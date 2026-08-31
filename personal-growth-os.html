@@ -149,6 +149,10 @@ textarea{resize:vertical}
 .btn-add{padding:6px 14px;border-radius:var(--radius-xs);font-size:13px;font-weight:600;background:var(--accent);color:#fff}
 .btn-cancel{padding:6px 14px;border-radius:var(--radius-xs);font-size:13px;background:var(--border-2);color:var(--text-2)}
 .task-limit-warn{font-size:12px;color:var(--amber);padding:6px 0}
+.task-presets{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
+.task-preset{padding:4px 10px;font-size:12px;font-weight:500;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);transition:all .15s;white-space:nowrap}
+.task-preset:active{transform:scale(.95)}
+.task-preset.selected{background:var(--accent);border-color:var(--accent);color:#fff}
 
 /* ===== ENERGY ===== */
 .energy-card{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius);padding:16px;margin-bottom:12px;box-shadow:var(--shadow)}
@@ -314,7 +318,13 @@ var NIGHT_CATEGORIES=[
   {id:'entrepreneurship',name:'创业/一人公司',en:'Entrepreneurship',color:'#8B5CF6',bg:'#F3EEFF',icon:'🚀'},
   {id:'interest',name:'兴趣',en:'Interest',color:'#F59E0B',bg:'#FEF3E2',icon:'🎨'}
 ];
-var OUTPUT_TYPES=['产品分析','竞品分析','市场研究','数据分析','PPT','周报','产品介绍','AI工作流','创业研究','英语成果'];
+var TASK_PRESETS={
+  body:['练胸','练肩','练背','练腿','核心训练','有氧运动','骑行'],
+  english:['背单词','跟读YouTube','英语口语练习','英语听力','英语阅读','英语写作'],
+  entrepreneurship:['看创业书','看创业视频','研究创业案例','写商业计划','创业想法记录','学习创业课程'],
+  interest:['宠物知识分享','摄影学习','写歌','音乐制作','绘画','读书','旅行规划']
+};
+var OUTPUT_TYPES=['工作','创业','学习','健身'];
 var WEEKLY_QUESTIONS=[
   {id:'q1',label:'我这周完成了什么？',ph:'记录本周完成的任务和成果...'},
   {id:'q2',label:'我这周学到了什么？',ph:'新学到的知识和技能...'},
@@ -374,13 +384,13 @@ function getDefaultData(){
     weeklyTop3:{1:'',2:'',3:''},
     totalReview:TOTAL_DIMENSIONS.map(function(d){return{id:d.id,name:d.name,score:d.score,reason:d.reason}}),
     outputs:[
-      {id:'o1',type:'周报',title:'入职第1周周报',desc:'梳理了入职第一周的观察和学习。',date:'2026-08-16'},
-      {id:'o2',type:'产品分析',title:'工装裤产品分析卡',desc:'完成了工装裤的产品分析卡。',date:'2026-08-24'},
-      {id:'o3',type:'市场研究',title:'女性户外运动服饰市场初步研究',desc:'初步梳理了市场。',date:'2026-08-22'}
+      {id:'o1',type:'工作',title:'入职第1周周报',desc:'梳理了入职第一周的观察和学习。',date:'2026-08-16'},
+      {id:'o2',type:'工作',title:'工装裤产品分析卡',desc:'完成了工装裤的产品分析卡。',date:'2026-08-24'},
+      {id:'o3',type:'工作',title:'女性户外运动服饰市场初步研究',desc:'初步梳理了市场。',date:'2026-08-22'}
     ],
     addForm:{type:null,category:null,priority:'should',title:''},
     addOutputOpen:false,
-    newOutput:{type:'产品分析',title:'',desc:''},
+    newOutput:{type:'工作',title:'',desc:''},
     outputFilter:'all',
     reviewTab:'weekly',
     calendarYear:new Date().getFullYear(),
@@ -533,7 +543,15 @@ function renderTask(task,type){
 function renderAddButton(type,category){
   var isOpen=state.addForm&&state.addForm.type===type&&state.addForm.category===category;
   if(isOpen){
-    return '<div class="add-task-form"><input class="add-task-input" type="text" placeholder="输入任务..." data-input="add-task-title" value="'+(state.addForm.title||'')+'" /><div class="priority-selector"><button class="priority-btn'+(state.addForm.priority==='must'?' active must':'')+'" data-action="select-priority" data-value="must">Must</button><button class="priority-btn'+(state.addForm.priority==='should'?' active should':'')+'" data-action="select-priority" data-value="should">Should</button><button class="priority-btn'+(state.addForm.priority==='optional'?' active optional':'')+'" data-action="select-priority" data-value="optional">Optional</button></div><div class="add-task-actions"><button class="btn-add" data-action="add-task">添加</button><button class="btn-cancel" data-action="close-add-form">取消</button></div></div>';
+    var presetsHtml='';
+    if(type==='night'&&TASK_PRESETS[category]){
+      presetsHtml='<div class="task-presets">';
+      for(var i=0;i<TASK_PRESETS[category].length;i++){
+        presetsHtml+='<button class="task-preset" data-action="select-preset" data-value="'+TASK_PRESETS[category][i]+'">'+TASK_PRESETS[category][i]+'</button>';
+      }
+      presetsHtml+='</div>';
+    }
+    return '<div class="add-task-form"><input class="add-task-input" type="text" placeholder="输入任务或点击下方选项..." data-input="add-task-title" value="'+(state.addForm.title||'')+'" />'+presetsHtml+'<div class="priority-selector"><button class="priority-btn'+(state.addForm.priority==='must'?' active must':'')+'" data-action="select-priority" data-value="must">Must</button><button class="priority-btn'+(state.addForm.priority==='should'?' active should':'')+'" data-action="select-priority" data-value="should">Should</button><button class="priority-btn'+(state.addForm.priority==='optional'?' active optional':'')+'" data-action="select-priority" data-value="optional">Optional</button></div><div class="add-task-actions"><button class="btn-add" data-action="add-task">添加</button><button class="btn-cancel" data-action="close-add-form">取消</button></div></div>';
   }
   var tasks=state.tasks[type];var canAdd=type==='day'?tasks.length<6:tasks.length<3;
   if(!canAdd)return '<p class="task-limit-warn">任务数已达上限</p>';
@@ -689,7 +707,7 @@ function renderWeeklyReview(){
   html+='</div>';return html;
 }
 function renderTotalReview(){
-  var html='<div class="monthly-intro"><p class="monthly-question">我和一个月前相比，真正变强了吗？</p></div>';
+  var html='';
   for(var i=0;i<state.totalReview.length;i++){
     var dim=state.totalReview[i];
     html+='<div class="monthly-score-card"><div class="score-header"><span class="score-name">'+dim.name+'</span><span class="score-value">'+dim.score+'</span></div><input type="range" min="0" max="100" value="'+dim.score+'" data-input="total-score" data-id="'+dim.id+'" class="score-slider" /><textarea class="score-reason" data-input="total-reason" data-id="'+dim.id+'" placeholder="评分原因...">'+(dim.reason||'')+'</textarea></div>';
@@ -756,6 +774,7 @@ function deleteTask(type,id){var tasks=state.tasks[type];for(var i=0;i<tasks.len
 function openAddForm(type,category){state.addForm={type:type,category:category,priority:'should',title:''};render();requestAnimationFrame(function(){var inp=document.querySelector('.add-task-input');if(inp)inp.focus()})}
 function closeAddForm(){state.addForm={type:null,category:null,priority:'should',title:''};render()}
 function selectPriority(val){state.addForm.priority=val;render();requestAnimationFrame(function(){var inp=document.querySelector('.add-task-input');if(inp){inp.focus();var len=inp.value.length;inp.setSelectionRange(len,len)}})}
+function selectPreset(val){state.addForm.title=val;render();requestAnimationFrame(function(){var inp=document.querySelector('.add-task-input');if(inp){inp.focus();var len=inp.value.length;inp.setSelectionRange(len,len)}})}
 function addTaskFromForm(){
   var f=state.addForm;if(!f.title||!f.title.trim())return;
   var tasks=state.tasks[f.type];
@@ -774,12 +793,12 @@ function setApproval(val){
 }
 function switchReviewTab(val){state.reviewTab=val;saveState();render()}
 function filterOutput(val){state.outputFilter=val;saveState();render()}
-function openAddOutput(){state.addOutputOpen=true;state.newOutput={type:'产品分析',title:'',desc:''};render();requestAnimationFrame(function(){var s=document.querySelector('.output-type-select');if(s)s.focus()})}
+function openAddOutput(){state.addOutputOpen=true;state.newOutput={type:'工作',title:'',desc:''};render();requestAnimationFrame(function(){var s=document.querySelector('.output-type-select');if(s)s.focus()})}
 function closeAddOutput(){state.addOutputOpen=false;render()}
 function addOutput(){
   var n=state.newOutput;if(!n.title||!n.title.trim())return;
   state.outputs.unshift({id:uid(),type:n.type,title:n.title.trim(),desc:n.desc||'',date:formatDateISO(new Date())});
-  state.addOutputOpen=false;state.newOutput={type:'产品分析',title:'',desc:''};
+  state.addOutputOpen=false;state.newOutput={type:'工作',title:'',desc:''};
   saveState();render();
 }
 function navigateMonth(delta){
@@ -804,6 +823,7 @@ function handleClick(e){
     case 'close-add-form':closeAddForm();break;
     case 'add-task':addTaskFromForm();break;
     case 'select-priority':selectPriority(ds.value);break;
+    case 'select-preset':selectPreset(ds.value);break;
     case 'toggle-recovery':toggleRecovery();break;
     case 'set-energy':setEnergy(ds.energyType,parseInt(ds.value));break;
     case 'set-approval':setApproval(ds.value==='true');break;
@@ -871,7 +891,7 @@ function ensureStateDefaults(){
   if(!state.opinionHistory)state.opinionHistory={};
   if(state.addForm===undefined)state.addForm={type:null,category:null,priority:'should',title:''};
   if(state.addOutputOpen===undefined)state.addOutputOpen=false;
-  if(!state.newOutput)state.newOutput={type:'产品分析',title:'',desc:''};
+  if(!state.newOutput)state.newOutput={type:'工作',title:'',desc:''};
   if(state.outputFilter===undefined)state.outputFilter='all';
   if(state.reviewTab===undefined)state.reviewTab='weekly';
   if(state.calendarYear===undefined){state.calendarYear=new Date().getFullYear();state.calendarMonth=new Date().getMonth()}
