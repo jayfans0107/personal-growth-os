@@ -51,6 +51,94 @@ textarea{resize:vertical}
 /* ===== CARDS ===== */
 .card{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius);padding:16px;margin-bottom:12px;box-shadow:var(--shadow)}
 
+/* ===== STREAK CARD ===== */
+.streak-card{
+  position:relative;overflow:hidden;
+  background:var(--surface);
+  border:1px solid var(--border-2);
+  border-radius:var(--radius);padding:24px 20px;margin-bottom:12px;
+  box-shadow:var(--shadow);text-align:center;
+  transition:background .4s ease;
+}
+.streak-card.s1{background:var(--surface)}
+.streak-card.s2{background:linear-gradient(135deg,#FFF9F0 0%,#FFFFFF 60%)}
+.streak-card.s3{background:linear-gradient(135deg,#FFF4E0 0%,#FFFDF8 50%)}
+.streak-card.s4{background:linear-gradient(135deg,#FFEFD0 0%,#FFFAF0 40%)}
+.streak-card.s5{background:linear-gradient(135deg,#FFE5B0 0%,#FFF5E0 30%)}
+.streak-card.s6{background:linear-gradient(135deg,#FFD78A 0%,#FFEFC0 25%)}
+.streak-card.s7{background:linear-gradient(135deg,#FFC957 0%,#FFE0A0 20%)}
+.streak-card.s7plus{background:linear-gradient(135deg,#FF9F0A 0%,#FFD060 30%,#FFE8B0 60%)}
+.streak-glow{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:200px;height:200px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(255,159,10,.12),transparent 70%);
+  opacity:0;transition:opacity .4s ease;
+}
+.streak-card.s3 .streak-glow{opacity:.3}
+.streak-card.s4 .streak-glow{opacity:.5}
+.streak-card.s5 .streak-glow{opacity:.7}
+.streak-card.s6 .streak-glow{opacity:.85}
+.streak-card.s7 .streak-glow{opacity:1}
+.streak-card.s7plus .streak-glow{opacity:1;background:radial-gradient(circle,rgba(255,159,10,.2),transparent 70%)}
+.streak-header{
+  position:relative;z-index:1;
+  font-size:11px;font-weight:600;letter-spacing:.06em;
+  color:var(--text-3);margin-bottom:4px;
+}
+.streak-number{
+  position:relative;z-index:1;
+  font-size:64px;font-weight:800;letter-spacing:-.05em;line-height:1.1;
+  color:var(--text);transition:color .4s ease;
+}
+.streak-card.s2 .streak-number{color:#C4952E}
+.streak-card.s3 .streak-number{color:#B88420}
+.streak-card.s4 .streak-number{color:#A87318}
+.streak-card.s5 .streak-number{color:#D4850A}
+.streak-card.s6 .streak-number{color:#E87800}
+.streak-card.s7 .streak-number{
+  background:linear-gradient(135deg,#FF9F0A,#FF6B35);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.streak-card.s7plus .streak-number{
+  background:linear-gradient(135deg,#FF6B35,#FF3B30,#FF9F0A);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.streak-unit{
+  position:relative;z-index:1;
+  font-size:14px;font-weight:500;color:var(--text-3);margin-top:2px;
+}
+.streak-sub{
+  position:relative;z-index:1;
+  font-size:11px;color:var(--text-3);margin-top:12px;
+  padding-top:12px;border-top:1px solid var(--border-2);
+  display:flex;justify-content:center;gap:16px;
+}
+.streak-main{
+  position:relative;z-index:1;
+  display:flex;align-items:center;justify-content:center;gap:4px;
+  margin-bottom:2px;
+}
+.streak-flame-wrap{
+  display:inline-flex;align-items:center;
+  animation:flameFlicker 1.8s ease-in-out infinite;
+  transform-origin:bottom center;
+}
+@keyframes flameFlicker{
+  0%,100%{transform:scale(1) rotate(-2deg)}
+  25%{transform:scale(1.08) rotate(1deg)}
+  50%{transform:scale(.95) rotate(-1deg)}
+  75%{transform:scale(1.05) rotate(2deg)}
+}
+.streak-card.s7plus .streak-flame-wrap{
+  animation:flameFlickerBig 1.2s ease-in-out infinite;
+  filter:drop-shadow(0 0 8px rgba(255,107,53,.4));
+}
+@keyframes flameFlickerBig{
+  0%,100%{transform:scale(1) rotate(-3deg)}
+  33%{transform:scale(1.12) rotate(2deg)}
+  66%{transform:scale(.92) rotate(-2deg)}
+}
+
 /* ===== RATE CARD ===== */
 .rate-card{
   position:relative;overflow:hidden;
@@ -92,7 +180,7 @@ textarea{resize:vertical}
   position:absolute;margin-top:22px;
   display:flex;flex-direction:column;align-items:center;
 }
-.rate-circle-value{font-size:26px;font-weight:800;letter-spacing:-.02em;color:#fff;line-height:1}
+.rate-circle-value{font-size:22px;font-weight:800;letter-spacing:-.02em;color:#fff;line-height:1}
 .rate-circle-unit{font-size:11px;font-weight:500;color:rgba(255,255,255,.5);margin-top:1px}
 .rate-circle-label{
   font-size:12px;font-weight:600;color:rgba(255,255,255,.85);margin-top:10px;
@@ -133,6 +221,12 @@ textarea{resize:vertical}
 .task-badge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;white-space:nowrap;flex-shrink:0}
 .task-delete{width:22px;height:22px;font-size:16px;color:var(--text-3);opacity:.35;transition:opacity .15s;flex-shrink:0}
 .task-item:hover .task-delete{opacity:1}
+.task-edit-btn{width:22px;height:22px;font-size:14px;color:var(--text-3);opacity:.35;transition:opacity .15s;flex-shrink:0}
+.task-item:hover .task-edit-btn{opacity:1}
+.task-edit-input{flex:1;border:1px solid var(--accent);border-radius:var(--radius-xs);padding:4px 8px;font-size:14px;outline:none;background:var(--surface)}
+.task-edit-save{width:22px;height:22px;font-size:14px;color:var(--green);flex-shrink:0}
+.task-edit-cancel{width:22px;height:22px;font-size:16px;color:var(--red);flex-shrink:0}
+.task-item.editing{background:var(--accent-bg);border-color:var(--accent)}
 
 /* ===== ADD TASK ===== */
 .add-task-btn{display:flex;align-items:center;justify-content:center;gap:4px;width:100%;padding:9px;border:1.5px dashed var(--border);border-radius:var(--radius-sm);background:transparent;color:var(--text-3);font-size:13px;transition:all .15s}
@@ -191,6 +285,12 @@ textarea{resize:vertical}
 .review-tab{flex:1;padding:8px;border:none;background:transparent;border-radius:8px;font-size:13px;font-weight:500;color:var(--text-2);transition:all .15s}
 .review-tab.active{background:var(--surface);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.08)}
 .review-stats-card{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius);padding:16px;margin-bottom:10px;box-shadow:var(--shadow)}
+.review-stat-row{display:flex;align-items:center;gap:10px}
+.stat-label{font-size:18px}
+.stat-bar{flex:1;height:10px;background:var(--border-2);border-radius:5px;overflow:hidden}
+.stat-fill{height:100%;border-radius:5px;transition:width .6s ease}
+.stat-value{font-size:16px;font-weight:800;color:var(--text);min-width:50px;text-align:right}
+.streak-sub-row{display:flex;justify-content:space-between;font-size:11px;color:var(--text-2);margin-top:8px;padding-top:8px;border-top:1px solid var(--border-2)}
 
 /* Heatmap */
 .heatmap-card{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius);padding:16px;margin-bottom:10px;box-shadow:var(--shadow)}
@@ -239,6 +339,18 @@ textarea{resize:vertical}
 .score-slider::-moz-range-thumb{width:14px;height:14px;background:var(--accent);border-radius:50%;cursor:pointer;border:3px solid #fff}
 .score-reason{width:100%;border:1px solid var(--border-2);border-radius:var(--radius-xs);padding:8px;font-size:12px;color:var(--text-2);resize:vertical;min-height:36px;outline:none}
 .score-reason:focus{border-color:var(--accent)}
+
+/* Memo */
+.memo-card{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius);padding:14px 16px;margin-bottom:10px;box-shadow:var(--shadow)}
+.memo-date{font-size:12px;font-weight:700;color:var(--accent);margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border-2)}
+.memo-content{font-size:14px;line-height:1.6;color:var(--text);white-space:pre-wrap;word-break:break-word}
+.memo-tag{display:inline-block;font-size:10px;font-weight:700;color:var(--accent);background:var(--accent-bg);padding:2px 6px;border-radius:4px;margin-right:6px;vertical-align:middle}
+.memo-search-bar{margin-bottom:10px}
+.memo-search-input{width:100%;border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 12px;font-size:13px;outline:none;background:var(--surface);transition:border-color .15s}
+.memo-search-input:focus{border-color:var(--accent)}
+.memo-filters{display:flex;gap:6px;margin-bottom:12px}
+.memo-filter{padding:5px 12px;font-size:12px;font-weight:500;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);transition:all .15s}
+.memo-filter.active{background:var(--accent);border-color:var(--accent);color:#fff}
 
 /* ===== GROWTH PAGE ===== */
 .output-filters{display:flex;gap:5px;margin-bottom:12px;flex-wrap:wrap}
@@ -305,12 +417,8 @@ textarea{resize:vertical}
 
 /* ===== CONSTANTS ===== */
 var DAY_CATEGORIES=[
-  {id:'business',name:'公司业务',en:'Business',color:'#3B82F6',bg:'#EBF2FF',icon:'🏢'},
-  {id:'product',name:'产品',en:'Product',color:'#8B5CF6',bg:'#F3EEFF',icon:'👕'},
-  {id:'market',name:'市场/竞品',en:'Market',color:'#06B6D4',bg:'#E0F7FA',icon:'📊'},
-  {id:'data',name:'数据',en:'Data',color:'#10B981',bg:'#E6FAF1',icon:'📈'},
-  {id:'expression',name:'表达与思考',en:'Expression',color:'#F59E0B',bg:'#FEF3E2',icon:'💬'},
-  {id:'ai',name:'AI工作流',en:'AI',color:'#EC4899',bg:'#FCE7F3',icon:'🤖'}
+  {id:'business',name:'待做事项',en:'Todo',color:'#3B82F6',bg:'#EBF2FF',icon:'📋'},
+  {id:'expression',name:'表达与思考',en:'Expression',color:'#F59E0B',bg:'#FEF3E2',icon:'💬'}
 ];
 var NIGHT_CATEGORIES=[
   {id:'body',name:'身体',en:'Body',color:'#EF4444',bg:'#FEE2E2',icon:'💪'},
@@ -365,8 +473,7 @@ function getDefaultData(){
     tasks:{
       day:[
         {id:'d1',category:'business',title:'搞懂公司产品研发流程和供应链',priority:'must',completed:false},
-        {id:'d2',category:'product',title:'完成工装裤产品分析卡',priority:'must',completed:false},
-        {id:'d3',category:'expression',title:'形成对女性户外运动服饰市场的初步判断',priority:'should',completed:false}
+        {id:'d2',category:'expression',title:'形成对女性户外运动服饰市场的初步判断',priority:'should',completed:false}
       ],
       night:[
         {id:'n1',category:'body',title:'健身 - 力量训练 45分钟',priority:'must',completed:false},
@@ -382,6 +489,8 @@ function getDefaultData(){
     opinionHistory:{},
     weeklyReview:{},
     weeklyTop3:{1:'',2:'',3:''},
+    top3Archive:[],
+    top3LastArchived:null,
     totalReview:TOTAL_DIMENSIONS.map(function(d){return{id:d.id,name:d.name,score:d.score,reason:d.reason}}),
     outputs:[
       {id:'o1',type:'工作',title:'入职第1周周报',desc:'梳理了入职第一周的观察和学习。',date:'2026-08-16'},
@@ -447,26 +556,52 @@ function getApproval(dateISO){
   return'unfilled';
 }
 
-function getWeeklyApprovalRate(){
-  var today=new Date();var recorded=0,approved=0;
-  for(var i=6;i>=0;i--){
-    var d=new Date(today);d.setDate(d.getDate()-i);
-    var ds=formatDateISO(d);var a=getApproval(ds);
-    if(a!=='unfilled'){recorded++;if(a==='approved')approved++}
-  }
-  return recorded>0?Math.round(approved/recorded*100):0;
+function getStreak(){
+  var today=new Date();
+  var todayApproval=getApproval(formatDateISO(today));
+  if(todayApproval==='rejected')return 0;
+  var streak=0;
+  if(todayApproval==='approved')streak=1;
+  var d=new Date(today);d.setDate(d.getDate()-1);
+  while(getApproval(formatDateISO(d))==='approved'){streak++;d.setDate(d.getDate()-1)}
+  return streak;
 }
-
-function getMonthlyApprovalRate(){
-  var today=new Date();var y=today.getFullYear(),m=today.getMonth();
-  var recorded=0,approved=0;
-  for(var ds in state.dailyApproval){
-    var parts=ds.split('-');if(parseInt(parts[0])===y&&parseInt(parts[1])-1===m){
-      recorded++;
-      if(state.dailyApproval[ds]===true)approved++;
-    }
+function getBestStreak(){
+  var dates=[];
+  for(var ds in state.dailyApproval){if(state.dailyApproval[ds]===true)dates.push(ds)}
+  dates.sort();
+  if(dates.length===0)return 0;
+  var best=1,current=1;
+  for(var i=1;i<dates.length;i++){
+    var prev=new Date(dates[i-1]+'T00:00:00');var curr=new Date(dates[i]+'T00:00:00');
+    var diff=Math.round((curr-prev)/86400000);
+    if(diff===1){current++;if(current>best)best=current}else{current=1}
   }
-  return recorded>0?Math.round(approved/recorded*100):0;
+  var curStreak=getStreak();
+  return Math.max(best,curStreak);
+}
+function getMonthlyApprovedCount(){
+  var today=new Date();var y=today.getFullYear(),m=today.getMonth();
+  var daysInMonth=new Date(y,m+1,0).getDate();var approved=0;
+  for(var ds in state.dailyApproval){
+    var parts=ds.split('-');
+    if(parseInt(parts[0])===y&&parseInt(parts[1])-1===m&&state.dailyApproval[ds]===true)approved++;
+  }
+  return approved+'/'+daysInMonth;
+}
+function getFlameSVG(streak){
+  var size=streak>=7?52:streak>=5?44:streak>=3?38:32;
+  var c1=streak>=7?'#FF3B30':streak>=5?'#FF6B35':streak>=4?'#FF9F0A':'#FFB347';
+  var c2=streak>=7?'#FF9F0A':streak>=5?'#FFB347':streak>=4?'#FFD060':'#FFE0A0';
+  var c3=streak>=5?'#FFE8B0':'#FFF4D0';
+  return '<svg class="streak-flame-icon" width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="none">'+
+    '<path d="M12 2c0 0-1 2-2.5 3.5C8 7 6 9 6 12c0 1.5.5 3 1.5 4c0 0-.5-2 .5-3c0 0 .5 1.5 2 2.5c1 .75 2 2 2 3.5c0 0 1-1 1.5-2c.5-1 .5-2.5 .5-3c0 0 .5 1 1 2c.5 1 0 2.5-.5 3c0 0 1.5-1 2.5-2.5c1-1.5 1.5-3 1.5-4.5c0-3-2-5-3.5-6.5C13 4 12 2 12 2z" '+
+    'fill="url(#flameG)" />'+
+    '<defs><linearGradient id="flameG" x1="50%" y1="100%" x2="50%" y2="0%">'+
+    '<stop offset="0%" stop-color="'+c1+'"/>'+
+    '<stop offset="50%" stop-color="'+c2+'"/>'+
+    '<stop offset="100%" stop-color="'+c3+'"/>'+
+    '</linearGradient></defs></svg>';
 }
 
 function getHeatmapData(){
@@ -505,6 +640,31 @@ function saveDailyOpinion(){
   if(!state.opinionHistory)state.opinionHistory={};
   state.opinionHistory[today]=state.todayOpinion||'';
 }
+function loadDailyOpinion(){
+  var today=getTodayISO();
+  if(!state.opinionHistory)state.opinionHistory={};
+  state.todayOpinion=state.opinionHistory[today]||'';
+}
+function checkTop3Archive(){
+  var today=getTodayISO();
+  if(state.top3LastArchived===null){state.top3LastArchived=today;return}
+  var last=new Date(state.top3LastArchived+'T00:00:00');
+  var now=new Date(today+'T00:00:00');
+  var diffDays=Math.round((now-last)/86400000);
+  if(diffDays>=7){
+    var content='';
+    for(var i=1;i<=3;i++){
+      var val=state.weeklyTop3[i]||'';
+      if(val.trim())content+=(content?'\n':'')+i+'. '+val.trim();
+    }
+    if(content){
+      state.top3Archive.push({date:state.top3LastArchived,content:content});
+    }
+    state.weeklyTop3={1:'',2:'',3:''};
+    state.top3LastArchived=today;
+    saveState();
+  }
+}
 
 /* ===== RENDER: MAIN ===== */
 function render(){
@@ -538,7 +698,10 @@ function renderNav(){
 function renderTask(task,type){
   var cat=findCat(type,task.category);
   var badge=cat?'<span class="task-badge" style="background:'+cat.bg+';color:'+cat.color+'">'+cat.name+'</span>':'';
-  return '<div class="task-item'+(task.completed?' completed':'')+'" data-task-id="'+type+'-'+task.id+'"><div class="task-check'+(task.completed?' checked':'')+'" data-action="toggle-task" data-type="'+type+'" data-id="'+task.id+'"></div><span class="task-title">'+task.title+'</span>'+badge+'<button class="task-delete" data-action="delete-task" data-type="'+type+'" data-id="'+task.id+'">\u00d7</button></div>';
+  if(state.editingTaskId===task.id){
+    return '<div class="task-item editing"><div class="task-check"></div><input class="task-edit-input" type="text" data-input="edit-task-title" data-type="'+type+'" data-id="'+task.id+'" value="'+task.title.replace(/"/g,'&quot;')+'" /><button class="task-edit-save" data-action="save-task-edit" data-type="'+type+'" data-id="'+task.id+'">\u2713</button><button class="task-edit-cancel" data-action="cancel-task-edit">\u00d7</button></div>';
+  }
+  return '<div class="task-item'+(task.completed?' completed':'')+'" data-task-id="'+type+'-'+task.id+'"><div class="task-check'+(task.completed?' checked':'')+'" data-action="toggle-task" data-type="'+type+'" data-id="'+task.id+'"></div><span class="task-title">'+task.title+'</span>'+badge+'<button class="task-edit-btn" data-action="edit-task" data-type="'+type+'" data-id="'+task.id+'">\u270E</button><button class="task-delete" data-action="delete-task" data-type="'+type+'" data-id="'+task.id+'">\u00d7</button></div>';
 }
 function renderAddButton(type,category){
   var isOpen=state.addForm&&state.addForm.type===type&&state.addForm.category===category;
@@ -553,12 +716,12 @@ function renderAddButton(type,category){
     }
     return '<div class="add-task-form"><input class="add-task-input" type="text" placeholder="输入任务或点击下方选项..." data-input="add-task-title" value="'+(state.addForm.title||'')+'" />'+presetsHtml+'<div class="priority-selector"><button class="priority-btn'+(state.addForm.priority==='must'?' active must':'')+'" data-action="select-priority" data-value="must">Must</button><button class="priority-btn'+(state.addForm.priority==='should'?' active should':'')+'" data-action="select-priority" data-value="should">Should</button><button class="priority-btn'+(state.addForm.priority==='optional'?' active optional':'')+'" data-action="select-priority" data-value="optional">Optional</button></div><div class="add-task-actions"><button class="btn-add" data-action="add-task">添加</button><button class="btn-cancel" data-action="close-add-form">取消</button></div></div>';
   }
-  var tasks=state.tasks[type];var canAdd=type==='day'?tasks.length<6:tasks.length<3;
-  if(!canAdd)return '<p class="task-limit-warn">任务数已达上限</p>';
-  return '<button class="add-task-btn" data-action="open-add-form" data-type="'+type+'" data-category="'+category+'">+ 添加任务</button>';
+  var tasks=state.tasks[type];var count=tasks.length;
+  var warn=count>=5?'<div class="task-limit-warn">\u{1F4A1} 任务较多，注意专注</div>':'';
+  return warn+'<button class="add-task-btn" data-action="open-add-form" data-type="'+type+'" data-category="'+category+'">+ 添加任务</button>';
 }
 function renderCategorySection(cat,tasks,type){
-  var html='<div class="category-section"><div class="category-header" style="border-left:3px solid '+cat.color+'"><span class="category-name">'+cat.icon+' '+cat.name+'</span><span class="category-count">'+tasks.length+'/'+(type==='day'?'6':'3')+'</span></div>';
+  var html='<div class="category-section"><div class="category-header" style="border-left:3px solid '+cat.color+'"><span class="category-name">'+cat.icon+' '+cat.name+'</span><span class="category-count">'+tasks.length+'</span></div>';
   if(tasks.length===0)html+='<p class="empty-hint">暂无任务</p>';
   for(var i=0;i<tasks.length;i++)html+=renderTask(tasks[i],type);
   html+=renderAddButton(type,cat.id);html+='</div>';return html;
@@ -630,38 +793,28 @@ function renderOutputItem(o){
 }
 
 /* ===== RENDER: HOME ===== */
-function renderRateCircle(rate,label,cls){
-  var r=38,c=2*Math.PI*r,off=c*(1-rate/100);
-  return '<div class="rate-circle-wrap"><svg class="rate-circle-svg" viewBox="0 0 90 90"><defs><linearGradient id="gradWeekly" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#A5F3FC"/><stop offset="100%" stop-color="#67E8F9"/></linearGradient><linearGradient id="gradMonthly" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FDE68A"/><stop offset="100%" stop-color="#FCD34D"/></linearGradient></defs><circle class="rate-circle-track" cx="45" cy="45" r="'+r+'"/><circle class="rate-circle-fill '+cls+'" cx="45" cy="45" r="'+r+'" stroke-dasharray="'+c+'" stroke-dashoffset="'+off+'"/></svg><div class="rate-circle-inner"><div class="rate-circle-value">'+rate+'</div><div class="rate-circle-unit">%</div></div><div class="rate-circle-label">'+label+'</div></div>';
+function renderRateCircle(data,label,cls){
+  var r=38,c=2*Math.PI*r,off=c*(1-data.percent/100);
+  return '<div class="rate-circle-wrap"><svg class="rate-circle-svg" viewBox="0 0 90 90"><defs><linearGradient id="gradWeekly" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#A5F3FC"/><stop offset="100%" stop-color="#67E8F9"/></linearGradient><linearGradient id="gradMonthly" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FDE68A"/><stop offset="100%" stop-color="#FCD34D"/></linearGradient></defs><circle class="rate-circle-track" cx="45" cy="45" r="'+r+'"/><circle class="rate-circle-fill '+cls+'" cx="45" cy="45" r="'+r+'" stroke-dasharray="'+c+'" stroke-dashoffset="'+off+'"/></svg><div class="rate-circle-inner"><div class="rate-circle-value">'+data.approved+'/'+data.recorded+'</div><div class="rate-circle-label">'+label+'</div></div></div>';
 }
 
 function renderHome(){
   var today=new Date();
-  var dayTasks=state.tasks.day;
-  var nightTasks=state.tasks.night;
-  var nightShown=state.recoveryMode?nightTasks.filter(function(t){return t.category==='body'||t.category==='english'}):nightTasks;
-  var weeklyRate=getWeeklyApprovalRate();
-  var monthlyRate=getMonthlyApprovalRate();
+  var streak=getStreak();
+  var bestStreak=getBestStreak();
+  var monthlyCount=getMonthlyApprovedCount();
   var todayApproval=getApproval(getTodayISO());
   var html='<div class="page home-page"><div class="page-header"><h1>Today</h1><p>'+formatDateDisplay(today)+'</p></div>';
 
-  html+='<div class="rate-card"><div class="rate-card-header">\u{1F4C8} 认可度 / Approval Rate</div><div class="rate-circles">'+renderRateCircle(weeklyRate,'本周','weekly')+renderRateCircle(monthlyRate,'本月','monthly')+'</div></div>';
+  var streakCls=streak===0?'s1':streak===1?'s1':streak===2?'s2':streak===3?'s3':streak===4?'s4':streak===5?'s5':streak===6?'s6':streak===7?'s7':'s7plus';
+  var flame=streak>=3?'<span class="streak-flame-wrap">'+getFlameSVG(streak)+'</span>':'';
+  html+='<div class="streak-card '+streakCls+'"><div class="streak-glow"></div><div class="streak-header">连续满意 Streak</div><div class="streak-main">'+flame+'<span class="streak-number">'+streak+'</span></div><div class="streak-unit">天连胜</div><div class="streak-sub"><span>最长 '+bestStreak+' 天</span><span>本月 '+monthlyCount+'</span></div></div>';
 
-  html+='<div class="section-day"><div class="section-header">\u2600\uFE0F DAYTIME \u00b7 白天</div><p class="section-subtitle">职业成长</p>';
-  if(dayTasks.length===0){html+='<p class="empty-hint">今天还没有设置核心任务<br>去 Day 页面添加</p>'}else{for(var i=0;i<dayTasks.length;i++)html+=renderTask(dayTasks[i],'day')}
-  html+='</div>';
-
-  html+='<div class="section-night"><div class="section-header">\u{1F319} NIGHT \u00b7 晚上</div><p class="section-subtitle">个人成长</p>';
-  if(state.recoveryMode)html+='<div class="recovery-banner">Recovery Mode \u00b7 恢复模式</div>';
-  if(nightShown.length===0){html+='<p class="empty-hint">今晚没有任务</p>'}else{for(var i=0;i<nightShown.length;i++)html+=renderTask(nightShown[i],'night')}
-  if(state.recoveryMode)html+='<div class="recovery-message">Take it easy. Recovery is part of growth. \u{1F319}</div>';
-  html+='</div>';
+  html+='<div class="approval-card"><div class="approval-question">今天对自己满意吗？</div><div class="approval-btns"><div style="text-align:center"><button class="approval-btn'+(todayApproval==='approved'?' approved':'')+'" data-action="set-approval" data-value="true">\u2713</button><div class="approval-label">满意</div></div><div style="text-align:center"><button class="approval-btn'+(todayApproval==='rejected'?' rejected':'')+'" data-action="set-approval" data-value="false">\u2717</button><div class="approval-label">不满意</div></div></div></div>';
 
   html+='<div class="energy-card"><div class="section-header">状态 / Status</div>'+renderEnergyRow('Energy','energy')+renderEnergyRow('Focus','focus')+renderEnergyRow('Mood','mood')+'</div>';
 
   html+='<div class="opinion-card"><div class="section-header">今日观点 / Today\'s Opinion</div><p class="section-subtitle" style="margin-bottom:8px;margin-top:0">我今天产生了什么判断？</p><textarea class="opinion-input" data-input="today-opinion" placeholder="结论 \u2192 依据 \u2192 判断 \u2192 建议...">'+(state.todayOpinion||'')+'</textarea></div>';
-
-  html+='<div class="approval-card"><div class="approval-question">今天对自己满意吗？</div><div class="approval-btns"><div style="text-align:center"><button class="approval-btn'+(todayApproval==='approved'?' approved':'')+'" data-action="set-approval" data-value="true">\u2713</button><div class="approval-label">满意</div></div><div style="text-align:center"><button class="approval-btn'+(todayApproval==='rejected'?' rejected':'')+'" data-action="set-approval" data-value="false">\u2717</button><div class="approval-label">不满意</div></div></div></div>';
 
   html+='</div>';return html;
 }
@@ -669,7 +822,7 @@ function renderHome(){
 /* ===== RENDER: DAY ===== */
 function renderDay(){
   var html='<div class="page day-page"><div class="page-header"><h1>Daytime \u00b7 白天</h1><p>职业成长</p></div>';
-  html+='<div class="day-intro"><p>把自己培养成一个懂业务、会分析、能表达、能解决问题的人。</p></div>';
+  html+='<div class="day-intro"><p>今日待做事项、思考记录与AI辅助工作。</p></div>';
   for(var i=0;i<DAY_CATEGORIES.length;i++){var cat=DAY_CATEGORIES[i];var tasks=state.tasks.day.filter(function(t){return t.category===cat.id});html+=renderCategorySection(cat,tasks,'day')}
   html+='<div class="opinion-card" style="margin-top:10px"><div class="section-header">今日观点 / Today\'s Opinion</div><p class="section-subtitle" style="margin-bottom:8px;margin-top:0">我今天产生了什么判断？</p><textarea class="opinion-input" data-input="today-opinion" placeholder="结论 \u2192 依据 \u2192 判断 \u2192 建议...">'+(state.todayOpinion||'')+'</textarea></div>';
   html+='</div>';return html;
@@ -689,28 +842,54 @@ function renderNight(){
 function renderReview(){
   var tab=state.reviewTab||'weekly';
   var html='<div class="page review-page"><div class="page-header"><h1>Review \u00b7 复盘</h1></div>';
-  html+='<div class="review-tabs"><button class="review-tab'+(tab==='weekly'?' active':'')+'" data-action="nav-review-tab" data-value="weekly">Weekly Review</button><button class="review-tab'+(tab==='total'?' active':'')+'" data-action="nav-review-tab" data-value="total">Total Review</button></div>';
-  if(tab==='weekly')html+=renderWeeklyReview();else html+=renderTotalReview();
+  html+='<div class="review-tabs"><button class="review-tab'+(tab==='weekly'?' active':'')+'" data-action="nav-review-tab" data-value="weekly">Weekly Review</button><button class="review-tab'+(tab==='memo'?' active':'')+'" data-action="nav-review-tab" data-value="memo">Memo</button></div>';
+  if(tab==='weekly')html+=renderWeeklyReview();else html+=renderMemo();
   html+='</div>';return html;
 }
 function renderWeeklyReview(){
-  var weeklyRate=getWeeklyApprovalRate();
-  var html='<div class="review-stats-card"><div class="section-header">本周认可度</div><div class="review-stat-row"><span class="stat-label">\u2705</span><div class="stat-bar"><div class="stat-fill" style="width:'+weeklyRate+'%;background:var(--green)"></div></div><span class="stat-value">'+weeklyRate+'%</span></div></div>';
+  var streak=getStreak();
+  var bestStreak=getBestStreak();
+  var monthlyCount=getMonthlyApprovedCount();
+  var html='<div class="review-stats-card"><div class="section-header">连续满意</div><div class="review-stat-row"><span class="stat-label">\u{1F525}</span><div class="stat-bar"><div class="stat-fill" style="width:'+Math.min(streak/7*100,100)+'%;background:linear-gradient(90deg,#34C759,#2DBE50)"></div></div><span class="stat-value">'+streak+' 天</span></div><div class="streak-sub-row"><span>最长 '+bestStreak+' 天</span><span>本月 '+monthlyCount+'</span></div></div>';
   html+='<div class="heatmap-card"><div class="section-header">Weekly Heatmap \u00b7 点击查看每日详情</div>'+renderHeatmap()+'</div>';
   html+='<div class="trend-card"><div class="section-header">状态趋势 \u00b7 过去7天</div>'+renderTrendChart()+'</div>';
-  for(var i=0;i<WEEKLY_QUESTIONS.length;i++){
-    var q=WEEKLY_QUESTIONS[i];
-    html+='<div class="question-card"><label class="question-label">'+q.label+'</label><textarea class="question-input" data-input="weekly-answer" data-field="'+q.id+'" placeholder="'+q.ph+'">'+(state.weeklyReview[q.id]||'')+'</textarea></div>';
-  }
   html+='<div class="top3-card"><div class="section-header">本周最有价值的3件事</div>';
   for(var i=1;i<=3;i++)html+='<input class="top3-input" type="text" data-input="weekly-top3" data-index="'+i+'" placeholder="'+i+'. " value="'+(state.weeklyTop3[i]||'')+'" />';
   html+='</div>';return html;
 }
-function renderTotalReview(){
-  var html='';
-  for(var i=0;i<state.totalReview.length;i++){
-    var dim=state.totalReview[i];
-    html+='<div class="monthly-score-card"><div class="score-header"><span class="score-name">'+dim.name+'</span><span class="score-value">'+dim.score+'</span></div><input type="range" min="0" max="100" value="'+dim.score+'" data-input="total-score" data-id="'+dim.id+'" class="score-slider" /><textarea class="score-reason" data-input="total-reason" data-id="'+dim.id+'" placeholder="评分原因...">'+(dim.reason||'')+'</textarea></div>';
+function renderMemo(){
+  var search=state.memoSearch||'';
+  var filter=state.memoFilter||'all';
+  var html='<div class="memo-search-bar"><input type="text" class="memo-search-input" data-input="memo-search" placeholder="搜索备忘录..." value="'+search+'" /></div>';
+  html+='<div class="memo-filters"><button class="memo-filter'+(filter==='all'?' active':'')+'" data-action="filter-memo" data-value="all">全部</button><button class="memo-filter'+(filter==='opinion'?' active':'')+'" data-action="filter-memo" data-value="opinion">观点</button><button class="memo-filter'+(filter==='top3'?' active':'')+'" data-action="filter-memo" data-value="top3">Top 3</button></div>';
+  var entries=[];
+  var opinionHist=state.opinionHistory||{};
+  for(var ds in opinionHist){
+    var text=opinionHist[ds];
+    if(text&&text.trim())entries.push({date:ds,text:text.trim(),type:'opinion'});
+  }
+  var top3Arch=state.top3Archive||[];
+  for(var i=0;i<top3Arch.length;i++){
+    var e=top3Arch[i];
+    if(e.content&&e.content.trim())entries.push({date:e.date,text:e.content.trim(),type:'top3'});
+  }
+  if(filter!=='all')entries=entries.filter(function(e){return e.type===filter});
+  if(search.trim()){
+    var q=search.trim().toLowerCase();
+    entries=entries.filter(function(e){return e.text.toLowerCase().indexOf(q)>=0});
+  }
+  entries.sort(function(a,b){return b.date.localeCompare(a.date)});
+  if(entries.length===0){
+    html+='<div class="history-empty">没有匹配的记录</div>';
+  }else{
+    for(var i=0;i<entries.length;i++){
+      var e=entries[i];
+      var d=new Date(e.date+'T00:00:00');
+      var dayNames=['日','一','二','三','四','五','六'];
+      var dateStr=d.getFullYear()+'年'+(d.getMonth()+1)+'月'+d.getDate()+'日 周'+dayNames[d.getDay()];
+      var tag=e.type==='top3'?'<span class="memo-tag">Top 3</span> ':'';
+      html+='<div class="memo-card"><div class="memo-date">'+tag+dateStr+'</div><div class="memo-content">'+e.text+'</div></div>';
+    }
   }
   return html;
 }
@@ -771,6 +950,16 @@ function renderHistory(){
 function navigate(page){state.currentPage=page;saveState();render();window.scrollTo(0,0)}
 function toggleTask(type,id){var tasks=state.tasks[type];for(var i=0;i<tasks.length;i++){if(tasks[i].id===id){tasks[i].completed=!tasks[i].completed;break}}saveState();render()}
 function deleteTask(type,id){var tasks=state.tasks[type];for(var i=0;i<tasks.length;i++){if(tasks[i].id===id){tasks.splice(i,1);break}}saveState();render()}
+function editTask(type,id){state.editingTaskId=id;render();requestAnimationFrame(function(){var inp=document.querySelector('.task-edit-input');if(inp)inp.focus()})}
+function cancelTaskEdit(){state.editingTaskId=null;render()}
+function saveTaskEdit(type,id){
+  var inp=document.querySelector('.task-edit-input[data-id="'+id+'"]');
+  if(!inp){state.editingTaskId=null;render();return}
+  var val=inp.value.trim();
+  if(val){var tasks=state.tasks[type];for(var i=0;i<tasks.length;i++){if(tasks[i].id===id){tasks[i].title=val;break}}}
+  state.editingTaskId=null;saveState();render();
+}
+function filterMemo(val){state.memoFilter=val;saveState();render()}
 function openAddForm(type,category){state.addForm={type:type,category:category,priority:'should',title:''};render();requestAnimationFrame(function(){var inp=document.querySelector('.add-task-input');if(inp)inp.focus()})}
 function closeAddForm(){state.addForm={type:null,category:null,priority:'should',title:''};render()}
 function selectPriority(val){state.addForm.priority=val;render();requestAnimationFrame(function(){var inp=document.querySelector('.add-task-input');if(inp){inp.focus();var len=inp.value.length;inp.setSelectionRange(len,len)}})}
@@ -778,8 +967,6 @@ function selectPreset(val){state.addForm.title=val;render();requestAnimationFram
 function addTaskFromForm(){
   var f=state.addForm;if(!f.title||!f.title.trim())return;
   var tasks=state.tasks[f.type];
-  if(f.type==='day'&&tasks.length>=6)return;
-  if(f.type==='night'&&tasks.length>=3)return;
   tasks.push({id:uid(),category:f.category,title:f.title.trim(),priority:f.priority,completed:false});
   state.addForm={type:null,category:null,priority:'should',title:''};
   saveState();render();
@@ -819,6 +1006,9 @@ function handleClick(e){
   switch(action){
     case 'toggle-task':toggleTask(ds.type,ds.id);break;
     case 'delete-task':deleteTask(ds.type,ds.id);break;
+    case 'edit-task':editTask(ds.type,ds.id);break;
+    case 'save-task-edit':saveTaskEdit(ds.type,ds.id);break;
+    case 'cancel-task-edit':cancelTaskEdit();break;
     case 'open-add-form':openAddForm(ds.type,ds.category);break;
     case 'close-add-form':closeAddForm();break;
     case 'add-task':addTaskFromForm();break;
@@ -828,6 +1018,7 @@ function handleClick(e){
     case 'set-energy':setEnergy(ds.energyType,parseInt(ds.value));break;
     case 'set-approval':setApproval(ds.value==='true');break;
     case 'nav-review-tab':switchReviewTab(ds.value);break;
+    case 'filter-memo':filterMemo(ds.value);break;
     case 'filter-output':filterOutput(ds.value);break;
     case 'open-add-output':openAddOutput();break;
     case 'close-add-output':closeAddOutput();break;
@@ -844,6 +1035,11 @@ function handleInput(e){
   switch(input){
     case 'today-opinion':state.todayOpinion=e.target.value;saveDailyOpinion();debouncedSave();break;
     case 'add-task-title':state.addForm.title=e.target.value;break;
+    case 'memo-search':
+      state.memoSearch=e.target.value;
+      render();
+      requestAnimationFrame(function(){var inp=document.querySelector('.memo-search-input');if(inp){inp.focus();var len=inp.value.length;inp.setSelectionRange(len,len)}});
+      break;
     case 'weekly-answer':state.weeklyReview[ds.field]=e.target.value;debouncedSave();break;
     case 'weekly-top3':state.weeklyTop3[ds.index]=e.target.value;debouncedSave();break;
     case 'total-reason':
@@ -873,6 +1069,12 @@ function handleKeydown(e){
     var el1=e.target.closest('[data-input="add-task-title"]');
     if(el1){e.preventDefault();addTaskFromForm();return}
     if(e.target.classList.contains('output-title-input')){e.preventDefault();addOutput()}
+    var el2=e.target.closest('[data-input="edit-task-title"]');
+    if(el2){e.preventDefault();var ds=el2.dataset;var val=el2.value.trim();if(val){var tasks=state.tasks[ds.type];for(var i=0;i<tasks.length;i++){if(tasks[i].id===ds.id){tasks[i].title=val;break}}}state.editingTaskId=null;saveState();render();return}
+  }
+  if(e.key==='Escape'){
+    var el3=e.target.closest('[data-input="edit-task-title"]');
+    if(el3){cancelTaskEdit();return}
   }
 }
 
@@ -883,6 +1085,8 @@ function ensureStateDefaults(){
   if(!state.tasks.night)state.tasks.night=[];
   if(!state.weeklyReview)state.weeklyReview={};
   if(!state.weeklyTop3)state.weeklyTop3={1:'',2:'',3:''};
+  if(!state.top3Archive)state.top3Archive=[];
+  if(state.top3LastArchived===undefined)state.top3LastArchived=null;
   if(!state.totalReview)state.totalReview=TOTAL_DIMENSIONS.map(function(d){return{id:d.id,name:d.name,score:d.score,reason:d.reason}});
   if(!state.outputs)state.outputs=[];
   if(!state.energy)state.energy={energy:3,focus:4,mood:4};
@@ -893,7 +1097,10 @@ function ensureStateDefaults(){
   if(state.addOutputOpen===undefined)state.addOutputOpen=false;
   if(!state.newOutput)state.newOutput={type:'工作',title:'',desc:''};
   if(state.outputFilter===undefined)state.outputFilter='all';
-  if(state.reviewTab===undefined)state.reviewTab='weekly';
+  if(state.reviewTab===undefined||state.reviewTab==='total')state.reviewTab='weekly';
+  if(state.memoSearch===undefined)state.memoSearch='';
+  if(state.memoFilter===undefined)state.memoFilter='all';
+  if(state.editingTaskId===undefined)state.editingTaskId=null;
   if(state.calendarYear===undefined){state.calendarYear=new Date().getFullYear();state.calendarMonth=new Date().getMonth()}
   if(state.historyDate===undefined)state.historyDate=null;
   if(state.recoveryMode===undefined)state.recoveryMode=false;
@@ -902,6 +1109,8 @@ function ensureStateDefaults(){
 }
 function init(){
   ensureStateDefaults();
+  checkTop3Archive();
+  loadDailyOpinion();
   document.getElementById('app').addEventListener('click',handleClick);
   document.getElementById('app').addEventListener('input',handleInput);
   document.getElementById('app').addEventListener('change',handleChange);
@@ -916,6 +1125,8 @@ function init(){
     cloudSyncLoad().then(function(cloudData){
       if(cloudData&&cloudData.tasks){
         state=cloudData;ensureStateDefaults();
+        checkTop3Archive();
+        loadDailyOpinion();
         try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}
         render();updateSyncStatus('synced');debouncedCloudSync();
       }else{updateSyncStatus('offline')}
