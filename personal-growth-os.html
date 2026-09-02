@@ -44,9 +44,9 @@ textarea{resize:vertical}
 
 /* ===== NAV ===== */
 #bottom-nav{position:fixed;bottom:0;left:0;right:0;height:calc(var(--nav-h) + env(safe-area-inset-bottom,0px));background:rgba(255,255,255,.82);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-around;padding-top:6px;padding-bottom:env(safe-area-inset-bottom,0);z-index:100;max-width:500px;margin:0 auto}
-.nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:var(--text-3);transition:color .15s;flex:1}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:9px;color:var(--text-3);transition:color .15s;flex:1}
 .nav-item.active{color:var(--accent)}
-.nav-item svg{width:22px;height:22px}
+.nav-item svg{width:20px;height:20px}
 
 /* ===== CARDS ===== */
 .card{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius);padding:16px;margin-bottom:12px;box-shadow:var(--shadow)}
@@ -405,6 +405,138 @@ textarea{resize:vertical}
 .sync-dot.error{background:var(--red)}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 
+/* ===== BELIEF CARD ===== */
+.belief-card{
+  background:linear-gradient(135deg,#F5F5F7 0%,#FAFAFF 100%);
+  border:1px solid var(--border-2);
+  border-radius:var(--radius);padding:16px 18px;margin-bottom:12px;
+  position:relative;overflow:hidden;
+}
+.belief-card::before{content:'"';position:absolute;top:-10px;left:8px;font-size:60px;color:var(--border);font-family:Georgia,serif;line-height:1;pointer-events:none}
+.belief-text{font-size:15px;font-weight:600;line-height:1.5;color:var(--text);position:relative;z-index:1;padding-left:8px}
+.belief-meta{font-size:11px;color:var(--text-3);margin-top:8px;padding-left:8px}
+.belief-outdated{opacity:.5;text-decoration:line-through}
+.belief-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;background:var(--red-bg);color:var(--red);margin-left:6px;font-weight:600}
+.belief-new-form{margin-top:12px}
+.belief-new-form textarea{width:100%;border:1px solid var(--border);border-radius:var(--radius-xs);padding:10px;font-size:13px;min-height:60px;outline:none}
+.belief-new-form textarea:focus{border-color:var(--accent)}
+
+/* ===== DIALOGUE ===== */
+.dialogue-card{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius);padding:16px;margin-bottom:12px}
+.dialogue-old{font-size:13px;color:var(--text-2);line-height:1.5;border-left:3px solid var(--border);padding-left:12px;margin-bottom:12px;white-space:pre-wrap}
+.dialogue-old-date{font-size:11px;color:var(--text-3);margin-bottom:4px}
+.dialogue-reply{font-size:13px;color:var(--text);line-height:1.5;border-left:3px solid var(--accent);padding-left:12px;margin-top:12px;white-space:pre-wrap}
+.dialogue-reply-date{font-size:11px;color:var(--accent);margin-bottom:4px;margin-top:12px}
+.dialogue-reply-form textarea{width:100%;border:1px solid var(--border);border-radius:var(--radius-xs);padding:10px;font-size:13px;min-height:80px;outline:none;margin-top:8px}
+.dialogue-reply-form textarea:focus{border-color:var(--accent)}
+
+/* ===== CONFLICT CARDS ===== */
+.conflict-form{margin-bottom:12px}
+.conflict-input-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.conflict-input-row label{font-size:13px;color:var(--text-2);white-space:nowrap;flex-shrink:0}
+.conflict-input-row input{flex:1;border:1px solid var(--border);border-radius:var(--radius-xs);padding:8px 10px;font-size:13px;outline:none}
+.conflict-input-row input:focus{border-color:var(--accent)}
+.conflict-card{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius);padding:14px;margin-bottom:8px}
+.conflict-text{font-size:13px;line-height:1.6;color:var(--text)}
+.conflict-text .c-want{color:var(--green);font-weight:600}
+.conflict-text .c-but{color:var(--red);font-weight:600}
+.conflict-text .c-because{color:var(--text-2)}
+.conflict-date{font-size:11px;color:var(--text-3);margin-top:6px}
+
+/* ===== LOCAL STATS ===== */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.stat-box{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-sm);padding:14px}
+.stat-box-label{font-size:11px;color:var(--text-3);margin-bottom:4px}
+.stat-box-value{font-size:20px;font-weight:700;color:var(--text)}
+.stat-box-sub{font-size:11px;color:var(--text-2);margin-top:2px}
+.stat-correlation{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-sm);padding:14px;margin-bottom:8px}
+.stat-correlation-label{font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:6px}
+.stat-correlation-text{font-size:13px;color:var(--text);line-height:1.5}
+.stat-dow-row{display:flex;gap:4px;margin-top:8px}
+.stat-dow-bar{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.stat-dow-bar-fill{width:100%;border-radius:4px 4px 0 0;min-height:4px;transition:height .3s}
+.stat-dow-label{font-size:10px;color:var(--text-3)}
+
+/* ===== MONTHLY REPORT ===== */
+.monthly-report-card{background:linear-gradient(135deg,var(--surface) 0%,var(--accent-bg) 100%);border:1px solid var(--border-2);border-radius:var(--radius);padding:18px;margin-bottom:12px;box-shadow:var(--shadow)}
+.monthly-report-header{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--text)}
+.monthly-report-row{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px solid var(--border-2)}
+.monthly-report-row:last-child{border-bottom:none}
+.monthly-report-label{color:var(--text-2)}
+.monthly-report-value{font-weight:600;color:var(--text)}
+
+/* ===== TASK HISTORY IN DAY VIEW ===== */
+.history-task-section{margin-top:12px}
+.history-task-list{list-style:none;padding:0}
+.history-task-item{display:flex;align-items:center;gap:8px;padding:6px 0;font-size:13px;border-bottom:1px solid var(--border-2)}
+.history-task-item:last-child{border-bottom:none}
+.history-task-check{width:18px;height:18px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff}
+.history-task-check.done{background:var(--green);border-color:var(--green)}
+.history-task-check.undone{background:var(--text-3);border-color:var(--text-3)}
+
+/* ===== GROWTH SUB-NAV ===== */
+.growth-subnav{display:flex;gap:8px;margin-bottom:16px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px}
+.growth-subnav-btn{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;border:1px solid var(--border);background:var(--surface);color:var(--text-2);transition:all .15s}
+.growth-subnav-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* ===== FITNESS PLAN ===== */
+.fitness-plan-card{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius);padding:16px;margin-bottom:12px}
+.fitness-plan-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.fitness-plan-toggle{font-size:12px;color:var(--accent);cursor:pointer}
+.fitness-day-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border-2);font-size:13px}
+.fitness-day-row:last-child{border-bottom:none}
+.fitness-day-label{font-weight:600;color:var(--text);width:60px;flex-shrink:0}
+.fitness-day-content{color:var(--text-2)}
+.fitness-day-today{background:var(--green-bg);border-radius:var(--radius-xs);padding:8px 10px}
+
+/* ===== FITNESS PAGE ===== */
+.fit-day-counter{text-align:center;padding:20px;background:linear-gradient(135deg,var(--surface) 0%,var(--accent-bg) 100%);border-radius:var(--radius);margin-bottom:12px;border:1px solid var(--border-2)}
+.fit-day-number{font-size:48px;font-weight:800;color:var(--accent);letter-spacing:-.03em;line-height:1}
+.fit-day-total{font-size:14px;color:var(--text-2);margin-top:4px}
+.fit-day-label{font-size:13px;font-weight:600;color:var(--text);margin-top:8px}
+.fit-day-progress{height:4px;background:var(--border-2);border-radius:2px;margin-top:12px;overflow:hidden}
+.fit-day-progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .3s}
+.fit-template-label{font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px}
+.fit-exercise-row{padding:10px 0;border-bottom:1px solid var(--border-2)}
+.fit-exercise-row:last-child{border-bottom:none}
+.fit-exercise-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.fit-exercise-name{font-size:14px;font-weight:600;color:var(--text)}
+.fit-exercise-target{font-size:11px;color:var(--text-3)}
+.fit-exercise-superset{font-size:10px;color:var(--accent);font-weight:600}
+.fit-ex-check{width:22px;height:22px;border:2px solid var(--border);border-radius:50%;flex-shrink:0;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent}
+.fit-ex-check.checked{background:var(--green);border-color:var(--green);color:#fff}
+.fit-ex-check:hover{border-color:var(--green)}
+.fit-actual-input{width:100%;border:1px solid var(--border-2);border-radius:8px;padding:6px 10px;font-size:13px;color:var(--text);outline:none;background:var(--bg);margin-top:4px}
+.fit-actual-input:focus{border-color:var(--accent);background:var(--surface)}
+.fit-day-cell{cursor:pointer;transition:transform .1s}
+.fit-day-cell:active{transform:scale(.97)}
+.fit-template-select{width:100%;border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;color:var(--text);outline:none;background:var(--surface);-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236E6E73' stroke-width='2'><polyline points='6 9 12 15 18 9'/></svg>");background-repeat:no-repeat;background-position:right 10px center;padding-right:30px}
+.fit-status-row{display:flex;gap:8px}
+.fit-status-btn{flex:1;padding:10px;border:1px solid var(--border-2);border-radius:10px;font-size:13px;color:var(--text-2);background:var(--surface);cursor:pointer;transition:all .15s;text-align:center}
+.fit-status-btn.active{border-color:var(--accent);background:var(--accent-bg);color:var(--accent);font-weight:600}
+.fit-chart-card{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius);padding:16px;margin-bottom:12px;box-shadow:var(--shadow)}
+.fit-chart-svg{width:100%;height:160px}
+.fit-set-row{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.fit-set-num{font-size:11px;color:var(--text-3);width:20px;flex-shrink:0}
+.fit-set-input{width:50px;border:1px solid var(--border);border-radius:6px;padding:4px 6px;font-size:12px;text-align:center;outline:none}
+.fit-set-input:focus{border-color:var(--accent)}
+.fit-set-x{font-size:11px;color:var(--text-3)}
+.fit-set-unit{font-size:10px;color:var(--text-3);width:20px}
+.fit-metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fit-metric-box{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius-sm);padding:12px}
+.fit-metric-label{font-size:11px;color:var(--text-3);margin-bottom:4px}
+.fit-metric-input{width:100%;border:none;font-size:18px;font-weight:700;color:var(--text);outline:none;background:transparent}
+.fit-metric-unit{font-size:11px;color:var(--text-3)}
+.fit-score-card{background:linear-gradient(135deg,var(--surface) 0%,var(--green-bg) 100%);border:1px solid var(--border-2);border-radius:var(--radius);padding:18px;text-align:center;margin-bottom:12px}
+.fit-score-number{font-size:40px;font-weight:800;color:var(--green);letter-spacing:-.03em}
+.fit-score-total{font-size:14px;color:var(--text-2)}
+.fit-score-breakdown{display:flex;justify-content:space-around;margin-top:10px;padding-top:10px;border-top:1px solid var(--border-2)}
+.fit-score-item{font-size:10px;color:var(--text-3);text-align:center}
+.fit-score-item-val{font-size:14px;font-weight:700;color:var(--text)}
+.fit-kpi-row{display:flex;justify-content:space-between;font-size:12px;padding:4px 0}
+.fit-kpi-label{color:var(--text-2)}
+.fit-kpi-value{font-weight:600;color:var(--text)}
+
 /* ===== RESPONSIVE ===== */
 @media(min-width:501px){body{background:var(--bg)}#app{box-shadow:0 0 40px rgba(0,0,0,.03)}}
 </style>
@@ -461,8 +593,84 @@ var ICONS={
   day:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M21 12h2M4.93 19.07l1.41-1.41M18.36 5.64l1.42-1.42"/></svg>',
   night:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>',
   review:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>',
-  growth:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></svg>'
+  growth:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></svg>',
+  fit:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h3l2-7 4 14 2-7h7"/></svg>'
 };
+
+/* ===== FITNESS PLAN ===== */
+var FITNESS_START='2026-09-01';
+var FITNESS_TEMPLATES={
+  A:{label:'背+二头+后束',cardio:true,exercises:[
+    {id:'a1',name:'辅助引体向上',sets:4,reps:'6-10',rest:'2-3min'},
+    {id:'a2',name:'螃蟹臂下拉',sets:3,reps:'8-12',rest:'2min'},
+    {id:'a3',name:'坐姿划船',sets:3,reps:'8-12',rest:'2min'},
+    {id:'a4',name:'单臂绳索下拉',sets:2,reps:'10-15',rest:'90s'},
+    {id:'a5',name:'反向飞鸟',sets:3,reps:'12-20',rest:'60s'},
+    {id:'a6',name:'Face Pull',sets:2,reps:'12-20',rest:'60s'},
+    {id:'a7',name:'杠铃弯举',sets:3,reps:'8-12',rest:'90s'},
+    {id:'a8',name:'哑铃锤式弯举',sets:2,reps:'10-12',rest:'60s'}
+  ]},
+  B:{label:'胸+三头+中束+核心',cardio:true,exercises:[
+    {id:'b1',name:'上斜哑铃卧推',sets:3,reps:'6-10',rest:'2-3min'},
+    {id:'b2',name:'平板卧推',sets:3,reps:'6-10',rest:'2-3min'},
+    {id:'b3',name:'器械胸推',sets:2,reps:'8-12',rest:'90s'},
+    {id:'b4',name:'Cable Fly',sets:2,reps:'12-15',rest:'60s'},
+    {id:'b5',name:'哑铃侧平举',sets:4,reps:'12-20',rest:'60s'},
+    {id:'b6',name:'绳索下压',sets:3,reps:'10-15',rest:'90s'},
+    {id:'b7',name:'过头绳索臂屈伸',sets:2,reps:'10-15',rest:'90s'},
+    {id:'b8',name:'悬垂举腿',sets:3,reps:'8-15',rest:'90s'},
+    {id:'b9',name:'Cable Crunch',sets:3,reps:'10-15',rest:'60s'}
+  ]},
+  C:{label:'主动恢复',cardio:true,cardioNote:'30-45min低强度',exercises:[],stretchNote:'10-20min拉伸/活动度'},
+  D:{label:'腿部维持+核心',cardio:true,exercises:[
+    {id:'d1',name:'Goblet Squat',sets:3,reps:'8-12',rest:'2min'},
+    {id:'d2',name:'腿举',sets:3,reps:'8-12',rest:'2min'},
+    {id:'d3',name:'腿弯举',sets:3,reps:'10-15',rest:'90s'},
+    {id:'d4',name:'保加利亚分腿蹲',sets:2,reps:'8-10/侧',rest:'90s'},
+    {id:'d5',name:'小腿提踵',sets:2,reps:'12-15',rest:'60s'},
+    {id:'d6',name:'Cable Crunch',sets:3,reps:'10-15',rest:'60s'},
+    {id:'d7',name:'Plank',sets:2,reps:'45-60s',rest:'60s'}
+  ]},
+  E:{label:'背+二头+后束(II)',cardio:true,exercises:[
+    {id:'e1',name:'辅助引体向上',sets:4,reps:'6-10',rest:'2-3min'},
+    {id:'e2',name:'高位下拉',sets:3,reps:'8-12',rest:'2min'},
+    {id:'e3',name:'坐姿划船',sets:3,reps:'8-12',rest:'2min'},
+    {id:'e4',name:'胸托划船',sets:3,reps:'8-12',rest:'2min'},
+    {id:'e5',name:'直臂下压',sets:2,reps:'12-15',rest:'90s'},
+    {id:'e6',name:'后束飞鸟',sets:3,reps:'15-20',rest:'60s'},
+    {id:'e7',name:'杠铃弯举',sets:3,reps:'8-12',rest:'90s'},
+    {id:'e8',name:'锤式弯举',sets:2,reps:'10-15',rest:'60s'}
+  ]},
+  F:{label:'胸+手臂+核心',cardio:true,exercises:[
+    {id:'f1',name:'上斜哑铃卧推',sets:3,reps:'8-10',rest:'2-3min'},
+    {id:'f2',name:'平板卧推',sets:3,reps:'8-10',rest:'2-3min'},
+    {id:'f3',name:'Cable Fly',sets:3,reps:'12-15',rest:'60s'},
+    {id:'f4',name:'器械胸推',sets:2,reps:'10-12',rest:'90s'},
+    {id:'f5',name:'哑铃侧平举',sets:4,reps:'12-20',rest:'60s'},
+    {id:'f6',name:'后束飞鸟',sets:3,reps:'15-20',rest:'60s'},
+    {id:'f7',name:'二头弯举',sets:3,reps:'10-12',rest:'90s',superset:'三头下压'},
+    {id:'f8',name:'三头下压',sets:3,reps:'10-15',rest:'90s',superset:'二头弯举'},
+    {id:'f9',name:'锤式弯举',sets:2,reps:'10-12',rest:'60s'},
+    {id:'f10',name:'过头三头',sets:2,reps:'10-15',rest:'90s'},
+    {id:'f11',name:'悬垂举腿',sets:3,reps:'8-15',rest:'90s'},
+    {id:'f12',name:'Cable Crunch',sets:3,reps:'10-15',rest:'60s'}
+  ]},
+  G:{label:'休息/徒步',cardio:false,exercises:[],restNote:'完全休息或徒步'},
+  S29:{label:'全上肢综合+有氧',cardio:true,exercises:[
+    {id:'s1',name:'上斜哑铃卧推',sets:3,reps:'8-10',rest:'2min'},
+    {id:'s2',name:'高位下拉',sets:3,reps:'8-12',rest:'2min'},
+    {id:'s3',name:'坐姿划船',sets:3,reps:'8-12',rest:'2min'},
+    {id:'s4',name:'哑铃侧平举',sets:3,reps:'12-20',rest:'60s'},
+    {id:'s5',name:'二头弯举',sets:3,reps:'10-12',rest:'90s'},
+    {id:'s6',name:'三头下压',sets:3,reps:'10-15',rest:'90s'}
+  ]},
+  S30:{label:'测试+低强度有氧',cardio:true,cardioNote:'40min低强度',exercises:[
+    {id:'t1',name:'上斜哑铃卧推(测试)',sets:1,reps:'AMRAP',rest:'-'},
+    {id:'t2',name:'平板卧推(测试)',sets:1,reps:'AMRAP',rest:'-'},
+    {id:'t3',name:'辅助引体(测试)',sets:1,reps:'AMRAP',rest:'-'}
+  ]}
+};
+var FITNESS_DAY_MAP={1:'A',2:'B',3:'C',4:'D',5:'E',6:'F',7:'G',8:'A',9:'B',10:'C',11:'D',12:'E',13:'F',14:'G',15:'A',16:'B',17:'C',18:'D',19:'E',20:'F',21:'G',22:'A',23:'B',24:'C',25:'D',26:'E',27:'F',28:'G',29:'S29',30:'S30'};
 
 /* ===== DEFAULT DATA ===== */
 function formatDateISO(d){var y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),dd=String(d.getDate()).padStart(2,'0');return y+'-'+m+'-'+dd}
@@ -504,7 +712,20 @@ function getDefaultData(){
     reviewTab:'weekly',
     calendarYear:new Date().getFullYear(),
     calendarMonth:new Date().getMonth(),
-    historyDate:null
+    historyDate:null,
+    taskHistory:{},
+    monthlyReports:[],
+    beliefs:[],
+    dialogues:[],
+    conflicts:[],
+    conflictDraft:{want:'',but:'',because:''},
+    dialogueDraft:null,
+    growthView:'calendar',
+    fitnessPlan:null,
+    fitnessPlanOpen:false,
+    beliefDraft:'',
+    fitnessLogs:{},
+    fitOverrides:{}
   };
 }
 
@@ -609,7 +830,8 @@ function getHeatmapData(){
   for(var i=6;i>=0;i--){
     var d=new Date(today);d.setDate(d.getDate()-i);
     var ds=formatDateISO(d);
-    days.push({dateISO:ds,dayName:dayNames[d.getDay()],isToday:i===0,isWeekend:isWeekend(d),approval:getApproval(ds)});
+    var fitLog=state.fitnessLogs[ds];
+    days.push({dateISO:ds,dayName:dayNames[d.getDay()],isToday:i===0,isWeekend:isWeekend(d),approval:getApproval(ds),fitStatus:fitLog?fitLog.status:null,fitCompleted:fitLog?fitLog.completed:false});
   }
   return days;
 }
@@ -666,15 +888,172 @@ function checkTop3Archive(){
   }
 }
 
+/* ===== DAILY TASK ARCHIVE ===== */
+function archiveDailyTasks(){
+  var today=getTodayISO();
+  if(!state.taskHistory)state.taskHistory={};
+  if(state.taskHistory[today])return;
+  state.taskHistory[today]={
+    day:state.tasks.day.map(function(t){return{title:t.title,category:t.category,completed:t.completed,priority:t.priority}}),
+    night:state.tasks.night.map(function(t){return{title:t.title,category:t.category,completed:t.completed,priority:t.priority}})
+  };
+}
+
+/* ===== MONTHLY REPORT ===== */
+function checkMonthlyReport(){
+  var today=new Date();
+  var y=today.getFullYear(),m=today.getMonth();
+  var monthKey=y+'-'+String(m+1).padStart(2,'0');
+  if(!state.monthlyReports)state.monthlyReports=[];
+  for(var i=0;i<state.monthlyReports.length;i++){
+    if(state.monthlyReports[i].month===monthKey)return;
+  }
+  var isLastDay=today.getDate()===new Date(y,m+1,0).getDate();
+  if(!isLastDay)return;
+  var daysInMonth=new Date(y,m+1,0).getDate();
+  var approved=0,rejected=0;
+  var energySum=0,energyCount=0;
+  for(var ds in state.dailyApproval){
+    var parts=ds.split('-');
+    if(parseInt(parts[0])===y&&parseInt(parts[1])-1===m){
+      if(state.dailyApproval[ds]===true)approved++;
+      else if(state.dailyApproval[ds]===false)rejected++;
+    }
+  }
+  for(var ds2 in state.energyHistory){
+    var parts2=ds2.split('-');
+    if(parseInt(parts2[0])===y&&parseInt(parts2[1])-1===m){
+      var e=state.energyHistory[ds2];
+      energySum+=(e.energy+e.focus+e.mood)/3;
+      energyCount++;
+    }
+  }
+  var opinionCount=0;
+  for(var ds3 in state.opinionHistory){
+    var parts3=ds3.split('-');
+    if(parseInt(parts3[0])===y&&parseInt(parts3[1])-1===m&&state.opinionHistory[ds3].trim())opinionCount++;
+  }
+  var outputCount=0;
+  for(var i2=0;i2<state.outputs.length;i2++){
+    if(state.outputs[i2].date&&state.outputs[i2].date.substring(0,7)===monthKey)outputCount++;
+  }
+  var fitDays=0,fitGood=0,fitAvg=0,fitPoor=0;
+  var bodyFatFirst=null,bodyFatLast=null;
+  for(var ds4 in state.fitnessLogs){
+    var parts4=ds4.split('-');
+    if(parseInt(parts4[0])===y&&parseInt(parts4[1])-1===m){
+      var fl=state.fitnessLogs[ds4];
+      if(fl.completed)fitDays++;
+      if(fl.status==='good')fitGood++;
+      else if(fl.status==='average')fitAvg++;
+      else if(fl.status==='poor')fitPoor++;
+      if(fl.bodyFat){
+        if(bodyFatFirst===null)bodyFatFirst=fl.bodyFat;
+        bodyFatLast=fl.bodyFat;
+      }
+    }
+  }
+  var streak=getStreak();
+  var bestStreak=getBestStreak();
+  state.monthlyReports.push({
+    month:monthKey,
+    approved:approved,
+    rejected:rejected,
+    unrecorded:daysInMonth-approved-rejected,
+    avgEnergy:energyCount>0?Math.round(energySum/energyCount*10)/10:0,
+    opinions:opinionCount,
+    outputs:outputCount,
+    streak:streak,
+    bestStreak:bestStreak,
+    fitDays:fitDays,
+    fitGood:fitGood,
+    fitAvg:fitAvg,
+    fitPoor:fitPoor,
+    bodyFatChange:(bodyFatFirst!==null&&bodyFatLast!==null)?Math.round((bodyFatLast-bodyFatFirst)*10)/10:null
+  });
+  saveState();
+}
+
+/* ===== LOCAL STATS ===== */
+function getLocalStats(){
+  var stats={correlations:[],dowEnergy:{},dowApproval:{}};
+  var dowNames=['周日','周一','周二','周三','周四','周五','周六'];
+  for(var i=0;i<7;i++){stats.dowEnergy[i]={sum:0,count:0,avg:0};stats.dowApproval[i]={approved:0,total:0}}
+  var energyVals=[];
+  var moodVals=[];
+  for(var ds in state.energyHistory){
+    var e=state.energyHistory[ds];
+    var d=new Date(ds+'T00:00:00');
+    var dow=d.getDay();
+    stats.dowEnergy[dow].sum+=(e.energy+e.focus+e.mood)/3;
+    stats.dowEnergy[dow].count++;
+    energyVals.push(e.energy);
+    moodVals.push(e.mood);
+  }
+  for(var dow in stats.dowEnergy){
+    var de=stats.dowEnergy[dow];
+    de.avg=de.count>0?Math.round(de.sum/de.count*10)/10:0;
+  }
+  for(var ds2 in state.dailyApproval){
+    var d2=new Date(ds2+'T00:00:00');
+    var dow2=d2.getDay();
+    stats.dowApproval[dow2].total++;
+    if(state.dailyApproval[ds2]===true)stats.dowApproval[dow2].approved++;
+  }
+  if(energyVals.length>=3){
+    var eSum=0,mSum=0,eSq=0,mSq=0,emSum=0,n=energyVals.length;
+    for(var i2=0;i2<n;i2++){eSum+=energyVals[i2];mSum+=moodVals[i2];eSq+=energyVals[i2]*energyVals[i2];mSq+=moodVals[i2]*moodVals[i2];emSum+=energyVals[i2]*moodVals[i2]}
+    var eAvg=eSum/n,mAvg=mSum/n;
+    var cov=emSum/n-eAvg*mAvg;
+    var eVar=eSq/n-eAvg*eAvg;
+    if(Math.abs(eVar)>0.001){
+      var corr=cov/Math.sqrt(eVar*(mSq/n-mAvg*mAvg));
+      if(corr>0.5)stats.correlations.push('能量与心情强正相关（r='+corr.toFixed(2)+'）：能量高时心情通常也好');
+      else if(corr<-0.5)stats.correlations.push('能量与心情负相关（r='+corr.toFixed(2)+'）：能量高时心情反而偏低');
+      else stats.correlations.push('能量与心情相关性弱（r='+corr.toFixed(2)+'）：两者关联不大');
+    }
+  }
+  var bestDow=-1,bestAvg=0;
+  for(var dow2=0;dow2<7;dow2++){
+    if(stats.dowEnergy[dow2].count>0&&stats.dowEnergy[dow2].avg>bestAvg){bestAvg=stats.dowEnergy[dow2].avg;bestDow=dow2}
+  }
+  if(bestDow>=0)stats.correlations.push(dowNames[bestDow]+'状态最好（平均'+bestAvg+'分）');
+  var worstDow=-1,worstAvg=99;
+  for(var dow3=0;dow3<7;dow3++){
+    if(stats.dowEnergy[dow3].count>0&&stats.dowEnergy[dow3].avg<worstAvg){worstAvg=stats.dowEnergy[dow3].avg;worstDow=dow3}
+  }
+  if(worstDow>=0&&worstDow!==bestDow)stats.correlations.push(dowNames[worstDow]+'状态最低（平均'+worstAvg+'分）');
+  var approvedLow=0,approvedHigh=0;
+  for(var ds3 in state.energyHistory){
+    var e3=state.energyHistory[ds3];
+    var avgE=(e3.energy+e3.focus+e3.mood)/3;
+    var ap=state.dailyApproval[ds3];
+    if(ap===true){if(avgE<=3)approvedLow++;else approvedHigh++}
+  }
+  if((approvedLow+approvedHigh)>=3){
+    if(approvedHigh>approvedLow)stats.correlations.push('能量高时更容易对自己满意（高能量满意'+approvedHigh+'次 vs 低能量满意'+approvedLow+'次）');
+    else if(approvedLow>approvedHigh)stats.correlations.push('低能量时反而更常满意（可能标准更低？）');
+  }
+  return stats;
+}
+
+/* ===== RANDOM BELIEF ===== */
+function getRandomBelief(){
+  if(!state.beliefs||state.beliefs.length===0)return null;
+  var active=state.beliefs.filter(function(b){return!b.outdated});
+  if(active.length===0)return state.beliefs[0];
+  return active[Math.floor(Math.random()*active.length)];
+}
+
 /* ===== RENDER: MAIN ===== */
 function render(){
   var app=document.getElementById('app');var html='';
   switch(state.currentPage){
     case 'home':html=renderHome();break;
     case 'day':html=renderDay();break;
-    case 'night':html=renderNight();break;
     case 'review':html=renderReview();break;
     case 'growth':html=renderGrowth();break;
+    case 'fit':html=renderFit();break;
     case 'history':html=renderHistory();break;
     default:html=renderHome();
   }
@@ -684,10 +1063,10 @@ function renderNav(){
   var nav=document.getElementById('bottom-nav');
   var items=[
     {id:'home',label:'Home',icon:ICONS.home},
-    {id:'day',label:'Day',icon:ICONS.day},
-    {id:'night',label:'Night',icon:ICONS.night},
+    {id:'day',label:'Daily',icon:ICONS.day},
     {id:'review',label:'Review',icon:ICONS.review},
-    {id:'growth',label:'Growth',icon:ICONS.growth}
+    {id:'growth',label:'Growth',icon:ICONS.growth},
+    {id:'fit',label:'Fit',icon:ICONS.fit}
   ];
   var html='';
   for(var i=0;i<items.length;i++){var it=items[i];html+='<div class="nav-item'+(state.currentPage===it.id?' active':'')+'" data-nav="'+it.id+'"><div class="nav-icon">'+it.icon+'</div><span class="nav-label">'+it.label+'</span></div>'}
@@ -742,7 +1121,20 @@ function renderHeatmap(){
     if(d.approval==='unfilled')cls='unfilled';
     html+='<div class="heatmap-cell '+cls+(d.isToday?' today':'')+'" data-action="view-history" data-date="'+d.dateISO+'">'+(d.approval==='approved'?'\u2713':d.approval==='rejected'?'\u2717':'')+'</div>';
   }
-  html+='</div></div>';return html;
+  html+='</div>';
+  var hasFitData=false;
+  for(var i=0;i<days.length;i++){if(days[i].fitStatus||days[i].fitCompleted){hasFitData=true;break}}
+  if(hasFitData){
+    html+='<div class="heatmap-row"><div class="heatmap-label">\u{1F3CB}</div>';
+    for(var i=0;i<days.length;i++){
+      var d=days[i];
+      var fitEmoji=d.fitStatus?{good:'\u{1F7E2}',average:'\u{1F7E1}',poor:'\u{1F534}'}[d.fitStatus]:'';
+      var fitMark=d.fitCompleted?'\u2713':'';
+      html+='<div class="heatmap-cell'+(d.isToday?' today':'')+'" data-action="go-fit-today" style="background:'+(d.fitCompleted?'var(--green-bg)':'var(--surface)')+';border:1px solid '+(d.fitCompleted?'var(--green)':'var(--border)')+'">'+fitEmoji+fitMark+'</div>';
+    }
+    html+='</div>';
+  }
+  html+='</div>';return html;
 }
 
 function renderTrendChart(){
@@ -761,7 +1153,7 @@ function renderTrendChart(){
   }
   for(var i=0;i<data.length;i++){var x=padL+(i/(data.length-1))*chartW;html+='<text x="'+x+'" y="'+(H-4)+'" text-anchor="middle" font-size="8" fill="'+(data[i].isWeekend?'#FF9F0A':'#AEAEB2')+'">'+data[i].dayName+'</text>'}
   html+='</svg>';
-  html+='<div class="trend-legend"><div class="trend-legend-item"><div class="trend-legend-dot" style="background:'+colors.energy+'"></div>Energy</div><div class="trend-legend-item"><div class="trend-legend-dot" style="background:'+colors.focus+'"></div>Focus</div><div class="trend-legend-item"><div class="trend-legend-dot" style="background:'+colors.mood+'"></div>Mood</div></div>';
+  html+='<div class="trend-legend"><div class="trend-legend-item"><div class="trend-legend-dot" style="background:'+colors.energy+'"></div>Energy \u7cbe\u529b</div><div class="trend-legend-item"><div class="trend-legend-dot" style="background:'+colors.focus+'"></div>Focus \u4e13\u6ce8</div><div class="trend-legend-item"><div class="trend-legend-dot" style="background:'+colors.mood+'"></div>Mood \u60c5\u7eea</div></div>';
   return html;
 }
 
@@ -783,13 +1175,16 @@ function renderCalendar(){
     if(approval!=='unfilled')cls+=' '+approval+' has-data';else cls+=' unfilled';
     if(isToday)cls+=' today';
     var icon=approval==='approved'?'\u2713':approval==='rejected'?'\u2717':'';
-    html+='<div class="'+cls+'" data-action="view-history" data-date="'+ds+'">'+icon+'<span class="calendar-day-num">'+day+'</span></div>';
+    var fitLog=state.fitnessLogs[ds];
+    var fitDot=fitLog&&fitLog.status?'<span style="position:absolute;bottom:1px;right:2px;font-size:8px">'+{good:'\u{1F7E2}',average:'\u{1F7E1}',poor:'\u{1F534}'}[fitLog.status]+'</span>':'';
+    html+='<div class="'+cls+'" data-action="view-history" data-date="'+ds+'" style="position:relative">'+icon+'<span class="calendar-day-num">'+day+'</span>'+fitDot+'</div>';
   }
   html+='</div>';return html;
 }
 
 function renderOutputItem(o){
-  return '<div class="output-item"><div class="output-icon">\u{1F4C4}</div><div class="output-info"><div class="output-title">'+o.title+'</div><div class="output-meta">'+o.type+' \u00b7 '+o.date+'</div>'+(o.desc?'<div class="output-desc">'+o.desc+'</div>':'')+'</div></div>';
+  var fitLink=o.type==='\u5065\u8eab'?'<span class="fit-link" data-action="go-fit-today" style="font-size:11px;color:var(--accent);cursor:pointer;font-weight:600;margin-left:6px">\u{1F3CB} 查看训练 \u2192</span>':'';
+  return '<div class="output-item"><div class="output-icon">\u{1F4C4}</div><div class="output-info"><div class="output-title">'+o.title+'</div><div class="output-meta">'+o.type+' \u00b7 '+o.date+fitLink+'</div>'+(o.desc?'<div class="output-desc">'+o.desc+'</div>':'')+'</div></div>';
 }
 
 /* ===== RENDER: HOME ===== */
@@ -810,31 +1205,60 @@ function renderHome(){
   var flame=streak>=3?'<span class="streak-flame-wrap">'+getFlameSVG(streak)+'</span>':'';
   html+='<div class="streak-card '+streakCls+'"><div class="streak-glow"></div><div class="streak-header">连续满意 Streak</div><div class="streak-main">'+flame+'<span class="streak-number">'+streak+'</span></div><div class="streak-unit">天连胜</div><div class="streak-sub"><span>最长 '+bestStreak+' 天</span><span>本月 '+monthlyCount+'</span></div></div>';
 
+  var randomBelief=getRandomBelief();
+  if(randomBelief){
+    html+='<div class="belief-card"><div class="belief-text '+(randomBelief.outdated?'belief-outdated':'')+'">'+randomBelief.text+'</div><div class="belief-meta">'+randomBelief.date+(randomBelief.outdated?'<span class="belief-tag">不再认同</span>':'')+'</div></div>';
+  }
+
   html+='<div class="approval-card"><div class="approval-question">今天对自己满意吗？</div><div class="approval-btns"><div style="text-align:center"><button class="approval-btn'+(todayApproval==='approved'?' approved':'')+'" data-action="set-approval" data-value="true">\u2713</button><div class="approval-label">满意</div></div><div style="text-align:center"><button class="approval-btn'+(todayApproval==='rejected'?' rejected':'')+'" data-action="set-approval" data-value="false">\u2717</button><div class="approval-label">不满意</div></div></div></div>';
 
-  html+='<div class="energy-card"><div class="section-header">状态 / Status</div>'+renderEnergyRow('Energy','energy')+renderEnergyRow('Focus','focus')+renderEnergyRow('Mood','mood')+'</div>';
+  html+='<div class="energy-card"><div class="section-header">状态 / Status</div>'+renderEnergyRow('Energy 精力','energy')+renderEnergyRow('Focus 专注','focus')+renderEnergyRow('Mood 情绪','mood')+'</div>';
 
-  html+='<div class="opinion-card"><div class="section-header">今日观点 / Today\'s Opinion</div><p class="section-subtitle" style="margin-bottom:8px;margin-top:0">我今天产生了什么判断？</p><textarea class="opinion-input" data-input="today-opinion" placeholder="结论 \u2192 依据 \u2192 判断 \u2192 建议...">'+(state.todayOpinion||'')+'</textarea></div>';
+  var dayTasks=state.tasks.day||[];
+  var nightTasks=state.tasks.night||[];
+  var dayDone=dayTasks.filter(function(t){return t.completed}).length;
+  var nightDone=nightTasks.filter(function(t){return t.completed}).length;
+  var dayTotal=dayTasks.length;
+  var nightTotal=nightTasks.length;
+  var todayOutputs=state.outputs.filter(function(o){return o.date===getTodayISO()}).length;
+  html+='<div class="card" style="padding:12px"><div style="display:flex;justify-content:space-between;align-items:center;cursor:pointer" data-action="go-day"><div><div style="font-size:11px;color:var(--text-3);font-weight:600">DAILY \u00b7 \u4eca\u65e5\u4efb\u52a1</div><div style="font-size:13px;font-weight:600;color:var(--text);margin-top:2px">\u767d\u5929 '+dayDone+'/'+dayTotal+' \u00b7 \u665a\u4e0a '+nightDone+'/'+nightTotal+'</div></div><div style="font-size:12px;color:var(--accent);font-weight:600">\u67e5\u770b \u2192</div></div>';
+  var allTasks=dayTasks.concat(nightTasks);
+  if(allTasks.length>0){
+    html+='<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border-2)">';
+    for(var ti=0;ti<Math.min(allTasks.length,5);ti++){
+      var tk=allTasks[ti];
+      var dot=tk.completed?'\u2705':'\u26ab';
+      html+='<div style="font-size:12px;color:var(--text-2);padding:2px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+dot+' '+tk.title+'</div>';
+    }
+    if(allTasks.length>5)html+='<div style="font-size:11px;color:var(--text-3);padding-top:2px">\u8fd8\u6709 '+(allTasks.length-5)+' \u9879...</div>';
+    html+='</div>';
+  }
+  if(todayOutputs>0)html+='<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border-2);display:flex;justify-content:space-between;align-items:center;cursor:pointer" data-action="go-growth"><div style="font-size:13px;font-weight:600;color:var(--text)">\u{1F4C4} \u4eca\u65e5\u6210\u679c '+todayOutputs+' \u4e2a</div><div style="font-size:12px;color:var(--accent);font-weight:600">\u67e5\u770b \u2192</div></div>';
+  html+='</div>';
+
+  var fitLog=getFitLog();
+  var fitTpl=getTodayTemplate();
+  var fitDay=getFitnessDay();
+  var fitStatusEmoji=fitLog.status?{good:'\u{1F7E2}',average:'\u{1F7E1}',poor:'\u{1F534}'}[fitLog.status]:'\u26ab';
+  html+='<div class="card fit-home-card" data-action="go-fit-today" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:11px;color:var(--text-3);font-weight:600">FIT \u00b7 Day '+fitDay+'/30</div><div style="font-size:14px;font-weight:600;color:var(--text);margin-top:2px">'+fitStatusEmoji+' '+fitTpl.label+(fitLog.completed?' \u2705':'')+'</div></div><div style="font-size:12px;color:var(--accent);font-weight:600">\u67e5\u770b \u2192</div></div>';
+
+  html+='<div class="opinion-card"><div class="section-header">今日观点 / Today\'s Opinion</div><p class="section-subtitle" style="margin-bottom:8px;margin-top:0">我今天产生了什么判断？</p><textarea class="opinion-input" data-input="today-opinion" placeholder="结论 \u2192 依据 \u2192 判断 \u2192 建议...">'+(state.todayOpinion||'')+'</textarea><div style="text-align:right;padding-top:4px"><span class="fit-link" data-action="go-review" style="font-size:11px;font-weight:600;color:var(--accent);cursor:pointer">\u{1F4DD} \u89c2\u70b9\u5f52\u6863\u5230 Memo \u2192</span></div></div>';
 
   html+='</div>';return html;
 }
 
-/* ===== RENDER: DAY ===== */
+/* ===== RENDER: DAY (MERGED) ===== */
 function renderDay(){
-  var html='<div class="page day-page"><div class="page-header"><h1>Daytime \u00b7 白天</h1><p>职业成长</p></div>';
-  html+='<div class="day-intro"><p>今日待做事项、思考记录与AI辅助工作。</p></div>';
+  var html='<div class="page day-page"><div class="page-header"><h1>Daily \u00b7 今日精进</h1><p>白天精进 \u00b7 晚上成长</p></div>';
+  html+='<div class="section-day"><div class="section-header">白天 \u00b7 待做与思考</div>';
   for(var i=0;i<DAY_CATEGORIES.length;i++){var cat=DAY_CATEGORIES[i];var tasks=state.tasks.day.filter(function(t){return t.category===cat.id});html+=renderCategorySection(cat,tasks,'day')}
-  html+='<div class="opinion-card" style="margin-top:10px"><div class="section-header">今日观点 / Today\'s Opinion</div><p class="section-subtitle" style="margin-bottom:8px;margin-top:0">我今天产生了什么判断？</p><textarea class="opinion-input" data-input="today-opinion" placeholder="结论 \u2192 依据 \u2192 判断 \u2192 建议...">'+(state.todayOpinion||'')+'</textarea></div>';
-  html+='</div>';return html;
-}
-
-/* ===== RENDER: NIGHT ===== */
-function renderNight(){
-  var html='<div class="page night-page"><div class="page-header"><h1>Nighttime \u00b7 晚上</h1><p>个人成长</p></div>';
-  html+='<div class="recovery-toggle'+(state.recoveryMode?' active':'')+'" data-action="toggle-recovery"><div class="recovery-info"><span class="recovery-title">Recovery Mode \u00b7 恢复模式</span><span class="recovery-desc">'+(state.recoveryMode?'已开启：只保留身体+英语':'工作累了？开启恢复模式')+'</span></div><div class="toggle-switch'+(state.recoveryMode?' on':'')+'"><div class="toggle-knob"></div></div></div>';
-  var cats=state.recoveryMode?NIGHT_CATEGORIES.filter(function(c){return c.id==='body'||c.id==='english'}):NIGHT_CATEGORIES;
-  for(var i=0;i<cats.length;i++){var cat=cats[i];var tasks=state.tasks.night.filter(function(t){return t.category===cat.id});html+=renderCategorySection(cat,tasks,'night')}
-  if(state.recoveryMode)html+='<div class="recovery-message">Take it easy. Recovery is part of growth. \u{1F319}</div>';
+  html+='</div>';
+  html+='<div class="section-night"><div class="section-header">晚上 \u00b7 个人成长</div>';
+  var nightCats=NIGHT_CATEGORIES.filter(function(c){return c.id!=='body'});
+  for(var i=0;i<nightCats.length;i++){var cat=nightCats[i];var tasks=state.tasks.night.filter(function(t){return t.category===cat.id});html+=renderCategorySection(cat,tasks,'night')}
+  html+='<div class="card" style="text-align:center;padding:12px"><span style="font-size:12px;color:var(--text-3)">健身训练已移至</span> <span class="fit-link" data-action="go-fit" style="font-size:12px;font-weight:600;color:var(--accent);cursor:pointer">Fit 页面</span></div>';
+  html+='</div>';
+  html+='<div class="opinion-card"><div class="section-header">今日观点 / Today\'s Opinion</div><p class="section-subtitle" style="margin-bottom:8px;margin-top:0">我今天产生了什么判断？</p><textarea class="opinion-input" data-input="today-opinion" placeholder="结论 \u2192 依据 \u2192 判断 \u2192 建议...">'+(state.todayOpinion||'')+'</textarea><div style="text-align:right;padding-top:4px"><span class="fit-link" data-action="go-review" style="font-size:11px;font-weight:600;color:var(--accent);cursor:pointer">\u{1F4DD} \u89c2\u70b9\u5f52\u6863\u5230 Memo \u2192</span></div></div>';
   html+='</div>';return html;
 }
 
@@ -851,7 +1275,7 @@ function renderWeeklyReview(){
   var bestStreak=getBestStreak();
   var monthlyCount=getMonthlyApprovedCount();
   var html='<div class="review-stats-card"><div class="section-header">连续满意</div><div class="review-stat-row"><span class="stat-label">\u{1F525}</span><div class="stat-bar"><div class="stat-fill" style="width:'+Math.min(streak/7*100,100)+'%;background:linear-gradient(90deg,#34C759,#2DBE50)"></div></div><span class="stat-value">'+streak+' 天</span></div><div class="streak-sub-row"><span>最长 '+bestStreak+' 天</span><span>本月 '+monthlyCount+'</span></div></div>';
-  html+='<div class="heatmap-card"><div class="section-header">Weekly Heatmap \u00b7 点击查看每日详情</div>'+renderHeatmap()+'</div>';
+  html+='<div class="heatmap-card"><div class="section-header">Weekly Heatmap \u00b7 点击查看每日详情</div>'+renderHeatmap()+'<div style="text-align:center;padding:6px 0"><span class="fit-link" data-action="go-growth-calendar" style="font-size:12px;font-weight:600;color:var(--accent);cursor:pointer">\u{1F4C5} \u67e5\u770b\u6708\u5386 \u2192</span></div></div>';
   html+='<div class="trend-card"><div class="section-header">状态趋势 \u00b7 过去7天</div>'+renderTrendChart()+'</div>';
   html+='<div class="top3-card"><div class="section-header">本周最有价值的3件事</div>';
   for(var i=1;i<=3;i++)html+='<input class="top3-input" type="text" data-input="weekly-top3" data-index="'+i+'" placeholder="'+i+'. " value="'+(state.weeklyTop3[i]||'')+'" />';
@@ -896,23 +1320,422 @@ function renderMemo(){
 
 /* ===== RENDER: GROWTH ===== */
 function renderGrowth(){
+  var view=state.growthView||'calendar';
   var html='<div class="page growth-page"><div class="page-header"><h1>Growth \u00b7 成长</h1></div>';
-  html+='<div class="calendar-card"><div class="section-header">满意度日历 \u00b7 每日记录</div>'+renderCalendar()+'</div>';
-  html+='<div class="card"><div class="section-header">Output \u00b7 我的成果</div>';
-  html+='<div class="output-filters"><button class="output-filter'+(state.outputFilter==='all'?' active':'')+'" data-action="filter-output" data-value="all">全部</button>';
-  for(var i=0;i<OUTPUT_TYPES.length;i++)html+='<button class="output-filter'+(state.outputFilter===OUTPUT_TYPES[i]?' active':'')+'" data-action="filter-output" data-value="'+OUTPUT_TYPES[i]+'">'+OUTPUT_TYPES[i]+'</button>';
+  html+='<div class="growth-subnav">';
+  var tabs=[{id:'calendar',label:'日历'},{id:'output',label:'成果'},{id:'dialogue',label:'对话'},{id:'conflict',label:'冲突'},{id:'report',label:'月报'}];
+  for(var i=0;i<tabs.length;i++)html+='<button class="growth-subnav-btn'+(view===tabs[i].id?' active':'')+'" data-action="growth-view" data-value="'+tabs[i].id+'">'+tabs[i].label+'</button>';
   html+='</div>';
-  var outputs=getFilteredOutputs();
-  if(outputs.length===0){html+='<p class="empty-hint">还没有成果，去创造一个吧</p>'}else{html+='<div class="output-list">';for(var i=0;i<outputs.length;i++)html+=renderOutputItem(outputs[i]);html+='</div>'}
-  if(state.addOutputOpen){
-    html+='<div class="add-output-form"><select class="output-type-select" data-input="output-type">';
-    for(var i=0;i<OUTPUT_TYPES.length;i++)html+='<option value="'+OUTPUT_TYPES[i]+'"'+(state.newOutput.type===OUTPUT_TYPES[i]?' selected':'')+'>'+OUTPUT_TYPES[i]+'</option>';
-    html+='</select><input class="output-title-input" type="text" placeholder="成果标题" data-input="output-title" value="'+(state.newOutput.title||'')+'" /><textarea class="output-desc-input" placeholder="简要描述..." data-input="output-desc">'+(state.newOutput.desc||'')+'</textarea><div class="add-task-actions"><button class="btn-add" data-action="add-output">添加</button><button class="btn-cancel" data-action="close-add-output">取消</button></div></div>';
-  }else{html+='<button class="add-task-btn" data-action="open-add-output">+ 添加成果</button>'}
-  html+='</div></div>';return html;
+  if(view==='calendar'){
+    html+='<div class="calendar-card"><div class="section-header">满意度日历 \u00b7 每日记录</div>'+renderCalendar()+'</div>';
+    var stats=getLocalStats();
+    html+='<div class="card"><div class="section-header">数据洞察 \u00b7 Insights</div>';
+    if(stats.correlations.length===0){
+      html+='<p class="empty-hint">数据量不足，记录更多天数后自动生成洞察</p>';
+    }else{
+      for(var s=0;s<stats.correlations.length;s++){
+        html+='<div class="stat-correlation"><div class="stat-correlation-label">\u{1F4CA} 发现</div><div class="stat-correlation-text">'+stats.correlations[s]+'</div></div>';
+      }
+    }
+    var dowNames=['日','一','二','三','四','五','六'];
+    var hasDow=false;
+    for(var d=0;d<7;d++){if(stats.dowEnergy[d].count>0){hasDow=true;break}}
+    if(hasDow){
+      html+='<div class="stat-correlation"><div class="stat-correlation-label">状态分布</div><div class="stat-dow-row">';
+      var maxAvg=0;for(var d2=0;d2<7;d2++){if(stats.dowEnergy[d2].avg>maxAvg)maxAvg=stats.dowEnergy[d2].avg}
+      for(var d3=0;d3<7;d3++){
+        var h=maxAvg>0?Math.round(stats.dowEnergy[d3].avg/maxAvg*40):4;
+        var bgColor=stats.dowEnergy[d3].avg>=4?'var(--green)':stats.dowEnergy[d3].avg>=3?'var(--amber)':'var(--red)';
+        html+='<div class="stat-dow-bar"><div class="stat-dow-bar-fill" style="height:'+(stats.dowEnergy[d3].count>0?h:4)+'px;background:'+(stats.dowEnergy[d3].count>0?bgColor:'var(--border)')+'"></div><span class="stat-dow-label">'+dowNames[d3]+'</span></div>';
+      }
+      html+='</div></div>';
+    }
+    html+='</div>';
+    html+='<div style="text-align:center;padding:8px 0"><span class="fit-link" data-action="go-review" style="font-size:12px;font-weight:600;color:var(--accent);cursor:pointer">\u{1F50D} \u67e5\u770b Weekly Heatmap \u2192</span></div>';
+  }
+  else if(view==='output'){
+    html+='<div class="card"><div class="section-header">Output \u00b7 我的成果</div>';
+    html+='<div class="output-filters"><button class="output-filter'+(state.outputFilter==='all'?' active':'')+'" data-action="filter-output" data-value="all">全部</button>';
+    for(var j=0;j<OUTPUT_TYPES.length;j++)html+='<button class="output-filter'+(state.outputFilter===OUTPUT_TYPES[j]?' active':'')+'" data-action="filter-output" data-value="'+OUTPUT_TYPES[j]+'">'+OUTPUT_TYPES[j]+'</button>';
+    html+='</div>';
+    var outputs=getFilteredOutputs();
+    if(outputs.length===0){html+='<p class="empty-hint">还没有成果，去创造一个吧</p>'}else{html+='<div class="output-list">';for(var k=0;k<outputs.length;k++)html+=renderOutputItem(outputs[k]);html+='</div>'}
+    if(state.addOutputOpen){
+      html+='<div class="add-output-form"><select class="output-type-select" data-input="output-type">';
+      for(var l=0;l<OUTPUT_TYPES.length;l++)html+='<option value="'+OUTPUT_TYPES[l]+'"'+(state.newOutput.type===OUTPUT_TYPES[l]?' selected':'')+'>'+OUTPUT_TYPES[l]+'</option>';
+      html+='</select><input class="output-title-input" type="text" placeholder="成果标题" data-input="output-title" value="'+(state.newOutput.title||'')+'" /><textarea class="output-desc-input" placeholder="简要描述..." data-input="output-desc">'+(state.newOutput.desc||'')+'</textarea><div class="add-task-actions"><button class="btn-add" data-action="add-output">添加</button><button class="btn-cancel" data-action="close-add-output">取消</button></div></div>';
+    }else{html+='<button class="add-task-btn" data-action="open-add-output">+ 添加成果</button>'}
+    html+='</div>';
+  }
+  else if(view==='belief'){
+    html+=renderBeliefSection();
+  }
+  else if(view==='dialogue'){
+    html+=renderDialogueSection();
+  }
+  else if(view==='conflict'){
+    html+=renderConflictSection();
+  }
+  else if(view==='report'){
+    html+=renderMonthlyReportSection();
+  }
+  html+='</div>';return html;
+}
+function renderBeliefSection(){
+  var html='<div class="card"><div class="section-header">信念卡片库 \u00b7 Belief Cards</div>';
+  html+='<div class="belief-new-form"><textarea data-input="belief-draft" placeholder="写下你认同的信念、原则或认知...">'+(state.beliefDraft||'')+'</textarea><div class="add-task-actions" style="margin-top:8px"><button class="btn-add" data-action="add-belief">提炼为信念</button></div></div>';
+  if(state.beliefs.length===0){
+    html+='<p class="empty-hint">还没有信念卡片。从复盘或日常思考中提炼短句认知，存入卡片库。</p>';
+  }else{
+    for(var i=state.beliefs.length-1;i>=0;i--){
+      var b=state.beliefs[i];
+      html+='<div class="belief-card"><div class="belief-text '+(b.outdated?'belief-outdated':'')+'">'+b.text+'</div><div class="belief-meta">'+b.date+(b.outdated?'<span class="belief-tag">不再认同</span>':'')+'</div><div style="margin-top:8px"><button class="btn-cancel" data-action="toggle-belief-outdated" data-id="'+b.id+'">'+(b.outdated?'重新认同':'标记不再认同')+'</button></div></div>';
+    }
+  }
+  html+='</div>';return html;
+}
+function renderDialogueSection(){
+  var html='<div class="card"><div class="section-header">跨时空自我对话 \u00b7 Cross-Time Dialogue</div>';
+  if(state.dialogueDraft===null){
+    html+='<button class="add-task-btn" data-action="start-dialogue">随机抽取一条旧记录</button>';
+  }else{
+    var d=state.dialogueDraft;
+    var oldDate=new Date(d.originalDate+'T00:00:00');
+    var dayNames=['日','一','二','三','四','五','六'];
+    var dateStr=oldDate.getFullYear()+'年'+(oldDate.getMonth()+1)+'月'+oldDate.getDate()+'日 周'+dayNames[oldDate.getDay()];
+    html+='<div class="dialogue-card"><div class="dialogue-old-date">'+dateStr+'</div><div class="dialogue-old">'+d.originalText+'</div><div class="dialogue-reply-date">现在的回信</div><textarea class="dialogue-reply-form" data-input="dialogue-reply" placeholder="写下你现在的回应...">'+(d.replyText||'')+'</textarea><div class="add-task-actions" style="margin-top:8px"><button class="btn-add" data-action="save-dialogue-reply">保存回信</button><button class="btn-cancel" data-action="cancel-dialogue">取消</button></div></div>';
+  }
+  if(state.dialogues.length>0){
+    html+='<div class="section-header" style="margin-top:16px">历史对话</div>';
+    for(var i=state.dialogues.length-1;i>=0;i--){
+      var dg=state.dialogues[i];
+      var oDate=new Date(dg.originalDate+'T00:00:00');
+      var rDate=new Date(dg.replyDate+'T00:00:00');
+      html+='<div class="dialogue-card"><div class="dialogue-old-date">'+oDate.getFullYear()+'/'+(oDate.getMonth()+1)+'/'+oDate.getDate()+'</div><div class="dialogue-old">'+dg.originalText+'</div><div class="dialogue-reply-date">'+rDate.getFullYear()+'/'+(rDate.getMonth()+1)+'/'+rDate.getDate()+'</div><div class="dialogue-reply">'+dg.replyText+'</div></div>';
+    }
+  }
+  html+='</div>';return html;
+}
+function renderConflictSection(){
+  var html='<div class="card"><div class="section-header">内心冲突记录 \u00b7 Inner Conflict</div>';
+  var d=state.conflictDraft||{want:'',but:'',because:''};
+  html+='<div class="conflict-form"><div class="conflict-input-row"><label>我想</label><input type="text" data-input="conflict-want" placeholder="想做的事情..." value="'+(d.want||'')+'" /></div><div class="conflict-input-row"><label>但又</label><input type="text" data-input="conflict-but" placeholder="矛盾的事情..." value="'+(d.but||'')+'" /></div><div class="conflict-input-row"><label>因为</label><input type="text" data-input="conflict-because" placeholder="背后的原因..." value="'+(d.because||'')+'" /></div><div class="add-task-actions"><button class="btn-add" data-action="add-conflict">记录冲突</button></div></div>';
+  if(state.conflicts.length===0){
+    html+='<p class="empty-hint">还没有记录过内心冲突。</p>';
+  }else{
+    for(var i=state.conflicts.length-1;i>=0;i--){
+      var c=state.conflicts[i];
+      html+='<div class="conflict-card"><div class="conflict-text">我想 <span class="c-want">'+c.want+'</span>，但又 <span class="c-but">'+c.but+'</span>，因为 <span class="c-because">'+c.because+'</span></div><div class="conflict-date">'+c.date+'</div></div>';
+    }
+  }
+  html+='</div>';return html;
+}
+function renderMonthlyReportSection(){
+  var html='';
+  if(state.monthlyReports.length===0){
+    html+='<div class="card"><p class="empty-hint">还没有月度报告。每月最后一天自动生成。</p></div>';
+  }else{
+    var monthNames=['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
+    for(var i=state.monthlyReports.length-1;i>=0;i--){
+      var r=state.monthlyReports[i];
+      var parts=r.month.split('-');
+      var title=parts[0]+'年 '+monthNames[parseInt(parts[1])-1];
+      var approvedRate=Math.round(r.approved/(r.approved+r.rejected+r.unrecorded)*100);
+      html+='<div class="monthly-report-card"><div class="monthly-report-header">'+title+'成长报告</div>';
+      html+='<div class="monthly-report-row"><span class="monthly-report-label">满意天数</span><span class="monthly-report-value">'+r.approved+'/'+(r.approved+r.rejected+r.unrecorded)+' ('+approvedRate+'%)</span></div>';
+      html+='<div class="monthly-report-row"><span class="monthly-report-label">不满意天数</span><span class="monthly-report-value">'+r.rejected+'</span></div>';
+      html+='<div class="monthly-report-row"><span class="monthly-report-label">未记录天数</span><span class="monthly-report-value">'+r.unrecorded+'</span></div>';
+      html+='<div class="monthly-report-row"><span class="monthly-report-label">平均状态</span><span class="monthly-report-value">'+r.avgEnergy+'/5</span></div>';
+      html+='<div class="monthly-report-row"><span class="monthly-report-label">观点记录</span><span class="monthly-report-value">'+r.opinions+' 条</span></div>';
+      html+='<div class="monthly-report-row"><span class="monthly-report-label">产出成果</span><span class="monthly-report-value">'+r.outputs+' 个</span></div>';
+      if(r.fitDays!==undefined){
+        html+='<div class="monthly-report-row" style="border-top:1px solid var(--border-2);margin-top:8px;padding-top:8px"><span class="monthly-report-label">\u{1F3CB} 训练完成</span><span class="monthly-report-value">'+r.fitDays+' 天</span></div>';
+        if(r.fitGood+r.fitAvg+r.fitPoor>0)html+='<div class="monthly-report-row"><span class="monthly-report-label">训练状态</span><span class="monthly-report-value">\u{1F7E2}'+r.fitGood+' \u{1F7E1}'+r.fitAvg+' \u{1F534}'+r.fitPoor+'</span></div>';
+        if(r.bodyFatChange!==null&&r.bodyFatChange!==undefined){
+          var bfColor=r.bodyFatChange<0?'var(--green)':r.bodyFatChange>0?'var(--red)':'var(--text-2)';
+          var bfStr=r.bodyFatChange>0?'+'+r.bodyFatChange+'%':r.bodyFatChange+'%';
+          html+='<div class="monthly-report-row"><span class="monthly-report-label">体脂变化</span><span class="monthly-report-value" style="color:'+bfColor+';font-weight:600">'+bfStr+'</span></div>';
+        }
+        html+='<div style="text-align:center;padding:6px 0 0"><span class="fit-link" data-action="go-fit" style="font-size:12px;font-weight:600;color:var(--accent);cursor:pointer">\u{1F3CB} \u67e5\u770b\u8bad\u7ec3\u8be6\u60c5 \u2192</span></div>';
+      }
+      html+='<div class="monthly-report-row"><span class="monthly-report-label">月末连胜</span><span class="monthly-report-value">'+r.streak+' 天</span></div>';
+      html+='<div class="monthly-report-row"><span class="monthly-report-label">最长连胜</span><span class="monthly-report-value">'+r.bestStreak+' 天</span></div>';
+      html+='</div>';
+    }
+  }
+  return html;
 }
 
-/* ===== RENDER: HISTORY DAY VIEW ===== */
+/* ===== RENDER: FIT ===== */
+function getFitnessDay(){
+  var start=new Date(FITNESS_START+'T00:00:00');
+  var today=new Date(getTodayISO()+'T00:00:00');
+  var diff=Math.round((today-start)/(86400000))+1;
+  return diff<1?1:(diff>30?30:diff);
+}
+function getTodayTemplate(){
+  var day=getFitnessDay();
+  return getDayTemplate(day);
+}
+function getDayTemplate(day){
+  var key=state.fitOverrides&&state.fitOverrides[day]?state.fitOverrides[day]:FITNESS_DAY_MAP[day];
+  return FITNESS_TEMPLATES[key];
+}
+function getDayTemplateKey(day){
+  return state.fitOverrides&&state.fitOverrides[day]?state.fitOverrides[day]:FITNESS_DAY_MAP[day];
+}
+function getFitLog(date){
+  var ds=date||getTodayISO();
+  if(!state.fitnessLogs[ds])state.fitnessLogs[ds]={exercises:{}};
+  var log=state.fitnessLogs[ds];
+  if(!log.exercises)log.exercises={};
+  return log;
+}
+function get7DayAvgWeight(){
+  var weights=[];
+  for(var i=0;i<7;i++){
+    var d=new Date();d.setDate(d.getDate()-i);
+    var ds=formatDateISO(d);
+    var log=state.fitnessLogs[ds];
+    if(log&&log.weight)weights.push(log.weight);
+  }
+  if(weights.length===0)return null;
+  var sum=0;for(var i=0;i<weights.length;i++)sum+=weights[i];
+  return Math.round(sum/weights.length*10)/10;
+}
+function renderFit(){
+  var view=state.fitView||'today';
+  var html='<div class="page fit-page"><div class="page-header"><h1>Fit \u00b7 30-Day Cut &amp; Shape</h1></div>';
+  html+='<div class="growth-subnav"><button class="growth-subnav-btn'+(view==='today'?' active':'')+'" data-action="fit-view" data-value="today">今日</button><button class="growth-subnav-btn'+(view==='calendar'?' active':'')+'" data-action="fit-view" data-value="calendar">月历</button><button class="growth-subnav-btn'+(view==='chart'?' active':'')+'" data-action="fit-view" data-value="chart">体脂</button></div>';
+  if(view==='calendar')return html+renderFitCalendar()+'</div>';
+  if(view==='day-detail')return html+renderFitDayDetail(state.fitViewDay||1)+'</div>';
+  if(view==='chart')return html+renderFitChart()+'</div>';
+  var day=getFitnessDay();
+  var tpl=getTodayTemplate();
+  var log=getFitLog();
+  var avgWeight=get7DayAvgWeight();
+  var dateStr=getTodayISO();
+  html+=renderFitDayContent(day,day,dateStr,tpl,log,avgWeight,true);
+  html+='</div>';return html;
+}
+function renderFitDayContent(dayNum,displayDay,dateStr,tpl,log,avgWeight,showCompleteBtn){
+  var html='';
+  if(!showCompleteBtn)html+='<div class="history-back" data-action="fit-back-to-calendar">\u2190 返回月历</div>';
+  html+='<div class="fit-day-counter"><div class="fit-day-number">'+displayDay+'</div><div class="fit-day-total">/ 30</div><div class="fit-day-label">'+tpl.label+'</div><div class="fit-day-progress"><div class="fit-day-progress-fill" style="width:'+Math.round(displayDay/30*100)+'%"></div></div></div>';
+  html+='<div class="card"><div class="section-header">切换计划</div><select class="fit-template-select" data-action="change-fit-template" data-day="'+dayNum+'">';
+  var tplKeys=Object.keys(FITNESS_TEMPLATES);
+  var currentKey=getDayTemplateKey(dayNum);
+  for(var t=0;t<tplKeys.length;t++){
+    var tk=tplKeys[t];
+    html+='<option value="'+tk+'"'+(tk===currentKey?' selected':'')+'>'+tk+' \u00b7 '+FITNESS_TEMPLATES[tk].label+'</option>';
+  }
+  html+='</select></div>';
+  html+='<div class="card"><div class="section-header">训练状态</div><div class="fit-status-row">';
+  var statuses=[{id:'good',emoji:'\u{1F7E2}',label:'好'},{id:'average',emoji:'\u{1F7E1}',label:'一般'},{id:'poor',emoji:'\u{1F534}',label:'差'}];
+  for(var s=0;s<statuses.length;s++){
+    var st=statuses[s];
+    var active=log.status===st.id;
+    html+='<button class="fit-status-btn'+(active?' active':'')+'" data-action="set-fit-status" data-status="'+st.id+'" data-date="'+dateStr+'">'+st.emoji+' '+st.label+'</button>';
+  }
+  html+='</div></div>';
+  if(tpl.exercises&&tpl.exercises.length>0){
+    html+='<div class="card"><div class="section-header">训练 \u00b7 '+tpl.label+'</div>';
+    for(var i=0;i<tpl.exercises.length;i++){
+      var ex=tpl.exercises[i];
+      var actual=log.exercises[ex.id]||'';
+      var done=log.exerciseDone&&log.exerciseDone[ex.id];
+      html+='<div class="fit-exercise-row"><div class="fit-exercise-header"><div class="fit-ex-check'+(done?' checked':'')+'" data-action="toggle-exercise" data-ex="'+ex.id+'" data-date="'+dateStr+'">\u2713</div><span class="fit-exercise-name">'+ex.name+'</span><span class="fit-exercise-target">'+ex.sets+'\u00d7'+ex.reps+' \u00b7 '+ex.rest+'</span></div>';
+      html+='<input class="fit-actual-input" type="text" data-input="fit-actual" data-ex="'+ex.id+'" data-date="'+dateStr+'" value="'+(actual||'')+'" /></div>';
+    }
+    html+='</div>';
+  }
+  if(tpl.restNote){
+    html+='<div class="card"><p style="font-size:14px;color:var(--text-2);text-align:center;padding:12px">'+tpl.restNote+'</p></div>';
+  }
+  if(tpl.stretchNote){
+    html+='<div class="card"><div class="section-header">拉伸</div><p style="font-size:13px;color:var(--text-2)">'+tpl.stretchNote+'</p></div>';
+  }
+  if(tpl.cardio||tpl.cardioNote){
+    html+='<div class="card"><div class="section-header">有氧 \u00b7 Cardio</div>';
+    if(tpl.cardio)html+='<p style="font-size:12px;color:var(--text-3);margin-bottom:8px">RPE 5-6/10</p>';
+    if(tpl.cardioNote)html+='<p style="font-size:12px;color:var(--text-3);margin-bottom:8px">'+tpl.cardioNote+'</p>';
+    html+='<input class="fit-actual-input" type="text" data-input="fit-cardio" data-date="'+dateStr+'" value="'+(log.cardioNote||'')+'" /></div>';
+  }
+  html+='<div class="card"><div class="section-header">身体数据 \u00b7 Body</div><div class="fit-metrics-grid"><div class="fit-metric-box"><div class="fit-metric-label">体重(kg)</div><input class="fit-metric-input" type="number" inputmode="decimal" data-input="fit-body" data-field="weight" data-date="'+dateStr+'" value="'+(log.weight||'')+'" /></div><div class="fit-metric-box"><div class="fit-metric-label">体脂率(%)</div><input class="fit-metric-input" type="number" inputmode="decimal" data-input="fit-body" data-field="bodyFat" data-date="'+dateStr+'" value="'+(log.bodyFat||'')+'" /></div></div>';
+  html+='<div class="fit-metrics-grid" style="margin-top:8px"><div class="fit-metric-box"><div class="fit-metric-label">骨骼肌(kg)</div><input class="fit-metric-input" type="number" inputmode="decimal" data-input="fit-body" data-field="muscle" data-date="'+dateStr+'" value="'+(log.muscle||'')+'" /></div><div class="fit-metric-box"><div class="fit-metric-label">7日均值</div><div style="font-size:18px;font-weight:700;color:var(--accent)">'+(avgWeight!==null?avgWeight:'-')+'</div><div class="fit-metric-unit">kg</div></div></div>';
+  html+='<p style="font-size:11px;color:var(--text-3);margin-top:6px">早起上厕所后称重，每周测一次体脂和骨骼肌</p></div>';
+  if(showCompleteBtn){
+    var btnLabel=tpl.exercises&&tpl.exercises.length>0?(log.completed?'\u2705 今日训练已完成':'标记训练完成'):'今日休息日';
+    var btnDisabled=tpl.exercises&&tpl.exercises.length===0;
+    html+='<button class="add-task-btn" data-action="toggle-fit-complete"'+(btnDisabled?' disabled style="opacity:.5"':'')+'>'+btnLabel+'</button>';
+    if(log.completed)html+='<div style="text-align:center;padding:8px 0 4px"><button class="btn-cancel" data-action="go-growth" style="font-size:12px;padding:6px 16px">\u{1F4C4} 查看训练成果 \u2192</button></div>';
+  }else{
+    if(log.completed)html+='<div style="text-align:center;color:var(--green);font-size:13px;font-weight:600;padding:8px">\u2705 训练已完成</div>';
+    if(log.completed)html+='<div style="text-align:center;padding:4px 0 8px"><button class="btn-cancel" data-action="go-growth" style="font-size:12px;padding:6px 16px">\u{1F4C4} 查看训练成果 \u2192</button></div>';
+  }
+  if(log.weight||log.bodyFat)html+='<div style="text-align:center;padding:4px"><button class="btn-cancel" data-action="fit-view" data-value="chart" style="font-size:12px;padding:6px 16px">\u{1F4CA} 查看体脂趋势 \u2192</button></div>';
+  return html;
+}
+function renderFitDayDetail(dayNum){
+  var dateStr=formatDateISO(new Date(new Date(FITNESS_START+'T00:00:00').getTime()+(dayNum-1)*86400000));
+  var tpl=getDayTemplate(dayNum);
+  var log=getFitLog(dateStr);
+  var avgWeight=get7DayAvgWeight();
+  return renderFitDayContent(dayNum,dayNum,dateStr,tpl,log,avgWeight,false);
+}
+function renderFitCalendar(){
+  var html='<div class="card"><div class="section-header">30天计划预览 \u00b7 点击查看每日详情</div>';
+  html+='<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px">';
+  for(var d=1;d<=30;d++){
+    var tpl=getDayTemplate(d);
+    var isToday=d===getFitnessDay();
+    var isPast=d<getFitnessDay();
+    var log=state.fitnessLogs[formatDateISO(new Date(new Date(FITNESS_START+'T00:00:00').getTime()+(d-1)*86400000))];
+    var done=log&&log.completed;
+    var hasData=log&&(log.weight||log.bodyFat||log.muscle||log.cardioNote||(log.exercises&&Object.keys(log.exercises).length>0));
+    var statusEmoji=log&&log.status?{good:'\u{1F7E2}',average:'\u{1F7E1}',poor:'\u{1F534}'}[log.status]:'';
+    var bg=isToday?'var(--accent-bg)':done?'var(--green-bg)':'var(--surface)';
+    var border=isToday?'var(--accent)':'var(--border-2)';
+    var labelColor=done?'var(--green)':isToday?'var(--accent)':'var(--text-2)';
+    html+='<div class="fit-day-cell" data-action="view-fit-day" data-day="'+d+'" style="background:'+bg+';border:1px solid '+border+';border-radius:8px;padding:8px 10px">';
+    html+='<div style="font-size:11px;font-weight:700;color:'+(isToday?'var(--accent)':'var(--text)')+'">Day '+d+'</div>';
+    html+='<div style="font-size:11px;color:'+labelColor+'">'+tpl.label+'</div>';
+    if(done)html+='<div style="font-size:10px;color:var(--green)">\u2705已完成'+(statusEmoji?' '+statusEmoji:'')+'</div>';
+    else if(hasData)html+='<div style="font-size:10px;color:var(--text-3)">有数据'+(statusEmoji?' '+statusEmoji:'')+'</div>';
+    else if(isPast)html+='<div style="font-size:10px;color:var(--text-3)">未完成</div>';
+    html+='</div>';
+  }
+  html+='</div></div>';
+  var completed=0;
+  for(var ds in state.fitnessLogs){if(state.fitnessLogs[ds].completed)completed++}
+  html+='<div class="card"><div class="section-header">完成统计</div><div style="font-size:28px;font-weight:800;color:var(--green)">'+completed+'</div><div style="font-size:13px;color:var(--text-2)">/'+getFitnessDay()+' \u5929\u5b8c\u6210\uff08'+(getFitnessDay()>0?Math.round(completed/getFitnessDay()*100):0)+'%\uff09</div>'+(completed>0?'<div style="text-align:center;padding:6px 0 0"><span class="fit-link" data-action="go-growth" style="font-size:12px;font-weight:600;color:var(--accent);cursor:pointer">\u{1F4C4} \u67e5\u770b\u8bad\u7ec3\u6210\u679c \u2192</span></div>':'')+'</div>';
+  html+=renderFitPlanText();
+  html+='</div>';return html;
+}
+function renderFitPlanText(){
+  var html='<div class="card"><div class="section-header">计划详情 \u00b7 Plan Details</div>';
+  html+='<div class="fit-plan-text">';
+  html+='<p style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px">\u5468\u671f\u76ee\u6807\uff1a30\u5929 Cut & Shape</p>';
+  html+='<p style="font-size:12px;color:var(--text-2);line-height:1.7;margin-bottom:12px">9\u67081\u65e5\u5df2\u5b8c\u6210\u80cc\u90e8\u8bad\u7ec3\uff0c\u4ece\u7b2c2\u5929\u63a5\u7eed\u3002\u6bcf\u5468\u5b89\u6392\uff1a4\u5929\u6b63\u5f0f\u8bad\u7ec3 + 1\u5929\u4e3b\u52a8\u6062\u590d + 1\u5929\u817f\u90e8/\u7efc\u5408 + 1\u5929\u4f11\u606f\u3002\u6709\u6c27\u5b89\u6392\u5728\u529b\u91cf\u8bad\u7ec3\u540e\uff0cRPE 5-6/10\uff08\u547c\u5438\u52a0\u5feb\u4f46\u80fd\u8bf4\u5b8c\u6574\u53e5\u5b50\uff09\u3002</p>';
+  var order=['A','B','C','D','E','F','G','S29','S30'];
+  for(var i=0;i<order.length;i++){
+    var key=order[i];
+    var tpl=FITNESS_TEMPLATES[key];
+    html+='<div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--border-2)">';
+    html+='<div style="font-size:12px;font-weight:700;color:var(--accent)">'+key+' \u00b7 '+tpl.label+'</div>';
+    if(tpl.cardioNote)html+='<div style="font-size:11px;color:var(--text-3);margin-top:2px">\u6709\u6c27\uff1a'+tpl.cardioNote+'</div>';
+    if(tpl.restNote)html+='<div style="font-size:11px;color:var(--text-3);margin-top:2px">'+tpl.restNote+'</div>';
+    if(tpl.stretchNote)html+='<div style="font-size:11px;color:var(--text-3);margin-top:2px">\u62c9\u4f38\uff1a'+tpl.stretchNote+'</div>';
+    if(tpl.exercises&&tpl.exercises.length>0){
+      html+='<div style="margin-top:4px">';
+      for(var j=0;j<tpl.exercises.length;j++){
+        var ex=tpl.exercises[j];
+        var superset=ex.superset?' \u2190 \u8d85\u7ec4 '+ex.superset:'';
+        html+='<div style="font-size:11px;color:var(--text-2);line-height:1.6">'+(j+1)+'. '+ex.name+' \u2014 '+ex.sets+'\u00d7'+ex.reps+' \u00b7 '+ex.rest+superset+'</div>';
+      }
+      html+='</div>';
+    }
+    html+='</div>';
+  }
+  html+='<p style="font-size:11px;color:var(--text-3);line-height:1.6">\u8981\u70b9\uff1a\u6b63\u5f0f\u8bad\u7ec3\u52a8\u4f5c\u4f18\u5148\u590d\u5408\u52a8\u4f5c\uff08\u5f15\u4f53/\u5367\u63a8/\u5212\u8239/\u4e0b\u62c9\uff09\uff0c\u5b64\u7acb\u52a8\u4f5c\u653e\u540e\u3002\u4e8c\u5934/\u4e09\u5934\u5c0f\u808c\u7fa4\u53ef\u7a7f\u63d2\u5728\u5927\u808c\u7fa4\u4e4b\u95f4\u4f5c\u4e3a\u4e3b\u52a8\u6062\u590d\u3002\u4fdd\u52a0\u7ef4\u6301\u80a1\u56db\u5934+\u6838\u5fc3\u5373\u53ef\uff0c\u4e0d\u51b2\u51fb\u6700\u5927\u91cd\u91cf\u3002</p>';
+  html+='</div>';
+  return html;
+}
+function renderFitChart(){
+  var range=state.fitChartRange||'week';
+  var html='<div class="fit-chart-card"><div class="section-header">体脂率变化 \u00b7 Body Fat %</div>';
+  html+='<div class="output-filters"><button class="output-filter'+(range==='week'?' active':'')+'" data-action="fit-chart-range" data-value="week">本周</button><button class="output-filter'+(range==='month'?' active':'')+'" data-action="fit-chart-range" data-value="month">本月</button></div>';
+  var days=range==='week'?7:30;
+  var data=[];
+  for(var i=days-1;i>=0;i--){
+    var d=new Date();d.setDate(d.getDate()-i);
+    var ds=formatDateISO(d);
+    var log=state.fitnessLogs[ds];
+    if(log&&log.bodyFat)data.push({date:ds,value:log.bodyFat});
+  }
+  if(data.length<2){
+    html+='<p class="empty-hint" style="padding:20px;text-align:center">数据不足，至少需要2天记录。在今日页填写体脂率后自动生成趋势图。</p></div>';
+    return html;
+  }
+  var minV=Math.min.apply(null,data.map(function(d){return d.value}))-1;
+  var maxV=Math.max.apply(null,data.map(function(d){return d.value}))+1;
+  var rangeV=maxV-minV||1;
+  var w=300,h=140,padL=30,padR=10,padT=10,padB=24;
+  var chartW=w-padL-padR,chartH=h-padT-padB;
+  var pts='';
+  var dots='';
+  var labels='';
+  for(var j=0;j<data.length;j++){
+    var x=padL+(data.length===1?chartW/2:chartW*j/(data.length-1));
+    var y=padT+chartH-(data[j].value-minV)/rangeV*chartH;
+    pts+=(j===0?'':' ')+' '+x+','+y;
+    dots+='<circle cx="'+x+'" cy="'+y+'" r="3" fill="var(--accent)"/>';
+    if(j===0||j===data.length-1||data.length<=7){
+      var dt=new Date(data[j].date+'T00:00:00');
+      var lbl=(dt.getMonth()+1)+'/'+dt.getDate();
+      labels+='<text x="'+x+'" y="'+(h-6)+'" text-anchor="middle" font-size="9" fill="var(--text-3)">'+lbl+'</text>';
+    }
+    if(j===0||j===data.length-1){
+      var anchor=j===0?'start':'end';
+      dots+='<text x="'+x+'" y="'+(y-6)+'" text-anchor="'+anchor+'" font-size="10" font-weight="700" fill="var(--text)">'+data[j].value+'%</text>';
+    }
+  }
+  var latest=data[data.length-1].value;
+  var first=data[0].value;
+  var diff=latest-first;
+  var diffStr=diff>0?'+'+diff.toFixed(1):diff.toFixed(1);
+  var diffColor=diff<0?'var(--green)':diff>0?'var(--red)':'var(--text-2)';
+  html+='<svg class="fit-chart-svg" viewBox="0 0 '+w+' '+h+'">';
+  html+='<line x1="'+padL+'" y1="'+padT+'" x2="'+padL+'" y2="'+(padT+chartH)+'" stroke="var(--border)" stroke-width="1"/>';
+  html+='<line x1="'+padL+'" y1="'+(padT+chartH)+'" x2="'+(padL+chartW)+'" y2="'+(padT+chartH)+'" stroke="var(--border)" stroke-width="1"/>';
+  html+='<polyline points="'+pts+'" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>';
+  html+=dots+labels;
+  html+='</svg>';
+  html+='<div style="display:flex;justify-content:space-between;margin-top:8px;padding-top:8px;border-top:1px solid var(--border-2)"><div><span style="font-size:11px;color:var(--text-3)">当前</span><br><span style="font-size:18px;font-weight:700;color:var(--accent)">'+latest+'%</span></div><div><span style="font-size:11px;color:var(--text-3)">'+(range==='week'?'本周':'本月')+'变化</span><br><span style="font-size:18px;font-weight:700;color:'+diffColor+'">'+diffStr+'%</span></div><div><span style="font-size:11px;color:var(--text-3)">记录天数</span><br><span style="font-size:18px;font-weight:700;color:var(--text)">'+data.length+'</span></div></div>';
+  html+='</div>';
+  var weightData=[];
+  for(var k=days-1;k>=0;k--){
+    var wd=new Date();wd.setDate(wd.getDate()-k);
+    var wds=formatDateISO(wd);
+    var wlog=state.fitnessLogs[wds];
+    if(wlog&&wlog.weight)weightData.push({date:wds,value:wlog.weight});
+  }
+  if(weightData.length>=2){
+    html+='<div class="fit-chart-card"><div class="section-header">体重变化 \u00b7 Weight (kg)</div>';
+    var wMin=Math.min.apply(null,weightData.map(function(d){return d.value}))-1;
+    var wMax=Math.max.apply(null,weightData.map(function(d){return d.value}))+1;
+    var wRange=wMax-wMin||1;
+    var wPts='',wDots='',wLabels='';
+    for(var m=0;m<weightData.length;m++){
+      var wx=padL+(weightData.length===1?chartW/2:chartW*m/(weightData.length-1));
+      var wy=padT+chartH-(weightData[m].value-wMin)/wRange*chartH;
+      wPts+=(m===0?'':' ')+' '+wx+','+wy;
+      wDots+='<circle cx="'+wx+'" cy="'+wy+'" r="3" fill="#FF9F0A"/>';
+      if(m===0||m===weightData.length-1||weightData.length<=7){
+        var wdt=new Date(weightData[m].date+'T00:00:00');
+        wLabels+='<text x="'+wx+'" y="'+(h-6)+'" text-anchor="middle" font-size="9" fill="var(--text-3)">'+(wdt.getMonth()+1)+'/'+wdt.getDate()+'</text>';
+      }
+      if(m===0||m===weightData.length-1){
+        var wAnchor=m===0?'start':'end';
+        wDots+='<text x="'+wx+'" y="'+(wy-6)+'" text-anchor="'+wAnchor+'" font-size="10" font-weight="700" fill="var(--text)">'+weightData[m].value+'kg</text>';
+      }
+    }
+    var wLatest=weightData[weightData.length-1].value;
+    var wFirst=weightData[0].value;
+    var wDiff=wLatest-wFirst;
+    var wDiffStr=wDiff>0?'+'+wDiff.toFixed(1):wDiff.toFixed(1);
+    var wDiffColor=wDiff<0?'var(--green)':wDiff>0?'var(--red)':'var(--text-2)';
+    html+='<svg class="fit-chart-svg" viewBox="0 0 '+w+' '+h+'">';
+    html+='<line x1="'+padL+'" y1="'+padT+'" x2="'+padL+'" y2="'+(padT+chartH)+'" stroke="var(--border)" stroke-width="1"/>';
+    html+='<line x1="'+padL+'" y1="'+(padT+chartH)+'" x2="'+(padL+chartW)+'" y2="'+(padT+chartH)+'" stroke="var(--border)" stroke-width="1"/>';
+    html+='<polyline points="'+wPts+'" fill="none" stroke="#FF9F0A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>';
+    html+=wDots+wLabels;
+    html+='</svg>';
+    html+='<div style="display:flex;justify-content:space-between;margin-top:8px;padding-top:8px;border-top:1px solid var(--border-2)"><div><span style="font-size:11px;color:var(--text-3)">当前</span><br><span style="font-size:18px;font-weight:700;color:#FF9F0A">'+wLatest+'kg</span></div><div><span style="font-size:11px;color:var(--text-3)">'+(range==='week'?'本周':'本月')+'变化</span><br><span style="font-size:18px;font-weight:700;color:'+wDiffColor+'">'+wDiffStr+'kg</span></div><div><span style="font-size:11px;color:var(--text-3)">7日均值</span><br><span style="font-size:18px;font-weight:700;color:var(--text)">'+(get7DayAvgWeight()!==null?get7DayAvgWeight():'-')+'kg</span></div></div>';
+    html+='</div>';
+  }
+  return html;
+}
 function renderHistory(){
   var ds=state.historyDate||getTodayISO();
   var d=new Date(ds+'T00:00:00');
@@ -927,7 +1750,7 @@ function renderHistory(){
   var statusText=approval==='approved'?'满意 \u00b7 Approved':approval==='rejected'?'不满意 \u00b7 Rejected':'未记录 \u00b7 No Record';
   html+='<div class="history-status"><div class="history-status-icon '+approval+'">'+statusIcon+'</div><span class="history-status-text">'+statusText+'</span></div>';
   if(energy){
-    var labels={energy:'Energy',focus:'Focus',mood:'Mood'};
+    var labels={energy:'Energy 精力',focus:'Focus 专注',mood:'Mood 情绪'};
     html+='<div class="energy-card"><div class="section-header">当日状态</div>';
     ['energy','focus','mood'].forEach(function(k){
       var val=energy[k]||0;
@@ -940,7 +1763,49 @@ function renderHistory(){
   if(opinion){
     html+='<div class="opinion-card"><div class="section-header">当日观点</div><p style="font-size:13px;color:var(--text);line-height:1.5;white-space:pre-wrap">'+opinion+'</p></div>';
   }
-  if(!energy&&!opinion){
+  var taskHist=state.taskHistory[ds];
+  if(taskHist){
+    if(taskHist.day&&taskHist.day.length>0){
+      html+='<div class="history-task-section"><div class="section-header">白天任务</div><ul class="history-task-list">';
+      for(var i=0;i<taskHist.day.length;i++){
+        var t=taskHist.day[i];
+        var cat=findCat('day',t.category);
+        var catName=cat?cat.name:'';
+        html+='<li class="history-task-item"><div class="history-task-check '+(t.completed?'done':'undone')+'">'+(t.completed?'\u2713':'')+'</div><span>'+t.title+'</span>'+(catName?'<span class="task-badge" style="background:#F2F2F7;color:#6E6E73">'+catName+'</span>':'')+'</li>';
+      }
+      html+='</ul></div>';
+    }
+    if(taskHist.night&&taskHist.night.length>0){
+      html+='<div class="history-task-section"><div class="section-header">晚上任务</div><ul class="history-task-list">';
+      for(var j=0;j<taskHist.night.length;j++){
+        var tn=taskHist.night[j];
+        var ncat=findCat('night',tn.category);
+        var ncatName=ncat?ncat.name:'';
+        html+='<li class="history-task-item"><div class="history-task-check '+(tn.completed?'done':'undone')+'">'+(tn.completed?'\u2713':'')+'</div><span>'+tn.title+'</span>'+(ncatName?'<span class="task-badge" style="background:#F2F2F7;color:#6E6E73">'+ncatName+'</span>':'')+'</li>';
+      }
+      html+='</ul></div>';
+    }
+  }
+  var dayOutputs=state.outputs.filter(function(o){return o.date===ds});
+  if(dayOutputs.length>0){
+    html+='<div class="history-task-section"><div class="section-header">当日成果</div>';
+    for(var k=0;k<dayOutputs.length;k++){
+      html+='<div class="history-task-item"><div class="history-task-check done">\u2713</div><span>'+dayOutputs[k].title+'</span><span class="task-badge" style="background:#F2F2F7;color:#6E6E73">'+dayOutputs[k].type+'</span></div>';
+    }
+    html+='</div>';
+  }
+  var fitLog=state.fitnessLogs[ds];
+  if(fitLog&&(fitLog.completed||fitLog.status||fitLog.weight||fitLog.bodyFat||fitLog.muscle||(fitLog.exercises&&Object.keys(fitLog.exercises).length>0))){
+    html+='<div class="history-task-section"><div class="section-header">训练记录</div>';
+    if(fitLog.completed)html+='<div class="history-task-item"><div class="history-task-check done">\u2713</div><span>训练完成</span>'+(fitLog.status?'<span class="task-badge" style="background:#F2F2F7;color:#6E6E73">'+{good:'\u{1F7E2} 好',average:'\u{1F7E1} 一般',poor:'\u{1F534} 差'}[fitLog.status]+'</span>':'')+'</div>';
+    if(fitLog.weight)html+='<div class="history-task-item"><span style="color:var(--text-3);font-size:12px;width:60px">体重</span><span>'+(fitLog.weight||'-')+' kg</span></div>';
+    if(fitLog.bodyFat)html+='<div class="history-task-item"><span style="color:var(--text-3);font-size:12px;width:60px">体脂率</span><span>'+(fitLog.bodyFat||'-')+'%</span></div>';
+    if(fitLog.muscle)html+='<div class="history-task-item"><span style="color:var(--text-3);font-size:12px;width:60px">骨骼肌</span><span>'+(fitLog.muscle||'-')+' kg</span></div>';
+    if(fitLog.cardioNote)html+='<div class="history-task-item"><span style="color:var(--text-3);font-size:12px;width:60px">有氧</span><span style="font-size:12px">'+fitLog.cardioNote+'</span></div>';
+    html+='<div style="text-align:center;padding:6px 0"><span class="fit-link" data-action="go-fit" style="font-size:12px;font-weight:600;color:var(--accent);cursor:pointer">\u{1F3CB} 前往Fit查看详情 \u2192</span></div>';
+    html+='</div>';
+  }
+  if(!energy&&!opinion&&!taskHist&&dayOutputs.length===0&&!fitLog){
     html+='<div class="history-empty">这一天没有更多记录</div>';
   }
   html+='</div>';return html;
@@ -996,6 +1861,88 @@ function navigateMonth(delta){
 }
 function viewHistoryDay(dateISO){state.historyDate=dateISO;state.currentPage='history';saveState();render();window.scrollTo(0,0)}
 function backFromHistory(){state.currentPage='review';saveState();render();window.scrollTo(0,0)}
+function setGrowthView(val){state.growthView=val;saveState();render()}
+function addBelief(){
+  var text=(state.beliefDraft||'').trim();if(!text)return;
+  state.beliefs.push({id:uid(),text:text,date:getTodayISO(),outdated:false});
+  state.beliefDraft='';saveState();render();
+}
+function toggleBeliefOutdated(id){
+  for(var i=0;i<state.beliefs.length;i++){
+    if(state.beliefs[i].id===id){state.beliefs[i].outdated=!state.beliefs[i].outdated;break}
+  }
+  saveState();render();
+}
+function startDialogue(){
+  var entries=[];
+  var oh=state.opinionHistory||{};
+  for(var ds in oh){
+    var text=oh[ds];
+    if(text&&text.trim()&&ds!==getTodayISO())entries.push({date:ds,text:text.trim()});
+  }
+  var ta=state.top3Archive||[];
+  for(var i=0;i<ta.length;i++){
+    if(ta[i].content&&ta[i].content.trim())entries.push({date:ta[i].date,text:ta[i].content.trim()});
+  }
+  if(entries.length===0)return;
+  var pick=entries[Math.floor(Math.random()*entries.length)];
+  state.dialogueDraft={originalDate:pick.date,originalText:pick.text,replyText:''};
+  saveState();render();
+}
+function saveDialogueReply(){
+  var d=state.dialogueDraft;if(!d)return;
+  var inp=document.querySelector('[data-input="dialogue-reply"]');
+  var reply=inp?inp.value.trim():'';
+  if(!reply){state.dialogueDraft=null;render();return}
+  state.dialogues.push({originalDate:d.originalDate,originalText:d.originalText,replyDate:getTodayISO(),replyText:reply});
+  state.dialogueDraft=null;saveState();render();
+}
+function cancelDialogue(){state.dialogueDraft=null;saveState();render()}
+function addConflict(){
+  var d=state.conflictDraft||{want:'',but:'',because:''};
+  if(!d.want.trim()||!d.but.trim())return;
+  state.conflicts.push({id:uid(),want:d.want.trim(),but:d.but.trim(),because:(d.because||'').trim(),date:getTodayISO()});
+  state.conflictDraft={want:'',but:'',because:''};saveState();render();
+}
+function toggleFitComplete(){
+  var log=getFitLog();
+  log.completed=!log.completed;
+  if(log.completed){
+    var day=getFitnessDay();
+    var tpl=getTodayTemplate();
+    var hasExisting=false;
+    for(var i=0;i<state.outputs.length;i++){
+      if(state.outputs[i].date===getTodayISO()&&state.outputs[i].type==='\u5065\u8eab'&&state.outputs[i].title.indexOf(tpl.label)>=0){hasExisting=true;break}
+    }
+    if(!hasExisting){
+      var doneCount=0;
+      if(log.exerciseDone)for(var k in log.exerciseDone){if(log.exerciseDone[k])doneCount++}
+      var totalEx=tpl.exercises?tpl.exercises.length:0;
+      state.outputs.unshift({id:uid(),type:'\u5065\u8eab',title:'Day '+day+' \u00b7 '+tpl.label,desc:'\u5b8c\u6210 '+doneCount+'/'+totalEx+' \u4e2a\u52a8\u4f5c\uff0c\u72b6\u6001\uff1a'+(log.status?{good:'\u{1F7E2}\u597d',average:'\u{1F7E1}\u4e00\u822c',poor:'\u{1F534}\u5dee'}[log.status]:'\u672a\u8bb0\u5f55'),date:formatDateISO(new Date())});
+    }
+  }
+  saveState();render();
+}
+function toggleExercise(exId,dateStr){
+  var log=getFitLog(dateStr);
+  if(!log.exerciseDone)log.exerciseDone={};
+  log.exerciseDone[exId]=!log.exerciseDone[exId];
+  saveState();render();
+}
+function setFitStatus(status,dateStr){
+  var log=getFitLog(dateStr);
+  log.status=log.status===status?null:status;
+  saveState();render();
+}
+function changeFitTemplate(dayNum,tplKey){
+  if(!state.fitOverrides)state.fitOverrides={};
+  if(state.fitOverrides[dayNum]===tplKey||(!state.fitOverrides[dayNum]&&FITNESS_DAY_MAP[dayNum]===tplKey)){
+    delete state.fitOverrides[dayNum];
+  }else{
+    state.fitOverrides[dayNum]=tplKey;
+  }
+  saveState();render();
+}
 
 /* ===== EVENT HANDLERS ===== */
 function handleClick(e){
@@ -1014,7 +1961,6 @@ function handleClick(e){
     case 'add-task':addTaskFromForm();break;
     case 'select-priority':selectPriority(ds.value);break;
     case 'select-preset':selectPreset(ds.value);break;
-    case 'toggle-recovery':toggleRecovery();break;
     case 'set-energy':setEnergy(ds.energyType,parseInt(ds.value));break;
     case 'set-approval':setApproval(ds.value==='true');break;
     case 'nav-review-tab':switchReviewTab(ds.value);break;
@@ -1027,6 +1973,26 @@ function handleClick(e){
     case 'next-month':navigateMonth(1);break;
     case 'view-history':viewHistoryDay(ds.date);break;
     case 'back-from-history':backFromHistory();break;
+    case 'growth-view':setGrowthView(ds.value);break;
+    case 'add-belief':addBelief();break;
+    case 'toggle-belief-outdated':toggleBeliefOutdated(ds.id);break;
+    case 'start-dialogue':startDialogue();break;
+    case 'save-dialogue-reply':saveDialogueReply();break;
+    case 'cancel-dialogue':cancelDialogue();break;
+    case 'add-conflict':addConflict();break;
+    case 'toggle-fit-complete':toggleFitComplete();break;
+    case 'fit-view':state.fitView=ds.value;state.fitViewDay=null;render();window.scrollTo(0,0);break;
+    case 'view-fit-day':state.fitView='day-detail';state.fitViewDay=parseInt(ds.day);render();window.scrollTo(0,0);break;
+    case 'fit-back-to-calendar':state.fitView='calendar';state.fitViewDay=null;render();window.scrollTo(0,0);break;
+    case 'toggle-exercise':toggleExercise(ds.ex,ds.date);break;
+    case 'set-fit-status':setFitStatus(ds.status,ds.date);break;
+    case 'fit-chart-range':state.fitChartRange=ds.value;saveState();render();break;
+    case 'go-fit':navigate('fit');break;
+    case 'go-growth':state.growthView='output';navigate('growth');break;
+    case 'go-fit-today':state.fitView='today';navigate('fit');break;
+    case 'go-day':navigate('day');break;
+    case 'go-review':navigate('review');break;
+    case 'go-growth-calendar':state.growthView='calendar';navigate('growth');break;
   }
 }
 function handleInput(e){
@@ -1048,9 +2014,37 @@ function handleInput(e){
     case 'output-type':state.newOutput.type=e.target.value;break;
     case 'output-title':state.newOutput.title=e.target.value;break;
     case 'output-desc':state.newOutput.desc=e.target.value;break;
+    case 'belief-draft':state.beliefDraft=e.target.value;debouncedSave();break;
+    case 'dialogue-reply':
+      if(state.dialogueDraft)state.dialogueDraft.replyText=e.target.value;
+      break;
+    case 'conflict-want':
+      if(!state.conflictDraft)state.conflictDraft={want:'',but:'',because:''};
+      state.conflictDraft.want=e.target.value;break;
+    case 'conflict-but':
+      if(!state.conflictDraft)state.conflictDraft={want:'',but:'',because:''};
+      state.conflictDraft.but=e.target.value;break;
+    case 'conflict-because':
+      if(!state.conflictDraft)state.conflictDraft={want:'',but:'',because:''};
+      state.conflictDraft.because=e.target.value;break;
+    case 'fit-actual':
+      var aLog=getFitLog(ds.date);
+      aLog.exercises[ds.ex]=e.target.value;
+      debouncedSave();break;
+    case 'fit-cardio':
+      var cLog=getFitLog(ds.date);
+      cLog.cardioNote=e.target.value;debouncedSave();break;
+    case 'fit-body':
+      var bLog=getFitLog(ds.date);
+      bLog[ds.field]=e.target.value?parseFloat(e.target.value):'';debouncedSave();break;
   }
 }
 function handleChange(e){
+  var actionEl=e.target.closest('[data-action]');
+  if(actionEl&&actionEl.tagName==='SELECT'){
+    var act=actionEl.getAttribute('data-action');var ads=actionEl.dataset;
+    if(act==='change-fit-template'){changeFitTemplate(parseInt(ads.day),e.target.value);return}
+  }
   var el=e.target.closest('[data-input]');if(!el)return;
   var input=el.getAttribute('data-input');var ds=el.dataset;
   if(input==='total-score'){
@@ -1104,12 +2098,31 @@ function ensureStateDefaults(){
   if(state.calendarYear===undefined){state.calendarYear=new Date().getFullYear();state.calendarMonth=new Date().getMonth()}
   if(state.historyDate===undefined)state.historyDate=null;
   if(state.recoveryMode===undefined)state.recoveryMode=false;
+  if(state.currentPage==='night')state.currentPage='day';
   if(state.todayOpinion===undefined)state.todayOpinion='';
-  delete state.taskHistory;delete state.growthStage;delete state.stageStart;delete state.stageEnd;delete state.monthlyRate;delete state.monthlyReview;
+  if(!state.taskHistory)state.taskHistory={};
+  if(!state.monthlyReports)state.monthlyReports=[];
+  if(!state.beliefs)state.beliefs=[];
+  if(!state.dialogues)state.dialogues=[];
+  if(!state.conflicts)state.conflicts=[];
+  if(!state.conflictDraft)state.conflictDraft={want:'',but:'',because:''};
+  if(state.dialogueDraft===undefined)state.dialogueDraft=null;
+  if(state.growthView===undefined)state.growthView='calendar';
+  if(state.fitnessPlan===undefined)state.fitnessPlan=null;
+  if(state.fitnessPlanOpen===undefined)state.fitnessPlanOpen=false;
+  if(state.beliefDraft===undefined)state.beliefDraft='';
+  if(!state.fitnessLogs)state.fitnessLogs={};
+  if(state.fitView===undefined)state.fitView='today';
+  if(state.fitViewDay===undefined)state.fitViewDay=null;
+  if(!state.fitOverrides)state.fitOverrides={};
+  if(state.fitChartRange===undefined)state.fitChartRange='week';
+  delete state.growthStage;delete state.stageStart;delete state.stageEnd;delete state.monthlyRate;delete state.monthlyReview;
 }
 function init(){
   ensureStateDefaults();
+  archiveDailyTasks();
   checkTop3Archive();
+  checkMonthlyReport();
   loadDailyOpinion();
   document.getElementById('app').addEventListener('click',handleClick);
   document.getElementById('app').addEventListener('input',handleInput);
@@ -1125,7 +2138,9 @@ function init(){
     cloudSyncLoad().then(function(cloudData){
       if(cloudData&&cloudData.tasks){
         state=cloudData;ensureStateDefaults();
+        archiveDailyTasks();
         checkTop3Archive();
+        checkMonthlyReport();
         loadDailyOpinion();
         try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}
         render();updateSyncStatus('synced');debouncedCloudSync();
