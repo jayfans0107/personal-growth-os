@@ -1130,7 +1130,7 @@ function renderHeatmap(){
       var d=days[i];
       var fitEmoji=d.fitStatus?{good:'\u{1F7E2}',average:'\u{1F7E1}',poor:'\u{1F534}'}[d.fitStatus]:'';
       var fitMark=d.fitCompleted?'\u2713':'';
-      html+='<div class="heatmap-cell'+(d.isToday?' today':'')+'" data-action="go-fit-today" style="background:'+(d.fitCompleted?'var(--green-bg)':'var(--surface)')+';border:1px solid '+(d.fitCompleted?'var(--green)':'var(--border)')+'">'+fitEmoji+fitMark+'</div>';
+      html+='<div class="heatmap-cell'+(d.isToday?' today':'')+'" data-action="go-fit-today" style="background:var(--surface);border:1px solid '+(d.fitCompleted?'var(--text)':'var(--border)')+';color:var(--text);font-weight:'+(d.fitCompleted?'700':'400')+'">'+fitEmoji+fitMark+'</div>';
     }
     html+='</div>';
   }
@@ -1176,8 +1176,10 @@ function renderCalendar(){
     if(isToday)cls+=' today';
     var icon=approval==='approved'?'\u2713':approval==='rejected'?'\u2717':'';
     var fitLog=state.fitnessLogs[ds];
-    var fitDot=fitLog&&fitLog.status?'<span style="position:absolute;bottom:1px;right:2px;font-size:8px">'+{good:'\u{1F7E2}',average:'\u{1F7E1}',poor:'\u{1F534}'}[fitLog.status]+'</span>':'';
-    html+='<div class="'+cls+'" data-action="view-history" data-date="'+ds+'" style="position:relative">'+icon+'<span class="calendar-day-num">'+day+'</span>'+fitDot+'</div>';
+    var fitDone=fitLog&&fitLog.completed;
+    var fitStatusDot=fitLog&&fitLog.status?'<span style="position:absolute;bottom:1px;right:2px;font-size:8px">'+{good:'\u{1F7E2}',average:'\u{1F7E1}',poor:'\u{1F534}'}[fitLog.status]+'</span>':'';
+    var fitCheck=fitDone?'<span style="position:absolute;top:1px;left:2px;font-size:9px;color:var(--text);font-weight:700">\u2713</span>':'';
+    html+='<div class="'+cls+'" data-action="view-history" data-date="'+ds+'" style="position:relative">'+icon+'<span class="calendar-day-num">'+day+'</span>'+fitCheck+fitStatusDot+'</div>';
   }
   html+='</div>';return html;
 }
@@ -1565,12 +1567,12 @@ function renderFitDayContent(dayNum,displayDay,dateStr,tpl,log,avgWeight,showCom
   html+='<div class="fit-metrics-grid" style="margin-top:8px"><div class="fit-metric-box"><div class="fit-metric-label">骨骼肌(kg)</div><input class="fit-metric-input" type="number" inputmode="decimal" data-input="fit-body" data-field="muscle" data-date="'+dateStr+'" value="'+(log.muscle||'')+'" /></div><div class="fit-metric-box"><div class="fit-metric-label">7日均值</div><div style="font-size:18px;font-weight:700;color:var(--accent)">'+(avgWeight!==null?avgWeight:'-')+'</div><div class="fit-metric-unit">kg</div></div></div>';
   html+='<p style="font-size:11px;color:var(--text-3);margin-top:6px">早起上厕所后称重，每周测一次体脂和骨骼肌</p></div>';
   if(showCompleteBtn){
-    var btnLabel=tpl.exercises&&tpl.exercises.length>0?(log.completed?'\u2705 今日训练已完成':'标记训练完成'):'今日休息日';
+    var btnLabel=tpl.exercises&&tpl.exercises.length>0?(log.completed?'\u2713 今日训练已完成':'标记训练完成'):'今日休息日';
     var btnDisabled=tpl.exercises&&tpl.exercises.length===0;
-    html+='<button class="add-task-btn" data-action="toggle-fit-complete"'+(btnDisabled?' disabled style="opacity:.5"':'')+'>'+btnLabel+'</button>';
+    html+='<button class="add-task-btn" data-action="toggle-fit-complete"'+(btnDisabled?' disabled style="opacity:.5"':'')+' style="'+(log.completed?'background:var(--surface);color:var(--text);border:1.5px solid var(--text)':'')+'">'+btnLabel+'</button>';
     if(log.completed)html+='<div style="text-align:center;padding:8px 0 4px"><button class="btn-cancel" data-action="go-growth" style="font-size:12px;padding:6px 16px">\u{1F4C4} 查看训练成果 \u2192</button></div>';
   }else{
-    if(log.completed)html+='<div style="text-align:center;color:var(--green);font-size:13px;font-weight:600;padding:8px">\u2705 训练已完成</div>';
+    if(log.completed)html+='<div style="text-align:center;color:var(--text);font-size:13px;font-weight:600;padding:8px">\u2713 训练已完成</div>';
     if(log.completed)html+='<div style="text-align:center;padding:4px 0 8px"><button class="btn-cancel" data-action="go-growth" style="font-size:12px;padding:6px 16px">\u{1F4C4} 查看训练成果 \u2192</button></div>';
   }
   if(log.weight||log.bodyFat)html+='<div style="text-align:center;padding:4px"><button class="btn-cancel" data-action="fit-view" data-value="chart" style="font-size:12px;padding:6px 16px">\u{1F4CA} 查看体脂趋势 \u2192</button></div>';
@@ -1594,13 +1596,13 @@ function renderFitCalendar(){
     var done=log&&log.completed;
     var hasData=log&&(log.weight||log.bodyFat||log.muscle||log.cardioNote||(log.exercises&&Object.keys(log.exercises).length>0));
     var statusEmoji=log&&log.status?{good:'\u{1F7E2}',average:'\u{1F7E1}',poor:'\u{1F534}'}[log.status]:'';
-    var bg=isToday?'var(--accent-bg)':done?'var(--green-bg)':'var(--surface)';
+    var bg=isToday?'var(--accent-bg)':'var(--surface)';
     var border=isToday?'var(--accent)':'var(--border-2)';
-    var labelColor=done?'var(--green)':isToday?'var(--accent)':'var(--text-2)';
+    var labelColor=isToday?'var(--accent)':'var(--text-2)';
     html+='<div class="fit-day-cell" data-action="view-fit-day" data-day="'+d+'" style="background:'+bg+';border:1px solid '+border+';border-radius:8px;padding:8px 10px">';
     html+='<div style="font-size:11px;font-weight:700;color:'+(isToday?'var(--accent)':'var(--text)')+'">Day '+d+'</div>';
     html+='<div style="font-size:11px;color:'+labelColor+'">'+tpl.label+'</div>';
-    if(done)html+='<div style="font-size:10px;color:var(--green)">\u2705已完成'+(statusEmoji?' '+statusEmoji:'')+'</div>';
+    if(done)html+='<div style="font-size:10px;color:var(--text);font-weight:600">\u2713 已完成'+(statusEmoji?' '+statusEmoji:'')+'</div>';
     else if(hasData)html+='<div style="font-size:10px;color:var(--text-3)">有数据'+(statusEmoji?' '+statusEmoji:'')+'</div>';
     else if(isPast)html+='<div style="font-size:10px;color:var(--text-3)">未完成</div>';
     html+='</div>';
@@ -1608,7 +1610,7 @@ function renderFitCalendar(){
   html+='</div></div>';
   var completed=0;
   for(var ds in state.fitnessLogs){if(state.fitnessLogs[ds].completed)completed++}
-  html+='<div class="card"><div class="section-header">完成统计</div><div style="font-size:28px;font-weight:800;color:var(--green)">'+completed+'</div><div style="font-size:13px;color:var(--text-2)">/'+getFitnessDay()+' \u5929\u5b8c\u6210\uff08'+(getFitnessDay()>0?Math.round(completed/getFitnessDay()*100):0)+'%\uff09</div>'+(completed>0?'<div style="text-align:center;padding:6px 0 0"><span class="fit-link" data-action="go-growth" style="font-size:12px;font-weight:600;color:var(--accent);cursor:pointer">\u{1F4C4} \u67e5\u770b\u8bad\u7ec3\u6210\u679c \u2192</span></div>':'')+'</div>';
+  html+='<div class="card"><div class="section-header">完成统计</div><div style="font-size:28px;font-weight:800;color:var(--text)">'+completed+'</div><div style="font-size:13px;color:var(--text-2)">/'+getFitnessDay()+' \u5929\u5b8c\u6210\uff08'+(getFitnessDay()>0?Math.round(completed/getFitnessDay()*100):0)+'%\uff09</div>'+(completed>0?'<div style="text-align:center;padding:6px 0 0"><span class="fit-link" data-action="go-growth" style="font-size:12px;font-weight:600;color:var(--accent);cursor:pointer">\u{1F4C4} \u67e5\u770b\u8bad\u7ec3\u6210\u679c \u2192</span></div>':'')+'</div>';
   html+=renderFitPlanText();
   html+='</div>';return html;
 }
@@ -1654,9 +1656,37 @@ function renderFitChart(){
     if(log&&log.bodyFat)data.push({date:ds,value:log.bodyFat});
   }
   if(data.length<2){
-    html+='<p class="empty-hint" style="padding:20px;text-align:center">数据不足，至少需要2天记录。在今日页填写体脂率后自动生成趋势图。</p></div>';
-    return html;
-  }
+    var w=300,h=140,padL=30,padR=10,padT=10,padB=24;
+    var chartW=w-padL-padR,chartH=h-padT-padB;
+    html+='<svg class="fit-chart-svg" viewBox="0 0 '+w+' '+h+'">';
+    html+='<line x1="'+padL+'" y1="'+padT+'" x2="'+padL+'" y2="'+(padT+chartH)+'" stroke="var(--border)" stroke-width="1"/>';
+    html+='<line x1="'+padL+'" y1="'+(padT+chartH)+'" x2="'+(padL+chartW)+'" y2="'+(padT+chartH)+'" stroke="var(--border)" stroke-width="1"/>';
+    for(var gi=0;gi<=5;gi++){
+      var gy=padT+chartH-(gi/5)*chartH;
+      var gv=(15+gi*2);
+      html+='<line x1="'+padL+'" y1="'+gy+'" x2="'+(padL+chartW)+'" y2="'+gy+'" stroke="var(--border-2)" stroke-width="0.5" stroke-dasharray="2,3"/>';
+      html+='<text x="'+(padL-4)+'" y="'+(gy+3)+'" text-anchor="end" font-size="8" fill="var(--text-3)">'+gv+'%</text>';
+    }
+    var todayLbl=new Date();
+    for(var di=0;di<days;di++){
+      var dd=new Date();dd.setDate(dd.getDate()-(days-1-di));
+      var dx=padL+(days===1?chartW/2:chartW*di/(days-1));
+      var dlbl=(dd.getMonth()+1)+'/'+dd.getDate();
+      if(days<=7||di%Math.ceil(days/6)===0||di===days-1){
+        html+='<text x="'+dx+'" y="'+(h-6)+'" text-anchor="middle" font-size="8" fill="var(--text-3)">'+dlbl+'</text>';
+      }
+    }
+    if(data.length===1){
+      var single=data[0];
+      var sx=padL+chartW/2;
+      var sy=padT+chartH-(single.value-15)/12*chartH;
+      html+='<circle cx="'+sx+'" cy="'+sy+'" r="4" fill="var(--accent)"/>';
+      html+='<text x="'+sx+'" y="'+(sy-8)+'" text-anchor="middle" font-size="10" font-weight="700" fill="var(--accent)">'+single.value+'%</text>';
+    }
+    html+='</svg>';
+    if(data.length===0)html+='<p style="text-align:center;font-size:12px;color:var(--text-3);padding:8px 0">暂无体脂数据，填写后自动生成折线</p>';
+    html+='</div>';
+  }else{
   var minV=Math.min.apply(null,data.map(function(d){return d.value}))-1;
   var maxV=Math.max.apply(null,data.map(function(d){return d.value}))+1;
   var rangeV=maxV-minV||1;
@@ -1688,11 +1718,18 @@ function renderFitChart(){
   html+='<svg class="fit-chart-svg" viewBox="0 0 '+w+' '+h+'">';
   html+='<line x1="'+padL+'" y1="'+padT+'" x2="'+padL+'" y2="'+(padT+chartH)+'" stroke="var(--border)" stroke-width="1"/>';
   html+='<line x1="'+padL+'" y1="'+(padT+chartH)+'" x2="'+(padL+chartW)+'" y2="'+(padT+chartH)+'" stroke="var(--border)" stroke-width="1"/>';
+  for(var gi=0;gi<=5;gi++){
+    var gy=padT+chartH-(gi/5)*chartH;
+    var gv=(minV+gi/5*rangeV).toFixed(1);
+    html+='<line x1="'+padL+'" y1="'+gy+'" x2="'+(padL+chartW)+'" y2="'+gy+'" stroke="var(--border-2)" stroke-width="0.5" stroke-dasharray="2,3"/>';
+    html+='<text x="'+(padL-4)+'" y="'+(gy+3)+'" text-anchor="end" font-size="8" fill="var(--text-3)">'+gv+'%</text>';
+  }
   html+='<polyline points="'+pts+'" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>';
   html+=dots+labels;
   html+='</svg>';
   html+='<div style="display:flex;justify-content:space-between;margin-top:8px;padding-top:8px;border-top:1px solid var(--border-2)"><div><span style="font-size:11px;color:var(--text-3)">当前</span><br><span style="font-size:18px;font-weight:700;color:var(--accent)">'+latest+'%</span></div><div><span style="font-size:11px;color:var(--text-3)">'+(range==='week'?'本周':'本月')+'变化</span><br><span style="font-size:18px;font-weight:700;color:'+diffColor+'">'+diffStr+'%</span></div><div><span style="font-size:11px;color:var(--text-3)">记录天数</span><br><span style="font-size:18px;font-weight:700;color:var(--text)">'+data.length+'</span></div></div>';
   html+='</div>';
+  }
   var weightData=[];
   for(var k=days-1;k>=0;k--){
     var wd=new Date();wd.setDate(wd.getDate()-k);
@@ -1728,10 +1765,34 @@ function renderFitChart(){
     html+='<svg class="fit-chart-svg" viewBox="0 0 '+w+' '+h+'">';
     html+='<line x1="'+padL+'" y1="'+padT+'" x2="'+padL+'" y2="'+(padT+chartH)+'" stroke="var(--border)" stroke-width="1"/>';
     html+='<line x1="'+padL+'" y1="'+(padT+chartH)+'" x2="'+(padL+chartW)+'" y2="'+(padT+chartH)+'" stroke="var(--border)" stroke-width="1"/>';
+    for(var gi=0;gi<=5;gi++){
+      var gy=padT+chartH-(gi/5)*chartH;
+      var gv=(wMin+gi/5*wRange).toFixed(1);
+      html+='<line x1="'+padL+'" y1="'+gy+'" x2="'+(padL+chartW)+'" y2="'+gy+'" stroke="var(--border-2)" stroke-width="0.5" stroke-dasharray="2,3"/>';
+      html+='<text x="'+(padL-4)+'" y="'+(gy+3)+'" text-anchor="end" font-size="8" fill="var(--text-3)">'+gv+'</text>';
+    }
     html+='<polyline points="'+wPts+'" fill="none" stroke="#FF9F0A" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>';
     html+=wDots+wLabels;
     html+='</svg>';
     html+='<div style="display:flex;justify-content:space-between;margin-top:8px;padding-top:8px;border-top:1px solid var(--border-2)"><div><span style="font-size:11px;color:var(--text-3)">当前</span><br><span style="font-size:18px;font-weight:700;color:#FF9F0A">'+wLatest+'kg</span></div><div><span style="font-size:11px;color:var(--text-3)">'+(range==='week'?'本周':'本月')+'变化</span><br><span style="font-size:18px;font-weight:700;color:'+wDiffColor+'">'+wDiffStr+'kg</span></div><div><span style="font-size:11px;color:var(--text-3)">7日均值</span><br><span style="font-size:18px;font-weight:700;color:var(--text)">'+(get7DayAvgWeight()!==null?get7DayAvgWeight():'-')+'kg</span></div></div>';
+    html+='</div>';
+  }else if(weightData.length===1){
+    html+='<div class="fit-chart-card"><div class="section-header">体重变化 \u00b7 Weight (kg)</div>';
+    html+='<svg class="fit-chart-svg" viewBox="0 0 '+w+' '+h+'">';
+    html+='<line x1="'+padL+'" y1="'+padT+'" x2="'+padL+'" y2="'+(padT+chartH)+'" stroke="var(--border)" stroke-width="1"/>';
+    html+='<line x1="'+padL+'" y1="'+(padT+chartH)+'" x2="'+(padL+chartW)+'" y2="'+(padT+chartH)+'" stroke="var(--border)" stroke-width="1"/>';
+    for(var gi=0;gi<=5;gi++){
+      var gy=padT+chartH-(gi/5)*chartH;
+      var gv=(50+gi*10);
+      html+='<line x1="'+padL+'" y1="'+gy+'" x2="'+(padL+chartW)+'" y2="'+gy+'" stroke="var(--border-2)" stroke-width="0.5" stroke-dasharray="2,3"/>';
+      html+='<text x="'+(padL-4)+'" y="'+(gy+3)+'" text-anchor="end" font-size="8" fill="var(--text-3)">'+gv+'</text>';
+    }
+    var swx=padL+chartW/2;
+    var swy=padT+chartH-(weightData[0].value-50)/60*chartH;
+    html+='<circle cx="'+swx+'" cy="'+swy+'" r="4" fill="#FF9F0A"/>';
+    html+='<text x="'+swx+'" y="'+(swy-8)+'" text-anchor="middle" font-size="10" font-weight="700" fill="#FF9F0A">'+weightData[0].value+'kg</text>';
+    html+='</svg>';
+    html+='<p style="text-align:center;font-size:12px;color:var(--text-3);padding:8px 0">再记录1天即可生成趋势折线</p>';
     html+='</div>';
   }
   return html;
