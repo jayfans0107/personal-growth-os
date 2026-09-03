@@ -284,6 +284,14 @@ textarea{resize:vertical}
 .review-tabs{display:flex;background:var(--border-2);border-radius:10px;padding:3px;margin-bottom:16px}
 .review-tab{flex:1;padding:8px;border:none;background:transparent;border-radius:8px;font-size:13px;font-weight:500;color:var(--text-2);transition:all .15s}
 .review-tab.active{background:var(--surface);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.day-sub-tabs{display:flex;background:var(--border-2);border-radius:10px;padding:3px;margin-bottom:14px}
+.day-sub-tab{flex:1;padding:8px;border:none;background:transparent;border-radius:8px;font-size:13px;font-weight:500;color:var(--text-2);transition:all .15s}
+.day-sub-tab.active{background:var(--surface);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.08);font-weight:600}
+.book-section{padding-bottom:20px}
+.book-card{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius);padding:12px;box-shadow:var(--shadow);transition:transform .15s}
+.book-card:active{transform:scale(.98)}
+.book-reminder-card{animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.85}}
 .review-stats-card{background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius);padding:16px;margin-bottom:10px;box-shadow:var(--shadow)}
 .review-stat-row{display:flex;align-items:center;gap:10px}
 .stat-label{font-size:18px}
@@ -382,7 +390,7 @@ textarea{resize:vertical}
 .calendar.day.rejected,.calendar-day.rejected{background:var(--red-bg);border-color:rgba(255,59,48,.4);color:var(--red)}
 .calendar-day.unfilled{background:var(--gray-bg);color:var(--text-3)}
 .calendar-day.today{box-shadow:0 0 0 2px var(--accent)}
-.calendar-day-num{font-size:10px;color:var(--text-3);position:absolute;transform:translate(14px,-14px);font-weight:600}
+.calendar-day-num{font-size:10px;color:var(--text-3);position:absolute;top:2px;left:4px;font-weight:600}
 .calendar-day.has-data .calendar-day-num{color:var(--text)}
 
 /* ===== HISTORY DAY VIEW ===== */
@@ -590,15 +598,168 @@ var TOTAL_DIMENSIONS=[
 ];
 var ICONS={
   home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>',
-  day:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M21 12h2M4.93 19.07l1.41-1.41M18.36 5.64l1.42-1.42"/></svg>',
+  day:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M9 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2h-2"/><path d="M9 13l2 2 4-4"/></svg>',
   night:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>',
   review:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>',
   growth:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></svg>',
-  fit:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h3l2-7 4 14 2-7h7"/></svg>'
+  fit:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h3l2-7 4 14 2-7h7"/></svg>',
+  book:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>'
 };
 
 /* ===== FITNESS PLAN ===== */
+var DAILY_QUOTES=[
+  {zh:'人是悬挂在自己编织的意义之网上的动物',en:'Man is an animal suspended in webs of significance he himself has spun.'},
+  {zh:'未经审视的人生不值得过',en:'The unexamined life is not worth living.'},
+  {zh:'我们终其一生，都在摆脱他人的期待，找到真正的自己',en:'All our lives we try to escape others\' expectations to find ourselves.'},
+  {zh:'自由不是想做什么就做什么，而是不想做什么就可以不做什么',en:'Freedom is not doing what you want, but not doing what you don\'t want.'},
+  {zh:'人最大的痛苦，是无法跨越知道和做到的鸿沟',en:'The deepest pain is the gap between knowing and doing.'},
+  {zh:'很多时候，我们不是在解决问题，而是在制造问题本身',en:"Often we don't solve problems — we become them."},
+  {zh:'你所抵抗的，会持续存在；你所审视的，会逐渐消失',en:'What you resist persists. What you examine dissolves.'},
+  {zh:'人生的答案，从来不在别人的嘴里',en:"The answer to your life is never in someone else's mouth."},
+  {zh:'成长的本质，是把自己重新养一遍',en:'To grow is to raise yourself all over again.'},
+  {zh:'我们看到的不是事物本身，而是我们自己',en:'We don\'t see things as they are. We see them as we are.'},
+  {zh:'真正的成熟，是接受不确定性',en:'True maturity is embracing uncertainty.'},
+  {zh:'时间不是用来规划的，时间是用来经历的',en:'Time is not for planning — it is for living.'},
+  {zh:'所有的情绪，都是未被看见的自己',en:'Every emotion is a self not yet seen.'},
+  {zh:'一个人知道自己为什么而活，就可以忍受任何一种生活',en:'He who has a why to live can bear almost any how.'},
+  {zh:'孤独不是没有人陪，而是无法与人分享真正重要的事',en:'Loneliness is not being alone — it\'s being unable to share what matters.'},
+  {zh:'你永远不能两次踏入同一条河流',en:'You cannot step into the same river twice.'},
+  {zh:'认知的边界，就是你世界的边界',en:'The limits of your cognition are the limits of your world.'},
+  {zh:'凡不能毁灭我的，必使我更强大',en:'That which does not kill us makes us stronger.'},
+  {zh:'人生没有意义，所以才容得下你赋予它意义',en:'Life has no meaning — which is exactly why you can give it one.'},
+  {zh:'逃避自由，是人类最深的恐惧',en:'The fear of freedom is humanity\'s deepest dread.'},
+  {zh:'你以为的捷径，往往是最远的路',en:'The shortcut you seek is usually the longest road.'},
+  {zh:'万物皆有裂痕，那是光照进来的地方',en:'There is a crack in everything — that\'s how the light gets in.'},
+  {zh:'我们都在阴沟里，但仍有人仰望星空',en:'We are all in the gutter, but some of us are looking at the stars.'},
+  {zh:'过去是一个异乡，那里的人做事方式不同',en:'The past is a foreign country; they do things differently there.'},
+  {zh:'真正的发现之旅，不在于寻找新大陆，而在于拥有新视角',en:'The real voyage of discovery is not in seeking new lands, but in having new eyes.'},
+  {zh:'你可以随时改变主意，成为另一个人',en:'You can always change your mind and become someone else.'},
+  {zh:'最深的水，总是最安静的',en:'The deepest waters are always the stillest.'},
+  {zh:'我们所爱的，常常不是一个人，而是爱情本身',en:"Often what we love is not a person, but love itself."},
+  {zh:'语言的边界，就是我世界的边界',en:'The limits of my language mean the limits of my world.'},
+  {zh:'你不是在寻找意义，你是在创造意义',en:"You're not finding meaning — you're making it."}
+];
+function getDailyQuote(){
+  var today=getTodayISO();
+  var hash=0;
+  for(var i=0;i<today.length;i++){hash=((hash<<5)-hash+today.charCodeAt(i))|0}
+  var idx=Math.abs(hash)%DAILY_QUOTES.length;
+  return DAILY_QUOTES[idx];
+}
 var FITNESS_START='2026-09-01';
+
+/* ===== READING / BOOK ===== */
+function getBookById(id){
+  if(!state.readingBooks)return null;
+  for(var i=0;i<state.readingBooks.length;i++){
+    if(state.readingBooks[i].id===id)return state.readingBooks[i];
+  }
+  return null;
+}
+function getBookProgress(book){
+  if(!book||!book.totalPages||!book.currentPage)return 0;
+  return Math.min(100,Math.round(book.currentPage/book.totalPages*100));
+}
+function getBookDaysLeft(book){
+  if(!book||!book.deadline)return null;
+  var today=new Date(getTodayISO()+'T00:00:00');
+  var ddl=new Date(book.deadline+'T00:00:00');
+  return Math.ceil((ddl-today)/86400000);
+}
+function getBookExpectedPage(book){
+  if(!book||!book.totalPages||!book.deadline)return null;
+  var start=book.startDate||getTodayISO();
+  var today=new Date(getTodayISO()+'T00:00:00');
+  var startDate=new Date(start+'T00:00:00');
+  var ddl=new Date(book.deadline+'T00:00:00');
+  var totalDays=Math.max(1,Math.ceil((ddl-startDate)/86400000));
+  var daysPassed=Math.max(0,Math.ceil((today-startDate)/86400000));
+  return Math.round(book.totalPages*daysPassed/totalDays);
+}
+function isBookBehind(book){
+  if(!book||book.status==='finished')return false;
+  var expected=getBookExpectedPage(book);
+  if(expected===null)return false;
+  return book.currentPage<expected*0.9;
+}
+function getMostBehindBook(){
+  if(!state.readingBooks||state.readingBooks.length===0)return null;
+  var behind=null;var maxGap=0;
+  for(var i=0;i<state.readingBooks.length;i++){
+    var b=state.readingBooks[i];
+    if(b.status==='finished')continue;
+    var expected=getBookExpectedPage(b);
+    if(expected===null)continue;
+    var gap=expected-b.currentPage;
+    if(gap>maxGap){maxGap=gap;behind=b}
+  }
+  return behind?{book:behind,gap:maxGap}:null;
+}
+function addBook(data){
+  if(!state.readingBooks)state.readingBooks=[];
+  state.readingBooks.unshift({
+    id:uid(),
+    title:data.title||'未命名书籍',
+    totalPages:parseInt(data.totalPages)||0,
+    currentPage:parseInt(data.currentPage)||0,
+    deadline:data.deadline||'',
+    dailyGoal:parseInt(data.dailyGoal)||0,
+    startDate:data.startDate||getTodayISO(),
+    status:'reading',
+    note:'',
+    history:[]
+  });
+  saveState();render();
+}
+function updateBookProgress(id,page,note){
+  var book=getBookById(id);
+  if(!book)return;
+  var p=parseInt(page);
+  if(isNaN(p))p=book.currentPage;
+  if(p>book.totalPages)p=book.totalPages;
+  if(p<0)p=0;
+  var today=getTodayISO();
+  var hasToday=false;
+  if(book.history){
+    for(var i=0;i<book.history.length;i++){
+      if(book.history[i].date===today){book.history[i].page=p;hasToday=true;break}
+    }
+  }else{book.history=[]}
+  if(!hasToday&&p!==book.currentPage){
+    book.history.unshift({date:today,page:p,note:note||''});
+  }else if(note){
+    for(var j=0;j<book.history.length;j++){
+      if(book.history[j].date===today){book.history[j].note=note;break}
+    }
+  }
+  book.currentPage=p;
+  if(p>=book.totalPages&&book.totalPages>0)book.status='finished';
+  saveState();render();
+}
+function deleteBook(id){
+  if(!state.readingBooks)return;
+  state.readingBooks=state.readingBooks.filter(function(b){return b.id!==id});
+  state.bookView='list';state.bookDetailId=null;
+  saveState();render();
+}
+function submitBook(){
+  var title=document.querySelector('[data-input="add-book-title"]').value.trim();
+  var pages=parseInt(document.querySelector('[data-input="add-book-pages"]').value)||0;
+  var current=parseInt(document.querySelector('[data-input="add-book-current"]').value)||0;
+  var deadline=document.querySelector('[data-input="add-book-deadline"]').value;
+  var goal=parseInt(document.querySelector('[data-input="add-book-goal"]').value)||0;
+  if(!title){alert('请输入书名');return}
+  if(pages<=0){alert('请输入总页数');return}
+  addBook({title:title,totalPages:pages,currentPage:current,deadline:deadline,dailyGoal:goal});
+  state.bookView='list';saveState();render();
+}
+function saveBookProgress(id){
+  var pageEl=document.querySelector('[data-input="book-current-page"][data-value="'+id+'"]');
+  var noteEl=document.querySelector('[data-input="book-today-note"][data-value="'+id+'"]');
+  var page=pageEl?pageEl.value:'';
+  var note=noteEl?noteEl.value:'';
+  updateBookProgress(id,page,note);
+}
 var FITNESS_TEMPLATES={
   A:{label:'背+二头+后束',cardio:true,exercises:[
     {id:'a1',name:'辅助引体向上',sets:4,reps:'6-10',rest:'2-3min'},
@@ -695,6 +856,7 @@ function getDefaultData(){
     dailyApproval:{},
     energyHistory:{},
     opinionHistory:{},
+  opinionExtras:{},
     weeklyReview:{},
     weeklyTop3:{1:'',2:'',3:''},
     top3Archive:[],
@@ -725,7 +887,11 @@ function getDefaultData(){
     fitnessPlanOpen:false,
     beliefDraft:'',
     fitnessLogs:{},
-    fitOverrides:{}
+    fitOverrides:{},
+    readingBooks:[],
+    bookView:'list',
+    bookDetailId:null,
+    daySubView:'tasks'
   };
 }
 
@@ -760,6 +926,15 @@ function updateSyncStatus(status){
 
 /* ===== STATE ===== */
 var state=loadState()||getDefaultData();
+function migrateState(){
+  var def=getDefaultData();
+  if(!state.readingBooks)state.readingBooks=def.readingBooks;
+  if(state.bookView===undefined)state.bookView=def.bookView;
+  if(state.bookDetailId===undefined)state.bookDetailId=def.bookDetailId;
+  if(state.daySubView===undefined)state.daySubView=def.daySubView;
+  if(!state.fitOverrides)state.fitOverrides={};
+}
+migrateState();
 
 /* ===== UTILS ===== */
 function uid(){return 'id'+Date.now()+Math.random().toString(36).slice(2,7)}
@@ -866,6 +1041,47 @@ function loadDailyOpinion(){
   var today=getTodayISO();
   if(!state.opinionHistory)state.opinionHistory={};
   state.todayOpinion=state.opinionHistory[today]||'';
+  if(!state.opinionExtras)state.opinionExtras={};
+  if(!state.opinionExtras[today])state.opinionExtras[today]=[];
+}
+function getOpinionExtras(){
+  var today=getTodayISO();
+  if(!state.opinionExtras)state.opinionExtras={};
+  if(!state.opinionExtras[today])state.opinionExtras[today]=[];
+  return state.opinionExtras[today];
+}
+function addOpinionExtra(){
+  var extras=getOpinionExtras();
+  extras.push({id:uid(),text:''});
+  saveState();render();
+}
+function saveOpinionExtra(id,val){
+  var extras=getOpinionExtras();
+  for(var i=0;i<extras.length;i++){
+    if(extras[i].id===id){extras[i].text=val;break}
+  }
+  saveDailyExtras();debouncedSave();
+}
+function saveDailyExtras(){
+  var today=getTodayISO();
+  if(!state.opinionExtras)state.opinionExtras={};
+  if(!state.opinionExtras[today])state.opinionExtras[today]=[];
+}
+function deleteOpinionExtra(id){
+  var today=getTodayISO();
+  if(!state.opinionExtras||!state.opinionExtras[today])return;
+  state.opinionExtras[today]=state.opinionExtras[today].filter(function(e){return e.id!==id});
+  saveState();render();
+}
+function renderOpinionCard(){
+  var extras=getOpinionExtras();
+  var html='<div class="opinion-card"><div class="section-header">今日观点 / Today\'s Opinion</div><p class="section-subtitle" style="margin-bottom:8px;margin-top:0">我今天产生了什么判断？</p><textarea class="opinion-input" data-input="today-opinion" placeholder="结论 \u2192 依据 \u2192 判断 \u2192 建议...">'+(state.todayOpinion||'')+'</textarea>';
+  for(var i=0;i<extras.length;i++){
+    var ex=extras[i];
+    html+='<div style="margin-top:8px;padding-top:8px;border-top:1px dashed var(--border-2)"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><span style="font-size:11px;color:var(--text-3);font-weight:600">补充想法 '+(i+1)+'</span><span class="fit-link" data-action="delete-opinion-extra" data-value="'+ex.id+'" style="font-size:11px;color:var(--red);cursor:pointer;font-weight:600">\u2715 删除</span></div><textarea class="opinion-input" data-input="opinion-extra" data-value="'+ex.id+'" placeholder="继续写..." style="min-height:50px">'+(ex.text||'')+'</textarea></div>';
+  }
+  html+='<div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px"><span class="fit-link" data-action="add-opinion-extra" style="font-size:12px;font-weight:600;color:var(--accent);cursor:pointer">+ 添加更多想法</span><span class="fit-link" data-action="go-review" style="font-size:11px;font-weight:600;color:var(--accent);cursor:pointer">\u{1F4DD} 归档到 Memo \u2192</span></div></div>';
+  return html;
 }
 function checkTop3Archive(){
   var today=getTodayISO();
@@ -1063,7 +1279,7 @@ function renderNav(){
   var nav=document.getElementById('bottom-nav');
   var items=[
     {id:'home',label:'Home',icon:ICONS.home},
-    {id:'day',label:'Daily',icon:ICONS.day},
+    {id:'day',label:'Task',icon:ICONS.day},
     {id:'review',label:'Review',icon:ICONS.review},
     {id:'growth',label:'Growth',icon:ICONS.growth},
     {id:'fit',label:'Fit',icon:ICONS.fit}
@@ -1128,9 +1344,17 @@ function renderHeatmap(){
     html+='<div class="heatmap-row"><div class="heatmap-label">\u{1F3CB}</div>';
     for(var i=0;i<days.length;i++){
       var d=days[i];
-      var fitEmoji=d.fitStatus?{good:'\u{1F7E2}',average:'\u{1F7E1}',poor:'\u{1F534}'}[d.fitStatus]:'';
-      var fitMark=d.fitCompleted?'\u2713':'';
-      html+='<div class="heatmap-cell'+(d.isToday?' today':'')+'" data-action="go-fit-today" style="background:var(--surface);border:1px solid '+(d.fitCompleted?'var(--text)':'var(--border)')+';color:var(--text);font-weight:'+(d.fitCompleted?'700':'400')+'">'+fitEmoji+fitMark+'</div>';
+      var cellContent='';
+      if(d.fitCompleted&&d.fitStatus){
+        var sColor={good:'#34C759',average:'#FF9F0A',poor:'#FF3B30'}[d.fitStatus];
+        cellContent='<div style="display:flex;flex-direction:column;align-items:center;gap:2px"><svg viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M4 13l6 6L20 6" stroke="var(--text)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg><span style="width:6px;height:6px;border-radius:50%;background:'+sColor+';display:inline-block"></span></div>';
+      }else if(d.fitCompleted){
+        cellContent='<svg viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M4 13l6 6L20 6" stroke="var(--text)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>';
+      }else if(d.fitStatus){
+        var sColor2={good:'#34C759',average:'#FF9F0A',poor:'#FF3B30'}[d.fitStatus];
+        cellContent='<span style="width:10px;height:10px;border-radius:50%;background:'+sColor2+';display:inline-block"></span>';
+      }
+      html+='<div class="heatmap-cell'+(d.isToday?' today':'')+'" data-action="go-fit-today" style="background:var(--surface);border:1.5px solid '+(d.fitCompleted?'var(--text)':'var(--border)')+';display:flex;align-items:center;justify-content:center">'+cellContent+'</div>';
     }
     html+='</div>';
   }
@@ -1174,12 +1398,15 @@ function renderCalendar(){
     var cls='calendar-day';
     if(approval!=='unfilled')cls+=' '+approval+' has-data';else cls+=' unfilled';
     if(isToday)cls+=' today';
-    var icon=approval==='approved'?'\u2713':approval==='rejected'?'\u2717':'';
+    var bigMark='';
+    if(approval==='approved'){
+      bigMark='<svg viewBox="0 0 24 24" style="width:30px;height:30px;position:absolute;top:50%;left:50%;transform:translate(-50%,-55%)"><path d="M4 14l6 6L20 6" stroke="#FF3B30" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>';
+    }else if(approval==='rejected'){
+      bigMark='<svg viewBox="0 0 24 24" style="width:30px;height:30px;position:absolute;top:50%;left:50%;transform:translate(-50%,-55%)"><path d="M7 7l10 10M17 7L7 17" stroke="#FF3B30" stroke-width="3.5" stroke-linecap="round" fill="none"/></svg>';
+    }
     var fitLog=state.fitnessLogs[ds];
-    var fitDone=fitLog&&fitLog.completed;
-    var fitStatusDot=fitLog&&fitLog.status?'<span style="position:absolute;bottom:1px;right:2px;font-size:8px">'+{good:'\u{1F7E2}',average:'\u{1F7E1}',poor:'\u{1F534}'}[fitLog.status]+'</span>':'';
-    var fitCheck=fitDone?'<span style="position:absolute;top:1px;left:2px;font-size:9px;color:var(--text);font-weight:700">\u2713</span>':'';
-    html+='<div class="'+cls+'" data-action="view-history" data-date="'+ds+'" style="position:relative">'+icon+'<span class="calendar-day-num">'+day+'</span>'+fitCheck+fitStatusDot+'</div>';
+    var fitStatusDot=fitLog&&fitLog.status?'<span style="position:absolute;top:3px;right:3px;width:8px;height:8px;border-radius:50%;background:'+{good:'#34C759',average:'#FF9F0A',poor:'#FF3B30'}[fitLog.status]+';display:inline-block"></span>':'';
+    html+='<div class="'+cls+'" data-action="view-history" data-date="'+ds+'" style="position:relative">'+bigMark+'<span class="calendar-day-num">'+day+'</span>'+fitStatusDot+'</div>';
   }
   html+='</div>';return html;
 }
@@ -1203,6 +1430,21 @@ function renderHome(){
   var todayApproval=getApproval(getTodayISO());
   var html='<div class="page home-page"><div class="page-header"><h1>Today</h1><p>'+formatDateDisplay(today)+'</p></div>';
 
+  var quote=getDailyQuote();
+  html+='<div class="quote-card" style="background:linear-gradient(135deg,var(--accent-bg),var(--surface));border:1px solid var(--border-2);border-radius:var(--radius);padding:14px 16px;margin-bottom:12px;text-align:center">';
+  html+='<div style="font-size:14px;font-weight:600;color:var(--text);line-height:1.5;margin-bottom:4px">'+quote.zh+'</div>';
+  html+='<div style="font-size:11px;color:var(--text-3);font-style:italic;letter-spacing:.3px">'+quote.en+'</div>';
+  html+='</div>';
+
+  var behindBook=getMostBehindBook();
+  if(behindBook){
+    html+='<div class="book-reminder-card" data-action="go-book-detail" data-value="'+behindBook.book.id+'" style="background:linear-gradient(135deg,#fff5f5,#ffe8e8);border:1px solid rgba(255,59,48,.2);border-radius:var(--radius);padding:10px 14px;margin-bottom:10px;cursor:pointer;display:flex;align-items:center;justify-content:space-between">';
+    html+='<div><div style="font-size:12px;font-weight:700;color:#FF3B30;margin-bottom:2px">\u26a0 \u300a'+behindBook.book.title+'\u300b 进度落后</div>';
+    html+='<div style="font-size:11px;color:#8B0000">落后 '+behindBook.gap+' 页，今天加把劲 📚</div></div>';
+    html+='<div style="font-size:11px;color:#FF3B30;font-weight:600">\u67e5\u770b \u2192</div>';
+    html+='</div>';
+  }
+
   var streakCls=streak===0?'s1':streak===1?'s1':streak===2?'s2':streak===3?'s3':streak===4?'s4':streak===5?'s5':streak===6?'s6':streak===7?'s7':'s7plus';
   var flame=streak>=3?'<span class="streak-flame-wrap">'+getFlameSVG(streak)+'</span>':'';
   html+='<div class="streak-card '+streakCls+'"><div class="streak-glow"></div><div class="streak-header">连续满意 Streak</div><div class="streak-main">'+flame+'<span class="streak-number">'+streak+'</span></div><div class="streak-unit">天连胜</div><div class="streak-sub"><span>最长 '+bestStreak+' 天</span><span>本月 '+monthlyCount+'</span></div></div>';
@@ -1223,19 +1465,20 @@ function renderHome(){
   var dayTotal=dayTasks.length;
   var nightTotal=nightTasks.length;
   var todayOutputs=state.outputs.filter(function(o){return o.date===getTodayISO()}).length;
-  html+='<div class="card" style="padding:12px"><div style="display:flex;justify-content:space-between;align-items:center;cursor:pointer" data-action="go-day"><div><div style="font-size:11px;color:var(--text-3);font-weight:600">DAILY \u00b7 \u4eca\u65e5\u4efb\u52a1</div><div style="font-size:13px;font-weight:600;color:var(--text);margin-top:2px">\u767d\u5929 '+dayDone+'/'+dayTotal+' \u00b7 \u665a\u4e0a '+nightDone+'/'+nightTotal+'</div></div><div style="font-size:12px;color:var(--accent);font-weight:600">\u67e5\u770b \u2192</div></div>';
+  html+='<div class="card" style="padding:12px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><div style="font-size:11px;color:var(--text-3);font-weight:600">TASK \u00b7 \u4eca\u65e5\u4efb\u52a1</div><span class="fit-link" data-action="go-day" style="font-size:11px;font-weight:600;color:var(--accent);cursor:pointer">\u67e5\u770b \u2192</span></div>';
   var allTasks=dayTasks.concat(nightTasks);
   if(allTasks.length>0){
-    html+='<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border-2)">';
     for(var ti=0;ti<Math.min(allTasks.length,5);ti++){
       var tk=allTasks[ti];
       var dot=tk.completed?'\u2705':'\u26ab';
-      html+='<div style="font-size:12px;color:var(--text-2);padding:2px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+dot+' '+tk.title+'</div>';
+      html+='<div style="font-size:13px;color:var(--text-2);padding:4px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+dot+' '+tk.title+'</div>';
     }
     if(allTasks.length>5)html+='<div style="font-size:11px;color:var(--text-3);padding-top:2px">\u8fd8\u6709 '+(allTasks.length-5)+' \u9879...</div>';
-    html+='</div>';
+  }else{
+    html+='<div style="text-align:center;padding:16px 0"><div style="font-size:32px;margin-bottom:6px">\u{1F4DD}</div><div style="font-size:12px;color:var(--text-3)">今天还没有任务</div></div>';
+    html+='<button class="add-task-btn" data-action="go-day" style="font-size:13px;padding:8px">\u52a0\u4e2a\u4efb\u52a1</button>';
   }
-  if(todayOutputs>0)html+='<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border-2);display:flex;justify-content:space-between;align-items:center;cursor:pointer" data-action="go-growth"><div style="font-size:13px;font-weight:600;color:var(--text)">\u{1F4C4} \u4eca\u65e5\u6210\u679c '+todayOutputs+' \u4e2a</div><div style="font-size:12px;color:var(--accent);font-weight:600">\u67e5\u770b \u2192</div></div>';
+  if(todayOutputs>0)html+='<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border-2);display:flex;justify-content:space-between;align-items:center;cursor:pointer" data-action="go-growth"><div style="font-size:13px;font-weight:600;color:var(--text)">\u{1F4C4} \u4eca\u65e5\u6210\u679c '+todayOutputs+' \u4e2a</div><div style="font-size:12px;color:var(--accent);font-weight:600">\u67e5\u770b \u2192</div></div>';
   html+='</div>';
 
   var fitLog=getFitLog();
@@ -1244,23 +1487,37 @@ function renderHome(){
   var fitStatusEmoji=fitLog.status?{good:'\u{1F7E2}',average:'\u{1F7E1}',poor:'\u{1F534}'}[fitLog.status]:'\u26ab';
   html+='<div class="card fit-home-card" data-action="go-fit-today" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:11px;color:var(--text-3);font-weight:600">FIT \u00b7 Day '+fitDay+'/30</div><div style="font-size:14px;font-weight:600;color:var(--text);margin-top:2px">'+fitStatusEmoji+' '+fitTpl.label+(fitLog.completed?' \u2705':'')+'</div></div><div style="font-size:12px;color:var(--accent);font-weight:600">\u67e5\u770b \u2192</div></div>';
 
-  html+='<div class="opinion-card"><div class="section-header">今日观点 / Today\'s Opinion</div><p class="section-subtitle" style="margin-bottom:8px;margin-top:0">我今天产生了什么判断？</p><textarea class="opinion-input" data-input="today-opinion" placeholder="结论 \u2192 依据 \u2192 判断 \u2192 建议...">'+(state.todayOpinion||'')+'</textarea><div style="text-align:right;padding-top:4px"><span class="fit-link" data-action="go-review" style="font-size:11px;font-weight:600;color:var(--accent);cursor:pointer">\u{1F4DD} \u89c2\u70b9\u5f52\u6863\u5230 Memo \u2192</span></div></div>';
+  html+=renderOpinionCard();
 
   html+='</div>';return html;
 }
 
 /* ===== RENDER: DAY (MERGED) ===== */
 function renderDay(){
-  var html='<div class="page day-page"><div class="page-header"><h1>Daily \u00b7 今日精进</h1><p>白天精进 \u00b7 晚上成长</p></div>';
-  html+='<div class="section-day"><div class="section-header">白天 \u00b7 待做与思考</div>';
-  for(var i=0;i<DAY_CATEGORIES.length;i++){var cat=DAY_CATEGORIES[i];var tasks=state.tasks.day.filter(function(t){return t.category===cat.id});html+=renderCategorySection(cat,tasks,'day')}
-  html+='</div>';
-  html+='<div class="section-night"><div class="section-header">晚上 \u00b7 个人成长</div>';
-  var nightCats=NIGHT_CATEGORIES.filter(function(c){return c.id!=='body'});
-  for(var i=0;i<nightCats.length;i++){var cat=nightCats[i];var tasks=state.tasks.night.filter(function(t){return t.category===cat.id});html+=renderCategorySection(cat,tasks,'night')}
-  html+='<div class="card" style="text-align:center;padding:12px"><span style="font-size:12px;color:var(--text-3)">健身训练已移至</span> <span class="fit-link" data-action="go-fit" style="font-size:12px;font-weight:600;color:var(--accent);cursor:pointer">Fit 页面</span></div>';
-  html+='</div>';
-  html+='<div class="opinion-card"><div class="section-header">今日观点 / Today\'s Opinion</div><p class="section-subtitle" style="margin-bottom:8px;margin-top:0">我今天产生了什么判断？</p><textarea class="opinion-input" data-input="today-opinion" placeholder="结论 \u2192 依据 \u2192 判断 \u2192 建议...">'+(state.todayOpinion||'')+'</textarea><div style="text-align:right;padding-top:4px"><span class="fit-link" data-action="go-review" style="font-size:11px;font-weight:600;color:var(--accent);cursor:pointer">\u{1F4DD} \u89c2\u70b9\u5f52\u6863\u5230 Memo \u2192</span></div></div>';
+  var subView=state.daySubView||'tasks';
+  var html='<div class="page day-page"><div class="page-header"><h1>Task \u00b7 今日精进</h1><p>白天精进 \u00b7 晚上成长</p></div>';
+  html+='<div class="day-sub-tabs"><button class="day-sub-tab'+(subView==='tasks'?' active':'')+'" data-action="day-sub-tab" data-value="tasks">\u270f\ufe0f \u4efb\u52a1</button><button class="day-sub-tab'+(subView==='book'?' active':'')+'" data-action="day-sub-tab" data-value="book">\u{1F4DA} \u9605\u8bfb</button></div>';
+  if(subView==='tasks'){
+    html+='<div class="section-day"><div class="section-header">白天 \u00b7 待做与思考</div>';
+    for(var i=0;i<DAY_CATEGORIES.length;i++){var cat=DAY_CATEGORIES[i];var tasks=state.tasks.day.filter(function(t){return t.category===cat.id});html+=renderCategorySection(cat,tasks,'day')}
+    html+='</div>';
+    html+='<div class="section-night"><div class="section-header">晚上 \u00b7 个人成长</div>';
+    var nightCats=NIGHT_CATEGORIES.filter(function(c){return c.id!=='body'});
+    for(var i=0;i<nightCats.length;i++){var cat=nightCats[i];var tasks=state.tasks.night.filter(function(t){return t.category===cat.id});html+=renderCategorySection(cat,tasks,'night')}
+    html+='<div class="card" style="text-align:center;padding:12px"><span style="font-size:12px;color:var(--text-3)">健身训练已移至</span> <span class="fit-link" data-action="go-fit" style="font-size:12px;font-weight:600;color:var(--accent);cursor:pointer">Fit 页面</span></div>';
+    html+='</div>';
+    html+=renderOpinionCard();
+  }else if(subView==='book'){
+    html+=renderBookContent();
+  }
+  html+='</div>';return html;
+}
+function renderBookContent(){
+  var view=state.bookView||'list';
+  var html='<div class="book-section">';
+  if(view==='list')html+=renderBookList();
+  else if(view==='detail')html+=renderBookDetail();
+  else if(view==='add')html+=renderBookAddForm();
   html+='</div>';return html;
 }
 
@@ -1293,6 +1550,10 @@ function renderMemo(){
   for(var ds in opinionHist){
     var text=opinionHist[ds];
     if(text&&text.trim())entries.push({date:ds,text:text.trim(),type:'opinion'});
+    var extras=state.opinionExtras&&state.opinionExtras[ds]?state.opinionExtras[ds]:[];
+    for(var ei=0;ei<extras.length;ei++){
+      if(extras[ei].text&&extras[ei].text.trim())entries.push({date:ds,text:extras[ei].text.trim(),type:'opinion',subtag:'补充'});
+    }
   }
   var top3Arch=state.top3Archive||[];
   for(var i=0;i<top3Arch.length;i++){
@@ -1314,7 +1575,8 @@ function renderMemo(){
       var dayNames=['日','一','二','三','四','五','六'];
       var dateStr=d.getFullYear()+'年'+(d.getMonth()+1)+'月'+d.getDate()+'日 周'+dayNames[d.getDay()];
       var tag=e.type==='top3'?'<span class="memo-tag">Top 3</span> ':'';
-      html+='<div class="memo-card"><div class="memo-date">'+tag+dateStr+'</div><div class="memo-content">'+e.text+'</div></div>';
+      var subtag=e.subtag?'<span class="memo-tag" style="background:var(--accent-bg);color:var(--accent)">'+e.subtag+'</span> ':'';
+      html+='<div class="memo-card"><div class="memo-date">'+tag+subtag+dateStr+'</div><div class="memo-content">'+e.text+'</div></div>';
     }
   }
   return html;
@@ -1505,6 +1767,116 @@ function get7DayAvgWeight(){
   var sum=0;for(var i=0;i<weights.length;i++)sum+=weights[i];
   return Math.round(sum/weights.length*10)/10;
 }
+
+/* ===== RENDER: BOOK ===== */
+function renderBook(){
+  var view=state.bookView||'list';
+  var html='<div class="page book-page"><div class="page-header"><h1>Book \u00b7 阅读</h1><p>追踪你的阅读进度</p></div>';
+  if(view==='list')html+=renderBookList();
+  else if(view==='detail')html+=renderBookDetail();
+  else if(view==='add')html+=renderBookAddForm();
+  html+='</div>';return html;
+}
+function renderBookList(){
+  var books=state.readingBooks||[];
+  var reading=books.filter(function(b){return b.status!=='finished'});
+  var finished=books.filter(function(b){return b.status==='finished'});
+  var html='';
+  html+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><div class="section-header" style="margin:0">正在读 \u00b7 '+reading.length+' 本</div><button class="add-task-btn" data-action="add-book-form" style="font-size:12px;padding:6px 14px">+ 添加书籍</button></div>';
+  if(reading.length===0){
+    html+='<div class="card" style="text-align:center;padding:32px 16px"><div style="font-size:40px;margin-bottom:10px">\u{1F4DA}</div><div style="font-size:13px;color:var(--text-2);margin-bottom:12px">还没有在读的书</div><button class="add-task-btn" data-action="add-book-form" style="font-size:13px;padding:8px 20px">开始读一本</button></div>';
+  }else{
+    for(var i=0;i<reading.length;i++){
+      var b=reading[i];
+      var pct=getBookProgress(b);
+      var daysLeft=getBookDaysLeft(b);
+      var behind=isBookBehind(b);
+      html+='<div class="card book-card" data-action="view-book" data-value="'+b.id+'" style="cursor:pointer;margin-bottom:8px">';
+      html+='<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">';
+      html+='<div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+b.title+'</div>';
+      html+='<div style="font-size:11px;color:var(--text-3);margin-top:2px">'+b.currentPage+'/'+b.totalPages+' 页'+(daysLeft!==null?' \u00b7 还剩 '+daysLeft+' 天':'')+'</div></div>';
+      html+='<div style="font-size:18px;font-weight:800;color:'+(behind?'var(--red)':'var(--accent)')+';flex-shrink:0;margin-left:10px">'+pct+'%</div>';
+      html+='</div>';
+      html+='<div style="height:6px;background:var(--gray-bg);border-radius:3px;overflow:hidden"><div style="height:100%;width:'+pct+'%;background:'+(behind?'var(--red)':'var(--accent)')+';border-radius:3px;transition:width .3s"></div></div>';
+      if(behind)html+='<div style="font-size:11px;color:var(--red);margin-top:6px">\u26a0 \u8fdb\u5ea6\u843d\u540e\u4e86\uff0c\u52a0\u62b2\u52a7</div>';
+      html+='</div>';
+    }
+  }
+  if(finished.length>0){
+    html+='<div class="section-header" style="margin:20px 0 10px">已读完 \u00b7 '+finished.length+' 本</div>';
+    for(var j=0;j<finished.length;j++){
+      var fb=finished[j];
+      html+='<div class="card book-card" data-action="view-book" data-value="'+fb.id+'" style="cursor:pointer;margin-bottom:6px;opacity:.7">';
+      html+='<div style="display:flex;justify-content:space-between;align-items:center">';
+      html+='<div style="font-size:13px;color:var(--text-2);text-decoration:line-through">'+fb.title+'</div>';
+      html+='<div style="font-size:11px;color:var(--green);font-weight:600">\u2713 \u5df2\u8bfb\u5b8c</div>';
+      html+='</div></div>';
+    }
+  }
+  return html;
+}
+function renderBookDetail(){
+  var id=state.bookDetailId;
+  var book=getBookById(id);
+  if(!book){state.bookView='list';return renderBookList()}
+  var pct=getBookProgress(book);
+  var daysLeft=getBookDaysLeft(book);
+  var behind=isBookBehind(book);
+  var expected=getBookExpectedPage(book);
+  var todayNote='';
+  var today=getTodayISO();
+  if(book.history){
+    for(var i=0;i<book.history.length;i++){
+      if(book.history[i].date===today){todayNote=book.history[i].note||'';break}
+    }
+  }
+  var html='';
+  html+='<div style="margin-bottom:12px"><button class="btn-cancel" data-action="book-view" data-value="list" style="font-size:13px;padding:4px 0">\u2190 \u8fd4\u56de\u4e66\u5355</button></div>';
+  html+='<div class="card" style="padding:16px">';
+  html+='<div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px">'+book.title+'</div>';
+  html+='<div style="font-size:12px;color:var(--text-3);margin-bottom:12px">'+book.totalPages+' 页'+(book.deadline?' \u00b7 DDL: '+book.deadline:'')+'</div>';
+  html+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span style="font-size:12px;color:var(--text-2)">进度</span><span style="font-size:16px;font-weight:700;color:'+(behind?'var(--red)':'var(--accent)')+'">'+pct+'%</span></div>';
+  html+='<div style="height:8px;background:var(--gray-bg);border-radius:4px;overflow:hidden;margin-bottom:8px"><div style="height:100%;width:'+pct+'%;background:'+(behind?'var(--red)':'var(--accent)')+';border-radius:4px"></div></div>';
+  html+='<div style="font-size:11px;color:var(--text-3);margin-bottom:12px">第 '+book.currentPage+' / '+book.totalPages+' 页'+(expected!==null?' \u00b7 \u6309\u8ba1\u5212\u5e94\u5230 '+expected+' \u9875':'')+'</div>';
+  if(behind)html+='<div style="background:var(--red-bg);border:1px solid rgba(255,59,48,.3);border-radius:8px;padding:8px 10px;margin-bottom:12px;font-size:12px;color:var(--red)">\u26a0 \u8fdb\u5ea6\u843d\u540e '+expected+'-'+book.currentPage+' = '+(expected-book.currentPage)+' \u9875</div>';
+  html+='<div style="margin-bottom:8px"><div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:6px">\u4eca\u65e5\u8fdb\u5ea6</div>';
+  html+='<input type="number" class="opinion-input" style="height:38px;font-size:14px" data-input="book-current-page" data-value="'+book.id+'" value="'+book.currentPage+'" placeholder="当前页码" />';
+  html+='</div>';
+  html+='<div style="margin-bottom:12px"><div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:6px">\u4eca\u65e5\u7b14\u8bb0\uff08\u9009\u586b\uff09</div>';
+  html+='<textarea class="opinion-input" style="min-height:50px;font-size:12px" data-input="book-today-note" data-value="'+book.id+'" placeholder="今天的感想 / 标记...">'+todayNote+'</textarea>';
+  html+='</div>';
+  html+='<button class="add-task-btn" data-action="save-book-progress" data-value="'+book.id+'" style="width:100%">\u4fdd\u5b58\u4eca\u65e5\u8fdb\u5ea6</button>';
+  html+='</div>';
+  if(book.history&&book.history.length>0){
+    html+='<div class="card" style="padding:12px;margin-top:10px">';
+    html+='<div class="section-header" style="margin-bottom:8px">\u9605\u8bfb\u5386\u53f2</div>';
+    var h=book.history.slice(0,10);
+    for(var k=0;k<h.length;k++){
+      html+='<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border-2)">';
+      html+='<span style="font-size:12px;color:var(--text-2)">'+h[k].date+'</span>';
+      html+='<span style="font-size:12px;font-weight:600;color:var(--text)">p.'+h[k].page+'</span>';
+      html+='</div>';
+      if(h[k].note)html+='<div style="font-size:11px;color:var(--text-3);padding:2px 0 6px">'+h[k].note+'</div>';
+    }
+    html+='</div>';
+  }
+  html+='<div style="text-align:center;margin-top:16px"><button class="btn-cancel" data-action="delete-book" data-value="'+book.id+'" style="color:var(--red);font-size:12px">\u5220\u9664\u4e66\u7c4d</button></div>';
+  return html;
+}
+function renderBookAddForm(){
+  var html='';
+  html+='<div style="margin-bottom:12px"><button class="btn-cancel" data-action="book-view" data-value="list" style="font-size:13px;padding:4px 0">\u2190 \u8fd4\u56de</button></div>';
+  html+='<div class="card" style="padding:16px">';
+  html+='<div class="section-header" style="margin-bottom:12px">\u6dfb\u52a0\u65b0\u4e66</div>';
+  html+='<div style="margin-bottom:10px"><div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:4px">\u4e66\u540d</div><input type="text" class="opinion-input" style="height:38px;font-size:14px" data-input="add-book-title" placeholder="比如：百年孤独" /></div>';
+  html+='<div style="margin-bottom:10px"><div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:4px">\u603b\u9875\u6570</div><input type="number" class="opinion-input" style="height:38px;font-size:14px" data-input="add-book-pages" placeholder="比如：360" /></div>';
+  html+='<div style="margin-bottom:10px"><div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:4px">\u5f53\u524d\u9875\u7801</div><input type="number" class="opinion-input" style="height:38px;font-size:14px" data-input="add-book-current" placeholder="0 = 刚开始读" /></div>';
+  html+='<div style="margin-bottom:10px"><div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:4px">\u8ba1\u5212\u770b\u5b8c\u65e5\u671f\uff08DDL\uff09</div><input type="date" class="opinion-input" style="height:38px;font-size:14px" data-input="add-book-deadline" /></div>';
+  html+='<div style="margin-bottom:16px"><div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:4px">\u6bcf\u65e5\u76ee\u6807\uff08\u9875\uff09</div><input type="number" class="opinion-input" style="height:38px;font-size:14px" data-input="add-book-goal" placeholder="选填，比如：30" /></div>';
+  html+='<button class="add-task-btn" data-action="submit-book" style="width:100%">+ \u5f00\u59cb\u8bfb</button>';
+  html+='</div>';
+  return html;
+}
 function renderFit(){
   var view=state.fitView||'today';
   var html='<div class="page fit-page"><div class="page-header"><h1>Fit \u00b7 30-Day Cut &amp; Shape</h1></div>';
@@ -1595,16 +1967,34 @@ function renderFitCalendar(){
     var log=state.fitnessLogs[formatDateISO(new Date(new Date(FITNESS_START+'T00:00:00').getTime()+(d-1)*86400000))];
     var done=log&&log.completed;
     var hasData=log&&(log.weight||log.bodyFat||log.muscle||log.cardioNote||(log.exercises&&Object.keys(log.exercises).length>0));
-    var statusEmoji=log&&log.status?{good:'\u{1F7E2}',average:'\u{1F7E1}',poor:'\u{1F534}'}[log.status]:'';
+    var statusColor=log&&log.status?{good:'#34C759',average:'#FF9F0A',poor:'#FF3B30'}[log.status]:'';
+    var statusText=log&&log.status?{good:'状态好',average:'状态一般',poor:'状态差'}[log.status]:'';
     var bg=isToday?'var(--accent-bg)':'var(--surface)';
-    var border=isToday?'var(--accent)':'var(--border-2)';
+    var border=isToday?'var(--accent)':done?'var(--text)':'var(--border-2)';
     var labelColor=isToday?'var(--accent)':'var(--text-2)';
-    html+='<div class="fit-day-cell" data-action="view-fit-day" data-day="'+d+'" style="background:'+bg+';border:1px solid '+border+';border-radius:8px;padding:8px 10px">';
-    html+='<div style="font-size:11px;font-weight:700;color:'+(isToday?'var(--accent)':'var(--text)')+'">Day '+d+'</div>';
-    html+='<div style="font-size:11px;color:'+labelColor+'">'+tpl.label+'</div>';
-    if(done)html+='<div style="font-size:10px;color:var(--text);font-weight:600">\u2713 已完成'+(statusEmoji?' '+statusEmoji:'')+'</div>';
-    else if(hasData)html+='<div style="font-size:10px;color:var(--text-3)">有数据'+(statusEmoji?' '+statusEmoji:'')+'</div>';
-    else if(isPast)html+='<div style="font-size:10px;color:var(--text-3)">未完成</div>';
+    var checkSvg=done?'<svg viewBox="0 0 24 24" style="width:28px;height:28px;flex-shrink:0"><path d="M4 13l6 6L20 6" stroke="var(--text)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>':'';
+    var bottomLine='';
+    if(done||statusText||hasData){
+      bottomLine='<div style="display:flex;align-items:center;gap:4px;margin-top:6px">';
+      if(statusColor){
+        bottomLine+='<span style="width:6px;height:6px;border-radius:50%;background:'+statusColor+';display:inline-block;flex-shrink:0"></span>';
+        bottomLine+='<span style="font-size:10px;color:var(--text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+statusText+'</span>';
+      }else if(done){
+        bottomLine+='<span style="font-size:10px;color:var(--text-2);font-weight:500">已完成</span>';
+      }else if(hasData){
+        bottomLine+='<span style="font-size:10px;color:var(--text-3)">有数据记录</span>';
+      }
+      bottomLine+='</div>';
+    }else if(isPast){
+      bottomLine='<div style="margin-top:6px"><span style="font-size:10px;color:var(--text-3)">未完成</span></div>';
+    }
+    html+='<div class="fit-day-cell" data-action="view-fit-day" data-day="'+d+'" style="background:'+bg+';border:1.5px solid '+border+';border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px;min-height:56px">';
+    html+='<div style="flex:1;min-width:0">';
+    html+='<div style="font-size:11px;font-weight:700;color:'+(isToday?'var(--accent)':'var(--text)')+';letter-spacing:.3px">DAY '+d+'</div>';
+    html+='<div style="font-size:12px;color:'+labelColor+';margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500">'+tpl.label+'</div>';
+    html+=bottomLine;
+    html+='</div>';
+    html+=checkSvg;
     html+='</div>';
   }
   html+='</div></div>';
@@ -1823,6 +2213,12 @@ function renderHistory(){
   }
   if(opinion){
     html+='<div class="opinion-card"><div class="section-header">当日观点</div><p style="font-size:13px;color:var(--text);line-height:1.5;white-space:pre-wrap">'+opinion+'</p></div>';
+  }
+  var dayExtras=state.opinionExtras&&state.opinionExtras[ds]?state.opinionExtras[ds]:[];
+  for(var ei=0;ei<dayExtras.length;ei++){
+    if(dayExtras[ei].text&&dayExtras[ei].text.trim()){
+      html+='<div class="opinion-card"><div class="section-header">补充想法 '+(ei+1)+'</div><p style="font-size:13px;color:var(--text);line-height:1.5;white-space:pre-wrap">'+dayExtras[ei].text+'</p></div>';
+    }
   }
   var taskHist=state.taskHistory[ds];
   if(taskHist){
@@ -2052,7 +2448,18 @@ function handleClick(e){
     case 'go-growth':state.growthView='output';navigate('growth');break;
     case 'go-fit-today':state.fitView='today';navigate('fit');break;
     case 'go-day':navigate('day');break;
+    case 'add-opinion-extra':addOpinionExtra();break;
+    case 'delete-opinion-extra':deleteOpinionExtra(ds.value);break;
     case 'go-review':navigate('review');break;
+    case 'day-sub-tab':state.daySubView=ds.value;state.bookView='list';saveState();render();break;
+    case 'add-book-form':state.bookView='add';saveState();render();break;
+    case 'book-view':state.bookView=ds.value;state.bookDetailId=null;saveState();render();break;
+    case 'view-book':state.bookDetailId=ds.value;state.bookView='detail';saveState();render();break;
+    case 'submit-book':submitBook();break;
+    case 'save-book-progress':saveBookProgress(ds.value);break;
+    case 'delete-book':deleteBook(ds.value);break;
+    case 'go-book':state.daySubView='book';state.bookView='list';navigate('day');break;
+    case 'go-book-detail':state.daySubView='book';state.bookView='detail';state.bookDetailId=ds.value;navigate('day');break;
     case 'go-growth-calendar':state.growthView='calendar';navigate('growth');break;
   }
 }
@@ -2061,6 +2468,7 @@ function handleInput(e){
   var input=el.getAttribute('data-input');var ds=el.dataset;
   switch(input){
     case 'today-opinion':state.todayOpinion=e.target.value;saveDailyOpinion();debouncedSave();break;
+    case 'opinion-extra':saveOpinionExtra(ds.value,e.target.value);break;
     case 'add-task-title':state.addForm.title=e.target.value;break;
     case 'memo-search':
       state.memoSearch=e.target.value;
@@ -2148,6 +2556,7 @@ function ensureStateDefaults(){
   if(!state.dailyApproval)state.dailyApproval={};
   if(!state.energyHistory)state.energyHistory={};
   if(!state.opinionHistory)state.opinionHistory={};
+  if(!state.opinionExtras)state.opinionExtras={};
   if(state.addForm===undefined)state.addForm={type:null,category:null,priority:'should',title:''};
   if(state.addOutputOpen===undefined)state.addOutputOpen=false;
   if(!state.newOutput)state.newOutput={type:'工作',title:'',desc:''};
