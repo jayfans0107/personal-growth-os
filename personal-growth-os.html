@@ -905,7 +905,7 @@ var saveTimer,cloudSyncTimer;
 function loadState(){
   try{var raw=localStorage.getItem(STORAGE_KEY);if(!raw)return null;var s=JSON.parse(raw);if(!s.tasks)return null;return s}catch(e){return null}
 }
-function saveState(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}debouncedCloudSync()}
+function saveState(){state.updatedAt=Date.now();try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}debouncedCloudSync()}
 function debouncedSave(){clearTimeout(saveTimer);saveTimer=setTimeout(saveState,400)}
 function debouncedCloudSync(){if(!cloudSyncEnabled)return;clearTimeout(cloudSyncTimer);cloudSyncTimer=setTimeout(cloudSyncSave,800)}
 function cloudSyncSave(){
@@ -2586,6 +2586,11 @@ function ensureStateDefaults(){
   if(state.fitViewDay===undefined)state.fitViewDay=null;
   if(!state.fitOverrides)state.fitOverrides={};
   if(state.fitChartRange===undefined)state.fitChartRange='week';
+  if(!state.readingBooks)state.readingBooks=[];
+  if(state.bookView===undefined)state.bookView='list';
+  if(state.bookDetailId===undefined)state.bookDetailId=null;
+  if(state.daySubView===undefined)state.daySubView='tasks';
+  if(state.updatedAt===undefined)state.updatedAt=Date.now();
   delete state.growthStage;delete state.stageStart;delete state.stageEnd;delete state.monthlyRate;delete state.monthlyReview;
 }
 function init(){
@@ -2607,13 +2612,16 @@ function init(){
     document.body.appendChild(indicator);
     cloudSyncLoad().then(function(cloudData){
       if(cloudData&&cloudData.tasks){
-        state=cloudData;ensureStateDefaults();
-        archiveDailyTasks();
-        checkTop3Archive();
-        checkMonthlyReport();
-        loadDailyOpinion();
-        try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}
-        render();updateSyncStatus('synced');debouncedCloudSync();
+        var localTS=state.updatedAt||0;
+        var cloudTS=cloudData.updatedAt||0;
+        if(cloudTS>localTS){
+          state=cloudData;ensureStateDefaults();migrateState();
+          archiveDailyTasks();checkTop3Archive();checkMonthlyReport();loadDailyOpinion();
+          try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}
+          render();updateSyncStatus('synced');
+        }else{
+          saveState();updateSyncStatus('synced');
+        }
       }else{updateSyncStatus('offline')}
     });
   }
