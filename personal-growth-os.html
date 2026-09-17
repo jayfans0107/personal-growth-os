@@ -6,6 +6,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="theme-color" content="#F5F5F7">
+<meta name="apple-mobile-web-app-title" content="成长OS">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22180%22%20height%3D%22180%22%20viewBox%3D%220%200%20180%20180%22%3E%3Crect%20width%3D%22180%22%20height%3D%22180%22%20rx%3D%2240%22%20fill%3D%22%23F5F5F0%22%2F%3E%3Ccircle%20cx%3D%2290%22%20cy%3D%2290%22%20r%3D%2260%22%20fill%3D%22none%22%20stroke%3D%22%234A306D%22%20stroke-width%3D%227%22%2F%3E%3Cpath%20d%3D%22M65%20110Q70%2085%2090%2075T115%2060%22%20fill%3D%22none%22%20stroke%3D%22%23C4A8E0%22%20stroke-width%3D%223.5%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M60%20115Q68%2085%2095%2070T120%2055%22%20fill%3D%22none%22%20stroke%3D%22%234A306D%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M110%2055L122%2050L120%2062%22%20fill%3D%22none%22%20stroke%3D%22%234A306D%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22180%22%20height%3D%22180%22%20viewBox%3D%220%200%20180%20180%22%3E%3Crect%20width%3D%22180%22%20height%3D%22180%22%20rx%3D%2240%22%20fill%3D%22%23F5F5F0%22%2F%3E%3Ccircle%20cx%3D%2290%22%20cy%3D%2290%22%20r%3D%2260%22%20fill%3D%22none%22%20stroke%3D%22%234A306D%22%20stroke-width%3D%227%22%2F%3E%3Cpath%20d%3D%22M65%20110Q70%2085%2090%2075T115%2060%22%20fill%3D%22none%22%20stroke%3D%22%23C4A8E0%22%20stroke-width%3D%223.5%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M60%20115Q68%2085%2095%2070T120%2055%22%20fill%3D%22none%22%20stroke%3D%22%234A306D%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M110%2055L122%2050L120%2062%22%20fill%3D%22none%22%20stroke%3D%22%234A306D%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E">
 <title>Personal Growth OS</title>
 <style>
 /* ===== RESET ===== */
@@ -915,6 +918,20 @@ function cloudSyncSave(){
 function cloudSyncLoad(){
   if(!cloudSyncEnabled)return Promise.resolve(null);
   return fetch(SUPABASE_URL+'/rest/v1/growth_os_data?id=eq.main&select=data',{headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}}).then(function(res){if(!res.ok)return null;return res.json()}).then(function(data){if(data&&data.length>0)return data[0].data;return null}).catch(function(){return null});
+}
+function hasSignificantData(s){
+  if(!s)return false;
+  var score=0;
+  if(s.outputs&&s.outputs.length>0)score+=s.outputs.length;
+  if(s.energyHistory)score+=Object.keys(s.energyHistory).length;
+  if(s.taskHistory)score+=Object.keys(s.taskHistory).length;
+  if(s.opinionHistory)score+=Object.keys(s.opinionHistory).length;
+  if(s.fitnessLogs)score+=Object.keys(s.fitnessLogs).length;
+  if(s.monthlyReports&&s.monthlyReports.length>0)score+=s.monthlyReports.length*5;
+  if(s.readingBooks&&s.readingBooks.length>0)score+=s.readingBooks.length;
+  if(s.beliefs&&s.beliefs.length>0)score+=s.beliefs.length;
+  if(s.top3Archive&&s.top3Archive.length>0)score+=s.top3Archive.length;
+  return score>=2;
 }
 function updateSyncStatus(status){
   var el=document.getElementById('sync-indicator');if(!el)return;
@@ -2590,7 +2607,6 @@ function ensureStateDefaults(){
   if(state.bookView===undefined)state.bookView='list';
   if(state.bookDetailId===undefined)state.bookDetailId=null;
   if(state.daySubView===undefined)state.daySubView='tasks';
-  if(state.updatedAt===undefined)state.updatedAt=Date.now();
   delete state.growthStage;delete state.stageStart;delete state.stageEnd;delete state.monthlyRate;delete state.monthlyReview;
 }
 function init(){
@@ -2614,13 +2630,27 @@ function init(){
       if(cloudData&&cloudData.tasks){
         var localTS=state.updatedAt||0;
         var cloudTS=cloudData.updatedAt||0;
-        if(cloudTS>localTS){
+        var localHasData=hasSignificantData(state);
+        var cloudHasData=hasSignificantData(cloudData);
+        var useCloud=false;
+        if(cloudHasData&&!localHasData){
+          useCloud=true;
+        }else if(cloudHasData&&localHasData){
+          if(!localTS){
+            useCloud=false;
+          }else if(cloudTS>localTS){
+            useCloud=true;
+          }
+        }
+        if(useCloud){
           state=cloudData;ensureStateDefaults();migrateState();
           archiveDailyTasks();checkTop3Archive();checkMonthlyReport();loadDailyOpinion();
           try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}
           render();updateSyncStatus('synced');
         }else{
-          saveState();updateSyncStatus('synced');
+          if(localHasData&&!localTS)state.updatedAt=Date.now();
+          if(localHasData)saveState();
+          updateSyncStatus('synced');
         }
       }else{updateSyncStatus('offline')}
     });
